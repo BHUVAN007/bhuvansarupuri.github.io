@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connected Strategy Worksheets - ITSM Analysis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Work+Sans:wght@300;400;500;600&family=Fraunces:wght@300;600;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --cyan: #00CED1;
+            --teal: #008B8B;
+            --blue: #2C5282;
+            --dark-blue: #1A365D;
+            --white: #FFFFFF;
+        }
+
+                * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        /* Name Header */
+        .name-header {
+            position: fixed;
+            top: 30px;
+            left: 40px;
+            z-index: 1000;
+            font-family: 'Fraunces', serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark-blue);
+            text-decoration: none;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 0.2s;
+            letter-spacing: 0.5px;
+            background: var(--white);
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .name-header .degree {
+            color: var(--cyan);
+            font-weight: 300;
+        }
+
+        /* Navigation */
+        .nav-links {
+            position: fixed;
+            top: 30px;
+            right: 40px;
+            z-index: 1000;
+            display: flex;
+            gap: 30px;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 0.4s;
+            background: var(--white);
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .nav-links a {
+            color: #4a5568;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--cyan);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 968px) {
+            .name-header {
+                position: static;
+                text-align: center;
+                margin: 20px auto;
+            }
+
+            .nav-links {
+                position: static;
+                margin-bottom: 20px;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+        }
+
+        body {
+            font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #F5F7FA;
+            padding: 120px 20px 40px 20px;
+            line-height: 1.6;
+            color: #1a202c;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 42px;
+            text-align: center;
+            margin-bottom: 15px;
+            color: #002A3A;
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 16px;
+            color: #4a5568;
+            margin-bottom: 50px;
+        }
+
+        .worksheet {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 50px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .worksheet-header {
+            border-bottom: 3px solid #00B8C8;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .worksheet-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            color: #002A3A;
+            margin-bottom: 10px;
+        }
+
+        .worksheet-desc {
+            font-size: 14px;
+            color: #4a5568;
+        }
+
+        /* Worksheet 1: Customer Journey */
+        .journey-grid {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .journey-stage-box {
+            background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
+            padding: 20px 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 2px solid #00B8C8;
+        }
+
+        .journey-stage-box h4 {
+            font-size: 13px;
+            font-weight: 600;
+            color: #002A3A;
+            margin-bottom: 15px;
+            min-height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .journey-stage-box p {
+            font-size: 11px;
+            color: #4a5568;
+            line-height: 1.5;
+        }
+
+        .journey-questions {
+            margin-top: 30px;
+            padding: 20px;
+            background: #fff8e1;
+            border-radius: 8px;
+        }
+
+        .journey-questions h4 {
+            font-size: 16px;
+            color: #FF6B35;
+            margin-bottom: 15px;
+        }
+
+        .journey-questions p {
+            font-size: 14px;
+            color: #4a5568;
+            margin-bottom: 10px;
+        }
+
+        /* Worksheet 2: Pain Points */
+        .pain-points-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .pain-points-table th {
+            background: #00B8C8;
+            color: white;
+            padding: 15px 10px;
+            font-size: 12px;
+            font-weight: 600;
+            text-align: left;
+        }
+
+        .pain-points-table td {
+            padding: 15px 10px;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 13px;
+            vertical-align: top;
+        }
+
+        .pain-points-table tr:hover {
+            background: #f7fafc;
+        }
+
+        .pain-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            background: #fed7d7;
+            color: #c53030;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        /* Worksheet 3: Information Flow */
+        .info-flow-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .flow-card {
+            background: #f8f9fa;
+            border: 2px solid #00B8C8;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .flow-card h4 {
+            font-size: 15px;
+            color: #002A3A;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .flow-detail {
+            margin-bottom: 10px;
+        }
+
+        .flow-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #00B8C8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .flow-value {
+            font-size: 13px;
+            color: #4a5568;
+            margin-top: 3px;
+        }
+
+        /* Worksheet 4: Why-How Ladder */
+        .ladder-container {
+            display: flex;
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        .ladder-column {
+            flex: 1;
+        }
+
+        .ladder-column h4 {
+            font-size: 18px;
+            color: #002A3A;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .ladder-item {
+            background: #f8f9fa;
+            border-left: 4px solid #FF6B35;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .ladder-item p {
+            font-size: 14px;
+            color: #4a5568;
+        }
+
+        .center-purpose {
+            background: linear-gradient(135deg, #00B8C8, #002A3A);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .center-purpose h4 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #FF6B35;
+        }
+
+        .center-purpose p {
+            font-size: 16px;
+            line-height: 1.7;
+        }
+
+        /* Worksheet 5: Responses */
+        .response-matrix {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .response-stage {
+            background: #e6fffa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #00B8C8;
+        }
+
+        .response-stage h5 {
+            font-size: 13px;
+            color: #002A3A;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .response-details {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .response-type {
+            margin-bottom: 15px;
+        }
+
+        .response-type strong {
+            font-size: 13px;
+            color: #00B8C8;
+        }
+
+        .response-type p {
+            font-size: 12px;
+            color: #4a5568;
+            margin-top: 5px;
+        }
+
+        /* Worksheet 6: Learning */
+        .learning-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .learning-stage {
+            background: linear-gradient(135deg, #f0f4f8 0%, #ffffff 100%);
+            border: 2px solid #00B8C8;
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .learning-stage h5 {
+            font-size: 14px;
+            color: #002A3A;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .learning-category {
+            margin-bottom: 15px;
+        }
+
+        .learning-category strong {
+            font-size: 11px;
+            color: #FF6B35;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .learning-category p {
+            font-size: 12px;
+            color: #4a5568;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 768px) {
+            .journey-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .ladder-container {
+                flex-direction: column;
+            }
+
+            .response-matrix {
+                grid-template-columns: 1fr;
+            }
+
+            .learning-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Name Header -->
+    <div class="name-header">Bhuvan Sarupuri <span class="degree">Ph.D.</span></div>
+
+    <!-- Navigation -->
+    <nav class="nav-links">
+        <a href="#" onclick="window.top.location.href='https://www.heybhuvan.com/'; return false;">Home</a>
+        <a href="#" onclick="window.top.location.href='https://www.heybhuvan.com/#projects'; return false;">Projects</a>
+        <a href="https://www.linkedin.com/in/bhuvan-sarupuri-ph-d-6448a767/" target="_blank">LinkedIn</a>
+    </nav>
+
+    
+    <div class="container">
+        <div style="background: linear-gradient(135deg, #002A3A 0%, #008C9E 100%); padding: 40px; border-radius: 12px; margin-bottom: 40px; color: white; text-align: center;">
+            <div style="font-size: 36px; font-weight: 700; margin-bottom: 10px;">TOPdesk</div>
+            <div style="font-size: 16px; opacity: 0.9; margin-bottom: 30px;">Make Service Happen</div>
+            <div style="font-size: 18px; font-weight: 300;">Connected Strategy Analysis • Detailed Worksheets</div>
+            <div style="font-size: 14px; opacity: 0.8; margin-top: 8px;">Wharton Business School • July 2024</div>
+            <div style="margin-top: 25px;">
+                <a href="https://www.heybhuvan.com/strategy" style="display: inline-block; background: #00B8C8; color: white; padding: 12px 30px; border-radius: 6px; text-decoration: none; font-weight: 600;">← Back to Main Portfolio</a>
+            </div>
+        </div>
+
+        <h1>Connected Strategy Analysis Worksheets</h1>
+        <p class="subtitle">Complete framework application for ITSM transformation project</p>
+
+        <!-- WORKSHEET 1: Customer Journey -->
+        <div class="worksheet">
+            <div class="worksheet-header">
+                <h2 class="worksheet-title">Worksheet 1: Map the Current Customer Journey</h2>
+                <p class="worksheet-desc">Understanding how IT service customers interact with ITSM systems across all touchpoints</p>
+            </div>
+
+            <div class="journey-grid">
+                <div class="journey-stage-box">
+                    <h4>Latent Need</h4>
+                    <p>IT infrastructure requires proactive monitoring; systems show early warning signs of potential failures</p>
+                </div>
+                <div class="journey-stage-box">
+                    <h4>Awareness of Need</h4>
+                    <p>Issue manifests (system down, slow performance); user recognizes need for IT support</p>
+                </div>
+                <div class="journey-stage-box">
+                    <h4>Search for Options</h4>
+                    <p>User checks knowledge base, searches for solutions, or decides to contact help desk</p>
+                </div>
+                <div class="journey-stage-box">
+                    <h4>Decide on Options</h4>
+                    <p>User chooses self-service resolution, submits ticket, or calls support based on urgency</p>
+                </div>
+                <div class="journey-stage-box">
+                    <h4>Order & Pay</h4>
+                    <p>Ticket created and prioritized; resources allocated; timeline established</p>
+                </div>
+                <div class="journey-stage-box">
+                    <h4>Receive</h4>
+                    <p>Support team acknowledges ticket; begins diagnosis and troubleshooting process</p>
+                </div>
+                <div class="journey-stage-box">
+                    <h4>Experience Service</h4>
+                    <p>Issue is resolved; solution implemented; user functionality restored</p>
+                </div>
+                <div class="journey-stage-box">
+                    <h4>Post-Purchase</h4>
+                    <p>Follow-up confirmation; satisfaction survey; documentation of resolution</p>
+                </div>
+            </div>
+
+            <div class="journey-questions">
+                <h4>Key Analysis Questions</h4>
+                <p><strong>Why does the customer engage?</strong> IT systems are critical for business operations. Downtime costs thousands per hour. Users need immediate, reliable support.</p>
+                <p><strong>How do they order and pay?</strong> Submit tickets via portal, email, or phone. Priority queues determine response time. Premium SLAs available for mission-critical services.</p>
+                <p><strong>What products/services provided?</strong> Incident management, problem resolution, change management, asset management, knowledge base access, proactive monitoring.</p>
+            </div>
+        </div>
+
+        <!-- WORKSHEET 2: Pain Points -->
+        <div class="worksheet">
+            <div class="worksheet-header">
+                <h2 class="worksheet-title">Worksheet 2: Pain Points & WTP Drivers</h2>
+                <p class="worksheet-desc">Identifying customer friction and willingness-to-pay drivers at each journey stage</p>
+            </div>
+
+            <table class="pain-points-table">
+                <thead>
+                    <tr>
+                        <th>Stage</th>
+                        <th>Pain Points</th>
+                        <th>Impact</th>
+                        <th>WTP Drivers</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Latent Need</strong></td>
+                        <td>No proactive detection; issues discovered only after failure; reactive firefighting mode</td>
+                        <td><span class="pain-badge">HIGH COST</span><br>Unexpected downtime, emergency responses</td>
+                        <td>Predictive analytics, proactive monitoring, automated alerts</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Awareness</strong></td>
+                        <td>Users don't know if issue is local or systemic; unclear how to escalate; uncertainty about resolution time</td>
+                        <td><span class="pain-badge">FRUSTRATION</span><br>Productivity loss, repeated attempts</td>
+                        <td>Instant status visibility, AI-powered diagnostics, transparent timelines</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Search</strong></td>
+                        <td>Knowledge base outdated or hard to search; solutions not contextualized; high effort required</td>
+                        <td><span class="pain-badge">TIME WASTE</span><br>30+ min searching before ticket submission</td>
+                        <td>Intelligent search, personalized recommendations, guided troubleshooting</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Decide</strong></td>
+                        <td>Unclear which option is best; lack of guidance on self-service vs escalation; no confidence in resolution path</td>
+                        <td><span class="pain-badge">POOR DECISIONS</span><br>Unnecessary escalations or delayed reporting</td>
+                        <td>AI recommendations based on issue type, success probability scores</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Order & Pay</strong></td>
+                        <td>Manual ticket categorization by operators; incorrect routing; priority assessment delays</td>
+                        <td><span class="pain-badge">INEFFICIENCY</span><br>Operators spend 40% time on categorization</td>
+                        <td>Automatic ticket classification, intelligent routing, priority algorithms</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Receive</strong></td>
+                        <td>Long wait for acknowledgment; no visibility into queue position; uncertain response time</td>
+                        <td><span class="pain-badge">ANXIETY</span><br>Users repeatedly check status, call help desk</td>
+                        <td>Real-time status updates, estimated resolution times, proactive communication</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Experience</strong></td>
+                        <td>Resolution quality varies by operator; inconsistent solutions to similar problems; lack of knowledge transfer</td>
+                        <td><span class="pain-badge">INCONSISTENCY</span><br>Repeat issues, trust erosion</td>
+                        <td>Standardized workflows, AI-guided resolution, best practice suggestions</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Post-Purchase</strong></td>
+                        <td>No follow-up on underlying issues; reactive fixes without root cause analysis; lessons not captured</td>
+                        <td><span class="pain-badge">RECURRENCE</span><br>Same issues repeat 40% of the time</td>
+                        <td>Root cause analysis, preventive recommendations, continuous improvement tracking</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- WORKSHEET 3: Information Flow -->
+        <div class="worksheet">
+            <div class="worksheet-header">
+                <h2 class="worksheet-title">Worksheet 3: Information Flow Analysis</h2>
+                <p class="worksheet-desc">Mapping data triggers, frequency, richness, and improvement opportunities</p>
+            </div>
+
+            <div class="info-flow-grid">
+                <div class="flow-card">
+                    <h4>System Monitoring Data</h4>
+                    <div class="flow-detail">
+                        <div class="flow-label">Trigger</div>
+                        <div class="flow-value">Performance metrics, error logs, system health checks</div>
+                    </div>
+                    <div class="flow-detail">
+                        <div class="flow-label">Frequency</div>
+                        <div class="flow-value">Continuous (real-time monitoring)</div>
+                    </div>
+                    <div class="flow-detail">
+                        <div class="flow-label">Richness</div>
+                        <div class="flow-value">High - detailed metrics, timestamps, system context</div>
+                    </div>
+                    <div class="flow-detail">
+                        <div class="flow-label">Inference Capability</div>
+                        <div class="flow-value">Can predict failures, identify patterns, forecast capacity needs</div>
+                    </div>
+                    <div class="flow-detail">
+                        <div class="flow-label">Customer Effort</div>
+                        <div class="flow-value">None (passive collection)</div>
+                    </div>
+                    <div class="flow-detail">
+                        <div class="flow-label">Improvement Idea</div>
+                        <div class="flow-value">AI-powered predictive analytics for proactive issue detection</div>
+                    </div>
+                </div>
+
+                <div class="flow-card">
+                    <h4>Ticket Submission Data</h4>
+                    <div class="flow-detail">
+                        <div class="flow-label">Trigger</div>
+                        <div class="flow-value">User reports issue, problem description, urgency indicator</div>
+                    </div>
+                    <div class="flow-detail">
+                        <div class="flow-label">Frequency</div>
+                        <div class="flow-value">Per incident (200-500 tickets/day typical)</div>
+                    </div>
+                    <div class="flow-detail">
+                        <div class="flow-label">Richness</div>
+                        <div class="flow-value">Medium - varies by user detail, often incomplete</div>
+                    </div>
+                    <div class="flow-detail">
+                        <div class="flow-label">Inference Capability</div>
+                        <div class="flow-value">Can categorize, route, predict resolution time, identify trends</div>
+                    </div>
+                    <div class="flow-detail">
+                        <div class="flow-label">Customer Effort</div>
+                        <div class="flow-value">High (form filling, problem description)</div>
+                    </div>
+                    <div class="flow-detail">
+                        <div class="flow-label">Improvement Idea</div>
+                        <div class="flow-value">NLP-powered auto-categorization, guided ticket creation with AI</div>
+                    </div>
+                </div>
+
+                <div class="flow-card">
+                    <h4>Historical Resolution Data</h4>
+                    <div class="flow-detail">
+                        <div class="flow-label">Trigger</div>
+                        <div class="flow-value">Past tickets, solutions applied, resolution times, operator actions</div>
+                    </div>
+                    <div class="flow-detail">
+                        <div class="flow-label">Frequency</div>
+                        <div class="flow-value">Accumulated (years of data)</div>
+                    </div>
+                    <div class="flow-detail">
+                        <div class="flow-label">Richness</div>
+                        <div class="flow-value">Very High - complete audit trail, outcomes, timestamps</div>
+                    </div>
+                    <div class="flow-detail">
+                        <div class="flow-label">Inference Capability</div>
+                        <div class="flow-value">Can identify best practices, success patterns, common issues</div>
+                    </div>
+                    <div class="flow-detail">
+                        <div class="flow-label">Customer Effort</div>
+                        <div class="flow-value">None (system-generated)</div>
+                    </div>
+                    <div class="flow-detail">
+                        <div class="flow-label">Improvement Idea</div>
+                        <div class="flow-value">Machine learning for solution recommendations, automated playbooks</div>
+                    </div>
+                </div>
+
+                <div class="flow-card">
+                    <h4>User Behavior Data</h4>
+                    <div class="flow-detail">
+                        <div class="flow-label">Trigger</div>
+                        <div class="flow-value">Search queries, self-service attempts, escalation patterns</div>
+                    </div>
+                    <div class="flow-detail">
+                        <div class="flow-label">Frequency</div>
+                        <div class="flow-value">Continuous (per user interaction)</div>
+                    </div>
+                    <div class="flow-detail">
+                        <div class="flow-label">Richness</div>
+                        <div class="flow-value">Medium - behavioral signals, success/failure indicators</div>
+                    </div>
+                    <div class="flow-detail">
+                        <div class="flow-label">Inference Capability</div>
+                        <div class="flow-value">Can personalize experiences, optimize UX, predict escalations</div>
+                    </div>
+                    <div class="flow-detail">
+                        <div class="flow-label">Customer Effort</div>
+                        <div class="flow-value">None (passive tracking)</div>
+                    </div>
+                    <div class="flow-detail">
+                        <div class="flow-label">Improvement Idea</div>
+                        <div class="flow-value">Personalized knowledge base, adaptive interface, coached workflows</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- WORKSHEET 4: Why-How Ladder -->
+        <div class="worksheet">
+            <div class="worksheet-header">
+                <h2 class="worksheet-title">Worksheet 4: Why-How Ladder</h2>
+                <p class="worksheet-desc">Exploring deeper motivations (Why) and specific implementations (How)</p>
+            </div>
+
+            <div class="center-purpose">
+                <h4>Core Purpose Statement</h4>
+                <p>In the eyes of the customer, the purpose of the relationship with our ITSM firm is to: <strong>"Ensure uninterrupted business operations through invisible, proactive IT support that prevents problems before they occur, allowing employees to focus on their work rather than technology obstacles."</strong></p>
+            </div>
+
+            <div class="ladder-container">
+                <div class="ladder-column">
+                    <h4>Why Ladder (Deeper Needs)</h4>
+                    <div class="ladder-item">
+                        <p><strong>Level 1:</strong> Fix IT issues when they break</p>
+                    </div>
+                    <div class="ladder-item">
+                        <p><strong>Level 2:</strong> Prevent disruptions to productivity</p>
+                    </div>
+                    <div class="ladder-item">
+                        <p><strong>Level 3:</strong> Enable organizational performance and growth</p>
+                    </div>
+                    <div class="ladder-item">
+                        <p><strong>Level 4:</strong> Build competitive advantage through technology reliability</p>
+                    </div>
+                    <div class="ladder-item">
+                        <p><strong>Level 5:</strong> Achieve strategic business outcomes with technology as an enabler, not a constraint</p>
+                    </div>
+                </div>
+
+                <div class="ladder-column">
+                    <h4>How Ladder (Specific Solutions)</h4>
+                    <div class="ladder-item">
+                        <p><strong>Implementation 1:</strong> 24/7 help desk with ticket management system</p>
+                    </div>
+                    <div class="ladder-item">
+                        <p><strong>Implementation 2:</strong> Proactive monitoring with AI-powered predictive alerts</p>
+                    </div>
+                    <div class="ladder-item">
+                        <p><strong>Implementation 3:</strong> Automated incident resolution and intelligent self-service</p>
+                    </div>
+                    <div class="ladder-item">
+                        <p><strong>Implementation 4:</strong> Continuous learning system that improves with every interaction</p>
+                    </div>
+                    <div class="ladder-item">
+                        <p><strong>Implementation 5:</strong> Strategic IT partnership with predictive analytics, capacity planning, and continuous optimization</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- WORKSHEET 5: Responses -->
+        <div class="worksheet">
+            <div class="worksheet-header">
+                <h2 class="worksheet-title">Worksheet 5: Connected Strategy Responses</h2>
+                <p class="worksheet-desc">Mapping pain points to Connected Strategy archetypes with required information</p>
+            </div>
+
+            <div class="response-matrix">
+                <div class="response-stage">
+                    <h5>Latent Need → Experience</h5>
+                </div>
+                <div class="response-details">
+                    <div class="response-type">
+                        <strong>🎯 Respond-to-Desire:</strong>
+                        <p>AI chatbots provide instant responses to queries 24/7. Virtual agents handle basic troubleshooting immediately without wait times.</p>
+                        <p><em>Required Info: NLP training data, common issues database, response templates</em></p>
+                    </div>
+                    <div class="response-type">
+                        <strong>📋 Curated Offering:</strong>
+                        <p>Personalized troubleshooting recommendations based on user history, system context, and similar issue patterns.</p>
+                        <p><em>Required Info: User behavior data, resolution success rates, contextual system info</em></p>
+                    </div>
+                    <div class="response-type">
+                        <strong>🎓 Coach Behavior:</strong>
+                        <p>Interactive workflows guide users through self-service resolution with step-by-step AI assistance and validation.</p>
+                        <p><em>Required Info: Task completion rates, user skill levels, workflow success patterns</em></p>
+                    </div>
+                    <div class="response-type">
+                        <strong>⚡ Automatic Execution:</strong>
+                        <p>AI automatically categorizes, prioritizes, and routes tickets. Routine resolutions executed without human intervention.</p>
+                        <p><em>Required Info: Historical ticket data, routing rules, automation playbooks, system integration APIs</em></p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 8px;">
+                <h4 style="margin-bottom: 15px; color: #002A3A;">Cross-Journey Implementation Priority</h4>
+                <p style="font-size: 14px; color: #4a5568; margin-bottom: 10px;"><strong>Phase 1 (Q1-Q2):</strong> Automatic Execution for ticket routing + Respond-to-Desire chatbots for common issues</p>
+                <p style="font-size: 14px; color: #4a5568; margin-bottom: 10px;"><strong>Phase 2 (Q2-Q3):</strong> Curated Offering with personalized recommendations + Coach Behavior for self-service</p>
+                <p style="font-size: 14px; color: #4a5568;"><strong>Phase 3 (Q4+):</strong> Full integration across all archetypes with predictive analytics and continuous learning</p>
+            </div>
+        </div>
+
+        <!-- WORKSHEET 6: Learning -->
+        <div class="worksheet">
+            <div class="worksheet-header">
+                <h2 class="worksheet-title">Worksheet 6: Learning from Repeated Experiences</h2>
+                <p class="worksheet-desc">How the system improves through accumulated customer interactions</p>
+            </div>
+
+            <div class="learning-grid">
+                <div class="learning-stage">
+                    <h5>Experience 1<br>(Months 1-3)</h5>
+                    <div class="learning-category">
+                        <strong>Customization</strong>
+                        <p>Basic AI learns common issues, ticket patterns, and initial user preferences</p>
+                    </div>
+                    <div class="learning-category">
+                        <strong>Optimization</strong>
+                        <p>Routing algorithms improve with initial feedback; chatbot responses refined</p>
+                    </div>
+                    <div class="learning-category">
+                        <strong>New Products</strong>
+                        <p>Identify gaps in knowledge base; create targeted self-service content</p>
+                    </div>
+                    <div class="learning-category">
+                        <strong>Efficiency</strong>
+                        <p>10% reduction in manual categorization time; baseline metrics established</p>
+                    </div>
+                    <div class="learning-category">
+                        <strong>Deeper Needs</strong>
+                        <p>Understand peak demand periods, common failure modes, user frustration points</p>
+                    </div>
+                </div>
+
+                <div class="learning-stage">
+                    <h5>Experience 2<br>(Months 4-6)</h5>
+                    <div class="learning-category">
+                        <strong>Customization</strong>
+                        <p>Personalized recommendations for frequent users; department-specific workflows emerge</p>
+                    </div>
+                    <div class="learning-category">
+                        <strong>Optimization</strong>
+                        <p>Resolution time improves 25%; first-contact resolution increases to 45%</p>
+                    </div>
+                    <div class="learning-category">
+                        <strong>New Products</strong>
+                        <p>Proactive monitoring alerts for predicted failures; preventive maintenance workflows</p>
+                    </div>
+                    <div class="learning-category">
+                        <strong>Efficiency</strong>
+                        <p>20% operator time savings; 40% of routine tickets automated</p>
+                    </div>
+                    <div class="learning-category">
+                        <strong>Deeper Needs</strong>
+                        <p>Recognize need for predictive analytics, not just reactive support</p>
+                    </div>
+                </div>
+
+                <div class="learning-stage">
+                    <h5>Experience 3<br>(Months 7-9)</h5>
+                    <div class="learning-category">
+                        <strong>Customization</strong>
+                        <p>User-specific success patterns identified; adaptive interfaces adjust to skill level</p>
+                    </div>
+                    <div class="learning-category">
+                        <strong>Optimization</strong>
+                        <p>AI predicts issues before user awareness; proactive notifications prevent 30% of tickets</p>
+                    </div>
+                    <div class="learning-category">
+                        <strong>New Products</strong>
+                        <p>Capacity planning service based on usage patterns; optimization recommendations</p>
+                    </div>
+                    <div class="learning-category">
+                        <strong>Efficiency</strong>
+                        <p>30% time savings achieved; resolution speed increased 40%</p>
+                    </div>
+                    <div class="learning-category">
+                        <strong>Deeper Needs</strong>
+                        <p>Shift from problem-solving to performance optimization mindset</p>
+                    </div>
+                </div>
+
+                <div class="learning-stage">
+                    <h5>Experience 4<br>(Months 10-12)</h5>
+                    <div class="learning-category">
+                        <strong>Customization</strong>
+                        <p>Fully personalized support experience; AI knows organizational context and history</p>
+                    </div>
+                    <div class="learning-category">
+                        <strong>Optimization</strong>
+                        <p>50% resolution time reduction achieved; 62% first-contact resolution rate</p>
+                    </div>
+                    <div class="learning-category">
+                        <strong>New Products</strong>
+                        <p>Strategic IT consulting based on data insights; continuous improvement partnership</p>
+                    </div>
+                    <div class="learning-category">
+                        <strong>Efficiency</strong>
+                        <p>35% operator workload reduction; cost savings of 20% realized</p>
+                    </div>
+                    <div class="learning-category">
+                        <strong>Deeper Needs</strong>
+                        <p>Enable strategic business outcomes through technology reliability and innovation</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 30px; padding: 25px; background: linear-gradient(135deg, #00B8C8, #002A3A); border-radius: 12px; color: white;">
+                <h4 style="margin-bottom: 15px; color: #FF6B35;">Compounding Value Over Time</h4>
+                <p style="font-size: 14px; line-height: 1.7;">The system doesn't just maintain performance—it gets exponentially better. Each interaction trains the AI, making predictions more accurate, automations smarter, and personalization deeper. By month 12, the AI prevents problems that users don't even know were coming, optimizes performance proactively, and provides strategic insights for business planning. This creates a sustainable competitive moat: the longer a customer uses the system, the more valuable it becomes, making switching costs prohibitively high.</p>
+            </div>
+    </div>
+
+    <div style="background: white; padding: 40px; margin-top: 60px; text-align: center; border-top: 4px solid #00B8C8;">
+        <div style="font-size: 28px; font-weight: 700; color: #002A3A; margin-bottom: 15px;">TOPdesk</div>
+        <p style="color: #4a5568; margin-bottom: 20px; font-size: 16px;">Connected Strategy Framework • Complete Analytical Worksheets</p>
+        <a href="https://www.heybhuvan.com/strategy" style="display: inline-block; background: #00B8C8; color: white; padding: 14px 35px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 16px;">← Back to Main Portfolio</a>
+        <p style="color: #718096; font-size: 14px; margin-top: 25px;">Strategic Management Project • Wharton Business School • July 2024</p>
+    </div>
+</body>
+</html>

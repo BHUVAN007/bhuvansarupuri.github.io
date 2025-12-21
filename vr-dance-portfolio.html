@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dancing in Virtual Reality | Research Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0A2463;
+            --secondary: #3E92CC;
+            --accent: #FB6542;
+            --accent-warm: #FFBB00;
+            --text: #1A1A2E;
+            --text-light: #4A5568;
+            --background: #FAFBFC;
+            --surface: #FFFFFF;
+            --border: #E2E8F0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text);
+            background: var(--background);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 90vh;
+            background: linear-gradient(135deg, var(--primary) 0%, #1a4d8f 100%);
+            color: white;
+            padding: 120px 20px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(62, 146, 204, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(251, 101, 66, 0.15) 0%, transparent 50%);
+            animation: shift 20s ease-in-out infinite;
+        }
+
+        @keyframes shift {
+            0%, 100% { transform: translate(0, 0); }
+            50% { transform: translate(30px, -20px); }
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-label {
+            font-size: 0.9rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent-warm);
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.2s;
+        }
+
+        .hero-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.4s;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            font-weight: 300;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.6s;
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 50px;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.8s;
+        }
+
+        .hero-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .hero-meta-icon {
+            width: 24px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+        }
+
+        /* Key Stats */
+        .key-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, background 0.3s ease;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards;
+        }
+
+        .stat-card:nth-child(1) { animation-delay: 1s; }
+        .stat-card:nth-child(2) { animation-delay: 1.1s; }
+        .stat-card:nth-child(3) { animation-delay: 1.2s; }
+        .stat-card:nth-child(4) { animation-delay: 1.3s; }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .stat-number {
+            font-family: 'Crimson Pro', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent-warm);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        
+        /* Name Header */
+        .name-header {
+            position: fixed;
+            top: 30px;
+            left: 40px;
+            z-index: 1000;
+            font-family: 'Fraunces', serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark-blue, #1A365D);
+            text-decoration: none;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 0.2s;
+            letter-spacing: 0.5px;
+            background: var(--white, #FFFFFF);
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .name-header .degree {
+            color: var(--cyan, #00CED1);
+            font-weight: 300;
+        }
+
+/* Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 20px;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Sections */
+        section {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            margin-bottom: 60px;
+        }
+
+        .section-label {
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .section-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .section-intro {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 800px;
+        }
+
+        /* Overview Grid */
+        .overview-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            margin-top: 40px;
+        }
+
+        .overview-card {
+            background: var(--surface);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .overview-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .overview-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .overview-card h3 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        /* Motivation Cards */
+        .motivation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .motivation-card {
+            background: var(--surface);
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .motivation-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.12);
+        }
+
+        .motivation-header {
+            padding: 40px 40px 30px;
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .motivation-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+        }
+
+        .motivation-category {
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+
+        .motivation-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .motivation-count {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        .motivation-body {
+            padding: 40px;
+        }
+
+        .motivation-insight {
+            background: var(--background);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border-left: 4px solid var(--accent);
+        }
+
+        .motivation-insight-title {
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .key-findings-list {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .key-findings-list li {
+            padding: 15px 0;
+            padding-left: 30px;
+            position: relative;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .key-findings-list li:last-child {
+            border-bottom: none;
+        }
+
+        .key-findings-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        /* Quote Box */
+        .quote-box {
+            background: var(--surface);
+            padding: 50px;
+            border-radius: 24px;
+            border-left: 6px solid var(--accent);
+            margin: 60px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        .quote-text {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.5rem;
+            font-style: italic;
+            color: var(--primary);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .quote-author {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        /* Findings Section */
+        .findings-container {
+            background: var(--surface);
+            padding: 60px;
+            border-radius: 24px;
+            margin-top: 40px;
+            border: 1px solid var(--border);
+        }
+
+        .finding-item {
+            padding: 30px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .finding-item:last-child {
+            border-bottom: none;
+        }
+
+        .finding-number {
+            font-family: 'Crimson Pro', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+
+        .finding-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .finding-description {
+            color: var(--text-light);
+            line-height: 1.8;
+        }
+
+        /* Methodology */
+        .method-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .method-card {
+            background: var(--surface);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+        }
+
+        .method-card h4 {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .method-stat {
+            font-family: 'Crimson Pro', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin: 20px 0;
+        }
+
+        /* Impact Section */
+        .impact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .impact-card {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 50px;
+            border-radius: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .impact-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            transform: translate(50%, -50%);
+        }
+
+        .impact-card h3 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .impact-card p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            opacity: 0.95;
+            position: relative;
+        }
+
+        /* Team Section */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .team-member {
+            text-align: center;
+        }
+
+        .team-photo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            margin: 0 auto 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            font-weight: 700;
+            border: 4px solid var(--border);
+        }
+
+        .team-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+
+        .team-role {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+            border-radius: 24px;
+            margin: 80px auto;
+            max-width: 1200px;
+        }
+
+        .cta-section h2 {
+            font-family: 'Crimson Pro', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 25px;
+        }
+
+        .cta-section p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0.95;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--primary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text);
+            color: white;
+            padding: 60px 20px 30px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .overview-grid,
+            .impact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .motivation-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding: 80px 20px 60px;
+            }
+
+            section {
+                padding: 60px 20px;
+            }
+
+            .quote-box,
+            .findings-container {
+                padding: 30px;
+            }
+        }
+
+        /* Scroll Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    
+        /* Logo */
+        .logo {
+            position: fixed;
+            top: 30px;
+            left: 40px;
+            z-index: 1000;
+            font-family: 'Fraunces', serif;
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--dark-blue, #1A365D);
+            text-decoration: none;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 0.2s;
+        }
+
+        .logo span {
+            color: var(--cyan, #00CED1);
+        }
+
+        
+        /* Name Header */
+        .name-header {
+            position: fixed;
+            top: 30px;
+            left: 40px;
+            z-index: 1000;
+            font-family: 'Fraunces', serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark-blue, #1A365D);
+            text-decoration: none;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 0.2s;
+            letter-spacing: 0.5px;
+            background: var(--white, #FFFFFF);
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .name-header .degree {
+            color: var(--cyan, #00CED1);
+            font-weight: 300;
+        }
+
+        /* Navigation */
+        .nav-links {
+            position: fixed;
+            top: 30px;
+            right: 40px;
+            z-index: 1000;
+            display: flex;
+            gap: 30px;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 0.4s;
+            background: var(--white, #FFFFFF);
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .nav-links a {
+            color: var(--text-mid, #4A5568);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--cyan, #00CED1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 968px) {
+            .logo,
+            .nav-links {
+                position: static;
+                margin: 20px auto;
+                text-align: center;
+            }
+
+            .nav-links {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+        }
+
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@300;600;900&display=swap" rel="stylesheet">
+</head>
+<body>
+        <!-- Name Header -->
+    <div class="name-header">Bhuvan Sarupuri <span class="degree">Ph.D.</span></div>
+
+    <!-- Navigation -->
+    <nav class="nav-links">
+        <a href="/portfolio">Home</a>
+        <a href="index.html#projects">Projects</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="https://www.linkedin.com/in/bhuvan-sarupuri-ph-d-6448a767/" target="_blank">LinkedIn</a>
+    </nav>
+
+
+    <!-- Hero Section -->
+    <div class="hero">
+        <div class="hero-content">
+            <div class="hero-label">Research Portfolio</div>
+            <h1 class="hero-title">Dancing in Virtual Reality</h1>
+            <p class="hero-subtitle">An inclusive platform for social and physical fitness activities</p>
+            
+            <div class="hero-meta">
+                <div class="hero-meta-item">
+                    <div class="hero-meta-icon">📊</div>
+                    <span>Survey Study</span>
+                </div>
+                <div class="hero-meta-item">
+                    <div class="hero-meta-icon">🎓</div>
+                    <span>Published 2024</span>
+                </div>
+                <div class="hero-meta-item">
+                    <div class="hero-meta-icon">🔬</div>
+                    <span>The Visual Computer</span>
+                </div>
+            </div>
+
+            <div class="key-stats">
+                <div class="stat-card">
+                    <div class="stat-number">292</div>
+                    <div class="stat-label">Survey Participants</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">Motivation Categories</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">79%</div>
+                    <div class="stat-label">Dance for Fun</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">66%</div>
+                    <div class="stat-label">Feel Avatar Ownership</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!-- Name Header -->
+    <div class="name-header">Bhuvan Sarupuri <span class="degree">Ph.D.</span></div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-content">
+            <strong>VR Dance Research</strong>
+            <ul class="nav-links">
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#findings">Key Findings</a></li>
+                <li><a href="#motivations">Motivations</a></li>
+                <li><a href="#impact">Impact</a></li>
+                <li><a href="#team">Team</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Overview Section -->
+    <section id="overview">
+        <div class="section-header fade-in">
+            <div class="section-label">Executive Summary</div>
+            <h2 class="section-title">Understanding VR Dance Users</h2>
+            <p class="section-intro">
+                This comprehensive survey study explores how people use virtual reality for dancing, examining their motivations, experiences, and expectations across a diverse user base.
+            </p>
+        </div>
+
+        <div class="overview-grid">
+            <div class="overview-card fade-in">
+                <div class="overview-icon">🎯</div>
+                <h3>Research Objective</h3>
+                <p>To understand user motivations, experiences, and requirements for using VR as an inclusive platform for dancing as both a social and physical activity.</p>
+            </div>
+
+            <div class="overview-card fade-in">
+                <div class="overview-icon">🔍</div>
+                <h3>Methodology</h3>
+                <p>Online survey conducted May-June 2021 with 292 participants. Data analyzed using OpenAI's GPT-3 model to identify themes and patterns without human bias.</p>
+            </div>
+
+            <div class="overview-card fade-in">
+                <div class="overview-icon">🌍</div>
+                <h3>Demographics</h3>
+                <p>Participants primarily from North America (49%) and Europe/UK (43%), with 79% male respondents using various VR platforms including VRChat, Beat Saber, and AltspaceVR.</p>
+            </div>
+
+            <div class="overview-card fade-in">
+                <div class="overview-icon">💡</div>
+                <h3>Key Insight</h3>
+                <p>Dancing in VR is a fundamentally different experience from real-world dancing, offering unique benefits for physical and mental well-being while addressing social barriers.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Findings -->
+    <section id="findings">
+        <div class="section-header fade-in">
+            <div class="section-label">Research Results</div>
+            <h2 class="section-title">Key Findings</h2>
+        </div>
+
+        <div class="findings-container fade-in">
+            <div class="finding-item">
+                <div class="finding-number">01</div>
+                <h3 class="finding-title">Increased Confidence & Reduced Self-Consciousness</h3>
+                <p class="finding-description">
+                    Many participants reported feeling more confident dancing in VR due to anonymity, reduced judgment, and the ability to customize their appearance through avatars. Several users stated they never danced in real life but found freedom to express themselves in VR.
+                </p>
+            </div>
+
+            <div class="finding-item">
+                <div class="finding-number">02</div>
+                <h3 class="finding-title">Different Fatigue Patterns</h3>
+                <p class="finding-description">
+                    Users experience similar or less physical exhaustion in VR compared to real-world dancing, often due to distraction from the immersive environment. However, heavy headsets contribute to increased physical strain, particularly in longer sessions.
+                </p>
+            </div>
+
+            <div class="finding-item">
+                <div class="finding-number">03</div>
+                <h3 class="finding-title">Higher Engagement & Frequency</h3>
+                <p class="finding-description">
+                    43% of participants don't dance in real life, but 79% use VR for dancing primarily for fun. Users dance more frequently and for longer durations in VR compared to real-world dancing, with 46% dancing several times per week.
+                </p>
+            </div>
+
+            <div class="finding-item">
+                <div class="finding-number">04</div>
+                <h3 class="finding-title">Strong Social Connection</h3>
+                <p class="finding-description">
+                    VR provides meaningful social experiences that users cannot or do not want to experience in real life. The anonymity and safety of VR platforms enables users to form genuine friendships and romantic relationships through dance communities.
+                </p>
+            </div>
+
+            <div class="finding-item">
+                <div class="finding-number">05</div>
+                <h3 class="finding-title">Pandemic Resilience</h3>
+                <p class="finding-description">
+                    COVID-19 restrictions significantly increased VR dance adoption, with users citing it as their only option for social interaction, fitness, and entertainment while confined to their homes. VR proved to be an effective substitute for real-life events.
+                </p>
+            </div>
+        </div>
+
+        <div class="quote-box fade-in">
+            <p class="quote-text">
+                "I never danced until I had access to VR, and now it's something I love and look forward to doing."
+            </p>
+            <p class="quote-author">— Survey Participant P181 (Fitness Category)</p>
+        </div>
+    </section>
+
+    <!-- Motivations Section -->
+    <section id="motivations">
+        <div class="section-header fade-in">
+            <div class="section-label">User Insights</div>
+            <h2 class="section-title">Six Motivation Categories</h2>
+            <p class="section-intro">
+                Using AI-powered analysis, we identified six distinct user motivation profiles for dancing in VR, each with unique needs and expectations.
+            </p>
+        </div>
+
+        <div class="motivation-grid">
+            <div class="motivation-card fade-in">
+                <div class="motivation-header">
+                    <div class="motivation-category">Category 01</div>
+                    <h3 class="motivation-title">Fun</h3>
+                    <p class="motivation-count">139 participants (48%)</p>
+                </div>
+                <div class="motivation-body">
+                    <div class="motivation-insight">
+                        <div class="motivation-insight-title">Primary Driver</div>
+                        <p>Entertainment and enjoyment through dancing to music, attending virtual events, and exploring VR worlds.</p>
+                    </div>
+                    <ul class="key-findings-list">
+                        <li>Feel more confident due to anonymity</li>
+                        <li>Can express themselves without judgment</li>
+                        <li>Enjoy customizing avatars and identities</li>
+                        <li>Appreciate the freedom of movement</li>
+                        <li>Value social connections made through dance</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="motivation-card fade-in">
+                <div class="motivation-header">
+                    <div class="motivation-category">Category 02</div>
+                    <h3 class="motivation-title">Fitness</h3>
+                    <p class="motivation-count">61 participants (21%)</p>
+                </div>
+                <div class="motivation-body">
+                    <div class="motivation-insight">
+                        <div class="motivation-insight-title">Primary Driver</div>
+                        <p>Exercise and physical health improvement while having fun in an immersive environment.</p>
+                    </div>
+                    <ul class="key-findings-list">
+                        <li>Use VR as a fun way to lose weight and stay fit</li>
+                        <li>Distraction from physical exertion increases endurance</li>
+                        <li>Convenient home-based workout solution</li>
+                        <li>Motivated by gamification and challenges</li>
+                        <li>Perspiration from headset increases physical strain</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="motivation-card fade-in">
+                <div class="motivation-header">
+                    <div class="motivation-category">Category 03</div>
+                    <h3 class="motivation-title">Social Activity</h3>
+                    <p class="motivation-count">45 participants (15%)</p>
+                </div>
+                <div class="motivation-body">
+                    <div class="motivation-insight">
+                        <div class="motivation-insight-title">Primary Driver</div>
+                        <p>Making friends, socializing, and connecting with people who share similar interests globally.</p>
+                    </div>
+                    <ul class="key-findings-list">
+                        <li>Anonymity enables different first impressions</li>
+                        <li>Reduced social anxiety in virtual environments</li>
+                        <li>Can blame tracking for poor performance</li>
+                        <li>Form genuine friendships through dance communities</li>
+                        <li>Experience stronger social connections than real life</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="motivation-card fade-in">
+                <div class="motivation-header">
+                    <div class="motivation-category">Category 04</div>
+                    <h3 class="motivation-title">Pandemic</h3>
+                    <p class="motivation-count">19 participants (7%)</p>
+                </div>
+                <div class="motivation-body">
+                    <div class="motivation-insight">
+                        <div class="motivation-insight-title">Primary Driver</div>
+                        <p>Only available option for social interaction and entertainment during COVID-19 lockdowns.</p>
+                    </div>
+                    <ul class="key-findings-list">
+                        <li>VR as substitute for real-life events</li>
+                        <li>Club feeling despite pandemic restrictions</li>
+                        <li>Easier to dance for long periods at home</li>
+                        <li>Connect with worldwide communities safely</li>
+                        <li>Maintained mental health during isolation</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="motivation-card fade-in">
+                <div class="motivation-header">
+                    <div class="motivation-category">Category 05</div>
+                    <h3 class="motivation-title">Escape</h3>
+                    <p class="motivation-count">17 participants (6%)</p>
+                </div>
+                <div class="motivation-body">
+                    <div class="motivation-insight">
+                        <div class="motivation-insight-title">Primary Driver</div>
+                        <p>Escape from real-world constraints like chronic pain, autism, social anxiety, or body image issues.</p>
+                    </div>
+                    <ul class="key-findings-list">
+                        <li>Disassociate from physical body and pain</li>
+                        <li>Freedom from mental self-sabotage</li>
+                        <li>Gender expression and identity exploration</li>
+                        <li>Idealized virtual body without insecurities</li>
+                        <li>Safe space for autistic individuals</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="motivation-card fade-in">
+                <div class="motivation-header">
+                    <div class="motivation-category">Category 06</div>
+                    <h3 class="motivation-title">Professional</h3>
+                    <p class="motivation-count">11 participants (4%)</p>
+                </div>
+                <div class="motivation-body">
+                    <div class="motivation-insight">
+                        <div class="motivation-insight-title">Primary Driver</div>
+                        <p>Learning dance, teaching dance, or performing professionally in virtual clubs and dance battles.</p>
+                    </div>
+                    <ul class="key-findings-list">
+                        <li>All feel more confident in VR than real life</li>
+                        <li>VR as confidence booster for performances</li>
+                        <li>Overcome stage fright through practice</li>
+                        <li>Safe environment to develop skills</li>
+                        <li>Access to supportive dance communities</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Section -->
+    <section id="impact">
+        <div class="section-header fade-in">
+            <div class="section-label">Real-World Applications</div>
+            <h2 class="section-title">Impact & Implications</h2>
+        </div>
+
+        <div class="impact-grid">
+            <div class="impact-card fade-in">
+                <h3>Mental Well-Being</h3>
+                <p>
+                    VR dance platforms provide significant mental health benefits including reduced social anxiety, increased confidence, and emotional support. Users report feeling energized (164), engaged (58), and inspired (31) after dance sessions.
+                </p>
+            </div>
+
+            <div class="impact-card fade-in">
+                <h3>Physical Health</h3>
+                <p>
+                    Dancing in VR offers an engaging alternative to traditional exercise, motivating users who might not otherwise be physically active. The immersive distraction helps users exercise for longer durations with less perceived fatigue.
+                </p>
+            </div>
+
+            <div class="impact-card fade-in">
+                <h3>Social Inclusion</h3>
+                <p>
+                    VR removes physical and social barriers that prevent many people from dancing in real life. It creates inclusive spaces for individuals with disabilities, body image concerns, autism, chronic pain, and social anxiety.
+                </p>
+            </div>
+
+            <div class="impact-card fade-in">
+                <h3>Future Development</h3>
+                <p>
+                    Over 30% of participants want better tracking capabilities, lighter hardware, safer community spaces, and more diverse content. Future systems should focus on full-body tracking, haptic feedback, and larger play spaces.
+                </p>
+            </div>
+        </div>
+
+        <div class="quote-box fade-in">
+            <p class="quote-text">
+                "VR allows me to meet friends that also love dancing, and it allows me to go to digital music venues and put those dancing skills to use. It's helping me to be more fit, and I just enjoy doing it."
+            </p>
+            <p class="quote-author">— Survey Participant P261 (Social Activity Category)</p>
+        </div>
+    </section>
+
+    <!-- Methodology -->
+    <section style="background: var(--surface); border-radius: 24px; padding: 80px 60px;">
+        <div class="section-header fade-in">
+            <div class="section-label">Research Design</div>
+            <h2 class="section-title">Methodology</h2>
+        </div>
+
+        <div class="method-cards">
+            <div class="method-card fade-in">
+                <h4>Survey Period</h4>
+                <p class="method-stat">May-June 2021</p>
+                <p>Conducted online with recruitment through Reddit, Facebook, and Twitter VR communities.</p>
+            </div>
+
+            <div class="method-card fade-in">
+                <h4>Sample Size</h4>
+                <p class="method-stat">292</p>
+                <p>Valid participants with VR dance experience after removing 15 incomplete responses.</p>
+            </div>
+
+            <div class="method-card fade-in">
+                <h4>Analysis Method</h4>
+                <p class="method-stat">AI-Powered</p>
+                <p>OpenAI GPT-3 used to categorize responses and identify themes without human bias.</p>
+            </div>
+
+            <div class="method-card fade-in">
+                <h4>Framework</h4>
+                <p class="method-stat">UGT</p>
+                <p>Uses and Gratifications Theory applied to understand user motivations and expectations.</p>
+            </div>
+        </div>
+
+        <div style="margin-top: 50px; padding: 40px; background: var(--background); border-radius: 16px;">
+            <h4 style="margin-bottom: 20px; color: var(--primary);">Research Questions Addressed</h4>
+            <ul class="key-findings-list">
+                <li>What are the motivations for using VR for dancing?</li>
+                <li>What features do users like and dislike in current VR dancing platforms?</li>
+                <li>What are the guidelines for designing and developing user-centered dance VR applications?</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team">
+        <div class="section-header fade-in">
+            <div class="section-label">Research Team</div>
+            <h2 class="section-title">About the Authors</h2>
+        </div>
+
+        <div class="team-grid">
+            <div class="team-member fade-in">
+                <div class="team-photo">BS</div>
+                <h3 class="team-name">Bhuvaneswari Sarupuri</h3>
+                <p class="team-role">Postdoctoral Researcher<br>INRIA, University of Rennes 2</p>
+            </div>
+
+            <div class="team-member fade-in">
+                <div class="team-photo">RK</div>
+                <h3 class="team-name">Richard Kulpa</h3>
+                <p class="team-role">Full Professor<br>M2S Lab, INRIA MimeTIC</p>
+            </div>
+
+            <div class="team-member fade-in">
+                <div class="team-photo">AA</div>
+                <h3 class="team-name">Andreas Aristidou</h3>
+                <p class="team-role">Assistant Professor<br>University of Cyprus</p>
+            </div>
+
+            <div class="team-member fade-in">
+                <div class="team-photo">FM</div>
+                <h3 class="team-name">Franck Multon</h3>
+                <p class="team-role">Professor<br>University Rennes 2, INRIA</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <div class="cta-section fade-in">
+        <h2>Access the Full Research</h2>
+        <p>Published in The Visual Computer (2024), this comprehensive study is available for researchers, developers, and anyone interested in VR dance applications.</p>
+        <div class="cta-buttons">
+            <a href="https://doi.org/10.1007/s00371-023-03068-6" class="btn btn-primary">Read Full Paper</a>
+            <a href="https://team.inria.fr/mimetic/files/2022/03/Dancing-in-Virtual-Reality.zip" class="btn btn-secondary">Download Dataset</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="https://doi.org/10.1007/s00371-023-03068-6">Paper DOI</a>
+                <a href="https://team.inria.fr/mimetic/">INRIA MimeTIC</a>
+                <a href="#">Contact</a>
+                <a href="#">Cite This Work</a>
+            </div>
+            <p style="margin-top: 30px; opacity: 0.7;">
+                © 2024 Sarupuri et al. | Published in The Visual Computer<br>
+                <small>Dancing in virtual reality as an inclusive platform for social and physical fitness activities</small>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll-triggered animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
