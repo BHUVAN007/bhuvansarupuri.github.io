@@ -7,15 +7,30 @@
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #0A2463;
-            --secondary: #3E92CC;
-            --accent: #FB6542;
-            --accent-warm: #FFBB00;
-            --text: #1A1A2E;
-            --text-light: #4A5568;
-            --background: #FAFBFC;
-            --surface: #FFFFFF;
-            --border: #E2E8F0;
+            --primary: #0D47A1;
+            --secondary: #0288D1;
+            --cyan: #00E5FF;
+            --mint: #64FFDA;
+            --accent: #FF5370;
+            --accent-warm: #FFB300;
+            
+            /* Dark theme colors */
+            --bg-primary: #0A0E1A;
+            --bg-secondary: #121827;
+            --bg-tertiary: #1A2332;
+            --bg-card: rgba(26, 35, 50, 0.8);
+            
+            --text: #E8F0F7;
+            --text-light: #A8B2C1;
+            --text-muted: #6B7788;
+            
+            --border: rgba(0, 229, 255, 0.1);
+            --border-hover: rgba(0, 229, 255, 0.3);
+            
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.5);
+            --shadow-glow: 0 0 20px rgba(0, 229, 255, 0.3);
         }
 
         * {
@@ -27,19 +42,24 @@
         body {
             font-family: 'DM Sans', sans-serif;
             color: var(--text);
-            background: var(--background);
+            background: var(--bg-primary);
             line-height: 1.6;
             overflow-x: hidden;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(0, 229, 255, 0.05) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(2, 136, 209, 0.05) 0px, transparent 50%);
+            background-attachment: fixed;
         }
 
         /* Hero Section */
         .hero {
-            min-height: 90vh;
-            background: linear-gradient(135deg, var(--primary) 0%, #1a4d8f 100%);
+            min-height: 80vh;
+            background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--primary) 100%);
             color: white;
-            padding: 120px 20px 80px;
+            padding: 100px 20px 80px;
             position: relative;
             overflow: hidden;
+            border-bottom: 1px solid var(--border);
         }
 
         .hero::before {
@@ -50,9 +70,10 @@
             right: 0;
             bottom: 0;
             background: 
-                radial-gradient(circle at 20% 50%, rgba(62, 146, 204, 0.2) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(251, 101, 66, 0.15) 0%, transparent 50%);
+                radial-gradient(circle at 20% 50%, rgba(0, 229, 255, 0.15) 0%, transparent 60%),
+                radial-gradient(circle at 80% 80%, rgba(255, 83, 112, 0.1) 0%, transparent 60%);
             animation: shift 20s ease-in-out infinite;
+            filter: blur(60px);
         }
 
         @keyframes shift {
@@ -71,10 +92,11 @@
             font-size: 0.9rem;
             letter-spacing: 3px;
             text-transform: uppercase;
-            color: var(--accent-warm);
+            color: var(--cyan);
             margin-bottom: 20px;
             opacity: 0;
             animation: fadeUp 0.8s ease forwards 0.2s;
+            text-shadow: 0 0 20px rgba(0, 229, 255, 0.5);
         }
 
         .hero-title {
@@ -142,14 +164,16 @@
         }
 
         .stat-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             padding: 30px;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: transform 0.3s ease, background 0.3s ease;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
             opacity: 0;
             animation: fadeUp 0.8s ease forwards;
+            box-shadow: var(--shadow-md);
         }
 
         .stat-card:nth-child(1) { animation-delay: 1s; }
@@ -158,15 +182,20 @@
         .stat-card:nth-child(4) { animation-delay: 1.3s; }
 
         .stat-card:hover {
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-8px);
+            background: rgba(26, 35, 50, 0.95);
+            border-color: var(--border-hover);
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
         }
 
         .stat-number {
             font-family: 'Crimson Pro', serif;
             font-size: 3rem;
             font-weight: 700;
-            color: var(--accent-warm);
+            background: linear-gradient(135deg, var(--cyan), var(--mint));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 10px;
         }
 
@@ -181,23 +210,32 @@
             position: fixed;
             top: 30px;
             left: 40px;
-            z-index: 1000;
+            z-index: 50;
             font-family: 'Fraunces', serif;
             font-size: 18px;
             font-weight: 600;
-            color: var(--dark-blue, #1A365D);
+            color: var(--text);
             text-decoration: none;
             opacity: 0;
             animation: fadeIn 1s ease forwards 0.2s;
             letter-spacing: 0.5px;
-            background: var(--white, #FFFFFF);
-            padding: 12px 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 12px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+        }
+
+        .name-header:hover {
+            border-color: var(--border-hover);
+            box-shadow: var(--shadow-glow);
         }
 
         .name-header .degree {
-            color: var(--cyan, #00CED1);
+            color: var(--cyan);
             font-weight: 300;
         }
 
@@ -205,12 +243,13 @@
         nav {
             position: sticky;
             top: 0;
-            background: var(--surface);
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border);
             padding: 20px;
-            z-index: 100;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+            z-index: 200;
+            box-shadow: var(--shadow-md);
         }
 
         .nav-content {
@@ -228,7 +267,7 @@
         }
 
         .nav-links a {
-            color: var(--text);
+            color: var(--text-light);
             text-decoration: none;
             font-weight: 500;
             font-size: 0.95rem;
@@ -243,12 +282,12 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: var(--accent);
+            background: linear-gradient(90deg, var(--cyan), var(--mint));
             transition: width 0.3s ease;
         }
 
         .nav-links a:hover {
-            color: var(--accent);
+            color: var(--cyan);
         }
 
         .nav-links a:hover::after {
@@ -257,13 +296,13 @@
 
         /* Sections */
         section {
-            padding: 100px 20px;
+            padding: 60px 20px;
             max-width: 1200px;
             margin: 0 auto;
         }
 
         .section-header {
-            margin-bottom: 60px;
+            margin-bottom: 40px;
         }
 
         .section-label {
@@ -279,7 +318,7 @@
             font-family: 'Crimson Pro', serif;
             font-size: clamp(2rem, 4vw, 3.5rem);
             font-weight: 700;
-            color: var(--primary);
+            color: var(--text);
             margin-bottom: 20px;
         }
 
@@ -293,65 +332,74 @@
         .overview-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            margin-top: 40px;
+            gap: 30px;
+            margin-top: 30px;
         }
 
         .overview-card {
-            background: var(--surface);
-            padding: 40px;
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 30px;
             border-radius: 20px;
             border: 1px solid var(--border);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
         }
 
         .overview-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
+            border-color: var(--border-hover);
         }
 
         .overview-icon {
             width: 60px;
             height: 60px;
-            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            background: linear-gradient(135deg, var(--cyan), var(--secondary));
             border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 28px;
             margin-bottom: 20px;
+            box-shadow: 0 4px 20px rgba(0, 229, 255, 0.3);
         }
 
         .overview-card h3 {
             font-family: 'Crimson Pro', serif;
             font-size: 1.8rem;
             margin-bottom: 15px;
-            color: var(--primary);
+            color: var(--text);
         }
 
         /* Motivation Cards */
         .motivation-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 40px;
-            margin-top: 40px;
+            gap: 25px;
+            margin-top: 30px;
         }
 
         .motivation-card {
-            background: var(--surface);
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-radius: 24px;
             overflow: hidden;
             border: 1px solid var(--border);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
         }
 
         .motivation-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.12);
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
+            border-color: var(--border-hover);
         }
 
         .motivation-header {
-            padding: 40px 40px 30px;
+            padding: 30px 30px 25px;
             background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
             color: white;
             position: relative;
@@ -389,21 +437,21 @@
         }
 
         .motivation-body {
-            padding: 40px;
+            padding: 30px;
         }
 
         .motivation-insight {
-            background: var(--background);
+            background: var(--bg-secondary);
             padding: 20px;
             border-radius: 12px;
             margin-bottom: 25px;
-            border-left: 4px solid var(--accent);
+            border-left: 4px solid var(--cyan);
         }
 
         .motivation-insight-title {
             font-weight: 700;
             margin-bottom: 10px;
-            color: var(--primary);
+            color: var(--cyan);
         }
 
         .key-findings-list {
@@ -432,19 +480,22 @@
 
         /* Quote Box */
         .quote-box {
-            background: var(--surface);
-            padding: 50px;
-            border-radius: 24px;
-            border-left: 6px solid var(--accent);
-            margin: 60px 0;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 35px;
+            border-radius: 20px;
+            border-left: 6px solid var(--cyan);
+            margin: 40px 0;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border);
         }
 
         .quote-text {
             font-family: 'Crimson Pro', serif;
             font-size: 1.5rem;
             font-style: italic;
-            color: var(--primary);
+            color: var(--text);
             line-height: 1.6;
             margin-bottom: 20px;
         }
@@ -457,66 +508,116 @@
 
         /* Findings Section */
         .findings-container {
-            background: var(--surface);
-            padding: 60px;
-            border-radius: 24px;
-            margin-top: 40px;
-            border: 1px solid var(--border);
+            max-width: 900px;
+            margin: 30px auto 0;
         }
 
         .finding-item {
-            padding: 30px 0;
+            display: flex;
+            gap: 25px;
+            padding: 25px 0;
             border-bottom: 1px solid var(--border);
+            transition: background 0.2s ease;
         }
 
         .finding-item:last-child {
             border-bottom: none;
         }
 
+        .finding-item:hover {
+            background: rgba(0, 229, 255, 0.05);
+            margin: 0 -20px;
+            padding: 25px 20px;
+            border-radius: 12px;
+        }
+
         .finding-number {
             font-family: 'Crimson Pro', serif;
-            font-size: 3rem;
+            font-size: 2rem;
             font-weight: 700;
-            color: var(--accent);
-            margin-bottom: 15px;
+            color: var(--cyan);
+            flex-shrink: 0;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.15), rgba(100, 255, 218, 0.1));
+            border-radius: 12px;
+            line-height: 1;
+            border: 1px solid var(--border);
+            text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+        }
+
+        .finding-content {
+            flex: 1;
+            min-width: 0;
         }
 
         .finding-title {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-weight: 700;
-            margin-bottom: 15px;
-            color: var(--primary);
+            margin-bottom: 8px;
+            color: var(--text);
+            line-height: 1.4;
         }
 
         .finding-description {
             color: var(--text-light);
-            line-height: 1.8;
+            line-height: 1.6;
+            font-size: 0.95rem;
         }
 
         /* Methodology */
         .method-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
         }
 
         .method-card {
-            background: var(--surface);
-            padding: 40px;
-            border-radius: 20px;
+            background: var(--bg-secondary);
+            padding: 20px;
+            border-radius: 12px;
             border: 1px solid var(--border);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .method-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--border-hover);
         }
 
         .method-card h4 {
-            font-size: 1.3rem;
-            color: var(--primary);
-            margin-bottom: 15px;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            font-weight: 600;
         }
 
         .method-stat {
             font-family: 'Crimson Pro', serif;
-            font-size: 2.5rem;
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--cyan), var(--mint));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+            display: block;
+            line-height: 1;
+        }
+
+        .method-card p:not(.method-stat) {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
             font-weight: 700;
             color: var(--accent);
             margin: 20px 0;
@@ -524,37 +625,61 @@
 
         /* Impact Section */
         .impact-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            margin-top: 40px;
+            max-width: 900px;
+            margin: 30px auto 0;
         }
 
         .impact-card {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            color: white;
-            padding: 50px;
-            border-radius: 24px;
-            position: relative;
-            overflow: hidden;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            padding: 25px;
+            border-radius: 20px;
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
         }
 
-        .impact-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
-            transform: translate(50%, -50%);
+        .impact-card:hover {
+            background: rgba(26, 35, 50, 0.95);
+            border-color: var(--border-hover);
+            transform: translateX(8px);
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
+        }
+
+        .impact-icon {
+            font-size: 2.5rem;
+            flex-shrink: 0;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(62, 146, 204, 0.2);
+        }
+
+        .impact-content {
+            flex: 1;
         }
 
         .impact-card h3 {
-            font-family: 'Crimson Pro', serif;
-            font-size: 2rem;
-            margin-bottom: 20px;
-            position: relative;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        .impact-card p {
+            color: var(--text-light);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
         }
 
         .impact-card p {
@@ -595,7 +720,7 @@
             font-size: 1.3rem;
             font-weight: 700;
             margin-bottom: 8px;
-            color: var(--primary);
+            color: var(--text);
         }
 
         .team-role {
@@ -612,6 +737,21 @@
             border-radius: 24px;
             margin: 80px auto;
             max-width: 1200px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-lg), 0 0 60px rgba(0, 229, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(0, 229, 255, 0.1) 0%, transparent 60%);
+            pointer-events: none;
         }
 
         .cta-section h2 {
@@ -644,13 +784,15 @@
         }
 
         .btn-primary {
-            background: white;
-            color: var(--primary);
+            background: linear-gradient(135deg, var(--cyan), var(--mint));
+            color: var(--bg-primary);
+            font-weight: 700;
+            box-shadow: 0 4px 20px rgba(0, 229, 255, 0.4);
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 229, 255, 0.6);
         }
 
         .btn-secondary {
@@ -662,14 +804,16 @@
         .btn-secondary:hover {
             background: white;
             color: var(--primary);
+            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.3);
         }
 
         /* Footer */
         footer {
-            background: var(--text);
-            color: white;
+            background: var(--bg-primary);
+            color: var(--text-light);
             padding: 60px 20px 30px;
             text-align: center;
+            border-top: 1px solid var(--border);
         }
 
         .footer-content {
@@ -741,7 +885,7 @@
             position: fixed;
             top: 30px;
             left: 40px;
-            z-index: 1000;
+            z-index: 50;
             font-family: 'Fraunces', serif;
             font-size: 28px;
             font-weight: 900;
@@ -761,7 +905,7 @@
             position: fixed;
             top: 30px;
             left: 40px;
-            z-index: 1000;
+            z-index: 50;
             font-family: 'Fraunces', serif;
             font-size: 18px;
             font-weight: 600;
@@ -786,7 +930,7 @@
             position: fixed;
             top: 30px;
             right: 40px;
-            z-index: 1000;
+            z-index: 200;
             display: flex;
             gap: 30px;
             opacity: 0;
@@ -891,20 +1035,6 @@
         <!-- Name Header -->
     <div class="name-header">Bhuvan Sarupuri <span class="degree">Ph.D.</span></div>
 
-    <!-- Navigation -->
-    <nav>
-        <div class="nav-content">
-            <strong>VR Dance Research</strong>
-            <ul class="nav-links">
-                <li><a href="#overview">Overview</a></li>
-                <li><a href="#findings">Key Findings</a></li>
-                <li><a href="#motivations">Motivations</a></li>
-                <li><a href="#impact">Impact</a></li>
-                <li><a href="#team">Team</a></li>
-            </ul>
-        </div>
-    </nav>
-
     <!-- Overview Section -->
     <section id="overview">
         <div class="section-header fade-in">
@@ -952,42 +1082,52 @@
         <div class="findings-container fade-in">
             <div class="finding-item">
                 <div class="finding-number">01</div>
-                <h3 class="finding-title">Increased Confidence & Reduced Self-Consciousness</h3>
-                <p class="finding-description">
-                    Many participants reported feeling more confident dancing in VR due to anonymity, reduced judgment, and the ability to customize their appearance through avatars. Several users stated they never danced in real life but found freedom to express themselves in VR.
-                </p>
+                <div class="finding-content">
+                    <h3 class="finding-title">Increased Confidence & Reduced Self-Consciousness</h3>
+                    <p class="finding-description">
+                        Many participants reported feeling more confident dancing in VR due to anonymity, reduced judgment, and the ability to customize their appearance through avatars. Several users stated they never danced in real life but found freedom to express themselves in VR.
+                    </p>
+                </div>
             </div>
 
             <div class="finding-item">
                 <div class="finding-number">02</div>
-                <h3 class="finding-title">Different Fatigue Patterns</h3>
-                <p class="finding-description">
-                    Users experience similar or less physical exhaustion in VR compared to real-world dancing, often due to distraction from the immersive environment. However, heavy headsets contribute to increased physical strain, particularly in longer sessions.
-                </p>
+                <div class="finding-content">
+                    <h3 class="finding-title">Different Fatigue Patterns</h3>
+                    <p class="finding-description">
+                        Users experience similar or less physical exhaustion in VR compared to real-world dancing, often due to distraction from the immersive environment. However, heavy headsets contribute to increased physical strain, particularly in longer sessions.
+                    </p>
+                </div>
             </div>
 
             <div class="finding-item">
                 <div class="finding-number">03</div>
-                <h3 class="finding-title">Higher Engagement & Frequency</h3>
-                <p class="finding-description">
-                    43% of participants don't dance in real life, but 79% use VR for dancing primarily for fun. Users dance more frequently and for longer durations in VR compared to real-world dancing, with 46% dancing several times per week.
-                </p>
+                <div class="finding-content">
+                    <h3 class="finding-title">Higher Engagement & Frequency</h3>
+                    <p class="finding-description">
+                        43% of participants don't dance in real life, but 79% use VR for dancing primarily for fun. Users dance more frequently and for longer durations in VR compared to real-world dancing, with 46% dancing several times per week.
+                    </p>
+                </div>
             </div>
 
             <div class="finding-item">
                 <div class="finding-number">04</div>
-                <h3 class="finding-title">Strong Social Connection</h3>
-                <p class="finding-description">
-                    VR provides meaningful social experiences that users cannot or do not want to experience in real life. The anonymity and safety of VR platforms enables users to form genuine friendships and romantic relationships through dance communities.
-                </p>
+                <div class="finding-content">
+                    <h3 class="finding-title">Strong Social Connection</h3>
+                    <p class="finding-description">
+                        VR provides meaningful social experiences that users cannot or do not want to experience in real life. The anonymity and safety of VR platforms enables users to form genuine friendships and romantic relationships through dance communities.
+                    </p>
+                </div>
             </div>
 
             <div class="finding-item">
                 <div class="finding-number">05</div>
-                <h3 class="finding-title">Pandemic Resilience</h3>
-                <p class="finding-description">
-                    COVID-19 restrictions significantly increased VR dance adoption, with users citing it as their only option for social interaction, fitness, and entertainment while confined to their homes. VR proved to be an effective substitute for real-life events.
-                </p>
+                <div class="finding-content">
+                    <h3 class="finding-title">Pandemic Resilience</h3>
+                    <p class="finding-description">
+                        COVID-19 restrictions significantly increased VR dance adoption, with users citing it as their only option for social interaction, fitness, and entertainment while confined to their homes. VR proved to be an effective substitute for real-life events.
+                    </p>
+                </div>
             </div>
         </div>
 
@@ -1147,31 +1287,43 @@
 
         <div class="impact-grid">
             <div class="impact-card fade-in">
-                <h3>Mental Well-Being</h3>
-                <p>
-                    VR dance platforms provide significant mental health benefits including reduced social anxiety, increased confidence, and emotional support. Users report feeling energized (164), engaged (58), and inspired (31) after dance sessions.
-                </p>
+                <div class="impact-icon">🧠</div>
+                <div class="impact-content">
+                    <h3>Mental Well-Being</h3>
+                    <p>
+                        VR dance platforms provide significant mental health benefits including reduced social anxiety, increased confidence, and emotional support. Users report feeling energized (164), engaged (58), and inspired (31) after dance sessions.
+                    </p>
+                </div>
             </div>
 
             <div class="impact-card fade-in">
-                <h3>Physical Health</h3>
-                <p>
-                    Dancing in VR offers an engaging alternative to traditional exercise, motivating users who might not otherwise be physically active. The immersive distraction helps users exercise for longer durations with less perceived fatigue.
-                </p>
+                <div class="impact-icon">💪</div>
+                <div class="impact-content">
+                    <h3>Physical Health</h3>
+                    <p>
+                        Dancing in VR offers an engaging alternative to traditional exercise, motivating users who might not otherwise be physically active. The immersive distraction helps users exercise for longer durations with less perceived fatigue.
+                    </p>
+                </div>
             </div>
 
             <div class="impact-card fade-in">
-                <h3>Social Inclusion</h3>
-                <p>
-                    VR removes physical and social barriers that prevent many people from dancing in real life. It creates inclusive spaces for individuals with disabilities, body image concerns, autism, chronic pain, and social anxiety.
-                </p>
+                <div class="impact-icon">🤝</div>
+                <div class="impact-content">
+                    <h3>Social Inclusion</h3>
+                    <p>
+                        VR removes physical and social barriers that prevent many people from dancing in real life. It creates inclusive spaces for individuals with disabilities, body image concerns, autism, chronic pain, and social anxiety.
+                    </p>
+                </div>
             </div>
 
             <div class="impact-card fade-in">
-                <h3>Future Development</h3>
-                <p>
-                    Over 30% of participants want better tracking capabilities, lighter hardware, safer community spaces, and more diverse content. Future systems should focus on full-body tracking, haptic feedback, and larger play spaces.
-                </p>
+                <div class="impact-icon">🚀</div>
+                <div class="impact-content">
+                    <h3>Future Development</h3>
+                    <p>
+                        Over 30% of participants want better tracking capabilities, lighter hardware, safer community spaces, and more diverse content. Future systems should focus on full-body tracking, haptic feedback, and larger play spaces.
+                    </p>
+                </div>
             </div>
         </div>
 
@@ -1184,7 +1336,7 @@
     </section>
 
     <!-- Methodology -->
-    <section style="background: var(--surface); border-radius: 24px; padding: 80px 60px;">
+    <section style="background: var(--bg-card); backdrop-filter: blur(12px); border: 1px solid var(--border); border-radius: 20px; padding: 40px 30px; box-shadow: var(--shadow-md);">
         <div class="section-header fade-in">
             <div class="section-label">Research Design</div>
             <h2 class="section-title">Methodology</h2>
@@ -1216,8 +1368,8 @@
             </div>
         </div>
 
-        <div style="margin-top: 50px; padding: 40px; background: var(--background); border-radius: 16px;">
-            <h4 style="margin-bottom: 20px; color: var(--primary);">Research Questions Addressed</h4>
+        <div style="margin-top: 35px; padding: 25px 30px; background: var(--bg-secondary); border-radius: 12px; border-left: 4px solid var(--cyan); border: 1px solid var(--border);">
+            <h4 style="margin-bottom: 15px; color: var(--cyan); font-size: 1.1rem;">Research Questions</h4>
             <ul class="key-findings-list">
                 <li>What are the motivations for using VR for dancing?</li>
                 <li>What features do users like and dislike in current VR dancing platforms?</li>

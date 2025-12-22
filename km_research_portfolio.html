@@ -14,14 +14,14 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            color: #333;
-            background: #f5f5f5;
+            color: #e0e0e0;
+            background: #1a1a1a;
         }
         
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            background: white;
+            background: #242424;
         }
         
         .hero {
@@ -55,6 +55,7 @@
         
         .content {
             padding: 4rem 2rem;
+            background: #242424;
         }
         
         .section {
@@ -77,11 +78,12 @@
         }
         
         .overview-card {
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            background: linear-gradient(135deg, #2a2a2a 0%, #303030 100%);
             padding: 2rem;
             border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
             transition: transform 0.3s ease;
+            border: 1px solid #3a3a3a;
         }
         
         .overview-card:hover {
@@ -93,17 +95,26 @@
             margin-bottom: 1rem;
         }
         
+        .overview-card p {
+            color: #e0e0e0;
+        }
+        
         .problem-statement {
-            background: #fff3e0;
+            background: #2d2520;
             padding: 2rem;
             border-left: 5px solid #ff6b35;
             margin: 2rem 0;
             border-radius: 5px;
+            border: 1px solid #3a3a3a;
         }
         
         .problem-statement h3 {
             color: #ff6b35;
             margin-bottom: 1rem;
+        }
+        
+        .problem-statement p {
+            color: #e0e0e0;
         }
         
         .stats-container {
@@ -140,17 +151,22 @@
         }
         
         .method-card {
-            background: white;
+            background: #2a2a2a;
             padding: 2rem;
             border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
             border-top: 4px solid #4ecdc4;
+            border: 1px solid #3a3a3a;
         }
         
         .method-card h4 {
             color: #ff6b35;
             margin-bottom: 1rem;
             font-size: 1.3rem;
+        }
+        
+        .method-card p {
+            color: #e0e0e0;
         }
         
         .image-container {
@@ -174,9 +190,11 @@
         .insights-list li {
             padding: 1.5rem;
             margin-bottom: 1rem;
-            background: #f8f9fa;
+            background: #2a2a2a;
             border-left: 5px solid #4ecdc4;
             border-radius: 5px;
+            border: 1px solid #3a3a3a;
+            color: #e0e0e0;
         }
         
         .insights-list li strong {
@@ -186,34 +204,45 @@
         .results-highlight {
             background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
             color: white;
-            padding: 3rem;
+            padding: 2rem;
             border-radius: 10px;
             text-align: center;
             margin: 2rem 0;
         }
         
+        .results-highlight h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+        
         .sus-score {
-            font-size: 5rem;
+            font-size: 3rem;
             font-weight: bold;
-            margin: 1rem 0;
+            margin: 0.5rem 0;
         }
         
         .grade {
-            font-size: 2rem;
+            font-size: 1.2rem;
             opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+        
+        .results-highlight p {
+            font-size: 0.95rem;
+            margin-top: 1rem;
         }
         
         .key-takeaways {
-            background: #fff;
+            background: #2a2a2a;
             padding: 2rem;
             border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
         }
         
         .takeaway-item {
             padding: 1.5rem;
             margin-bottom: 1rem;
-            background: linear-gradient(to right, #fff3e0 0%, #ffffff 100%);
+            background: linear-gradient(to right, #2d2520 0%, #2a2a2a 100%);
             border-left: 5px solid #ff6b35;
             border-radius: 5px;
         }
@@ -267,11 +296,12 @@
         
         .assumptions-table td {
             padding: 1rem;
-            border-bottom: 1px solid #e9ecef;
+            border-bottom: 1px solid #3a3a3a;
+            color: #e0e0e0;
         }
         
         .assumptions-table tr:nth-child(even) {
-            background: #f8f9fa;
+            background: #2a2a2a;
         }
         
         .true-badge {
@@ -335,15 +365,15 @@
             font-family: 'Fraunces', serif;
             font-size: 18px;
             font-weight: 600;
-            color: var(--dark-blue, #1A365D);
+            color: #e0e0e0;
             text-decoration: none;
             opacity: 0;
             animation: fadeIn 1s ease forwards 0.2s;
             letter-spacing: 0.5px;
-            background: var(--white, #FFFFFF);
+            background: rgba(42, 42, 42, 0.95);
             padding: 12px 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
         }
 
         .name-header .degree {
@@ -361,14 +391,14 @@
             gap: 30px;
             opacity: 0;
             animation: fadeIn 1s ease forwards 0.4s;
-            background: var(--white, #FFFFFF);
+            background: rgba(42, 42, 42, 0.95);
             padding: 12px 20px;
             border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
         }
 
         .nav-links a {
-            color: var(--text-mid, #4A5568);
+            color: #b0b0b0;
             text-decoration: none;
             font-size: 14px;
             font-weight: 500;
@@ -408,7 +438,7 @@
 
     <!-- Navigation -->
     <nav class="nav-links">
-        <a href="index.html">Home</a>
+        <a href="/portfolio">Home</a>
         <a href="index.html#projects">Projects</a>
         <a href="index.html#contact">Contact</a>
         <a href="https://www.linkedin.com/in/bhuvan-sarupuri-ph-d-6448a767/" target="_blank">LinkedIn</a>
@@ -429,16 +459,8 @@
                 <h2 class="section-title">Project Overview</h2>
                 <div class="overview-grid">
                     <div class="overview-card">
-                        <h3>Role</h3>
-                        <p>Senior UX Researcher</p>
-                    </div>
-                    <div class="overview-card">
-                        <h3>Duration</h3>
-                        <p>Research Sprint</p>
-                    </div>
-                    <div class="overview-card">
-                        <h3>Product</h3>
-                        <p>TOPdesk Knowledge Management</p>
+                        <h3>Research Methods</h3>
+                        <p>Survey (n=31), Card Sorting (n=5), Concept Testing (n=7), Usability Testing (n=19)</p>
                     </div>
                     <div class="overview-card">
                         <h3>Impact</h3>
