@@ -618,6 +618,297 @@
             border: 1px solid var(--border);
         }
 
+        /* Contact Form */
+        .contact-form {
+            max-width: 600px;
+            margin: 40px auto 0;
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-md);
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 18px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-size: 15px;
+            font-family: 'Libre Franklin', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--cyan);
+            box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 16px 32px;
+            background: linear-gradient(135deg, var(--cyan), var(--blue));
+            color: var(--bg-primary);
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 229, 255, 0.4);
+        }
+
+        .form-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 229, 255, 0.5);
+        }
+
+        .form-submit:active {
+            transform: translateY(0);
+        }
+
+        .form-message {
+            margin-top: 20px;
+            padding: 16px 24px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 500;
+            text-align: center;
+            display: none;
+        }
+
+        .form-message.success {
+            background: rgba(100, 255, 218, 0.15);
+            border: 1px solid var(--mint);
+            color: var(--mint);
+            display: block;
+        }
+
+        .form-message.error {
+            background: rgba(255, 100, 100, 0.15);
+            border: 1px solid #ff6464;
+            color: #ff9999;
+            display: block;
+        }
+
+        /* Experience Section */
+        .experience {
+            padding: 120px 40px;
+            background: var(--bg-primary);
+            position: relative;
+        }
+
+        .experience::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border), transparent);
+        }
+
+        .experience-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .experience-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            margin-top: 60px;
+        }
+
+        /* Timeline Styles */
+        .timeline {
+            position: relative;
+            padding: 0 0 0 40px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, var(--cyan), var(--mint), var(--blue));
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+            padding-left: 40px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -48px;
+            top: 8px;
+            width: 12px;
+            height: 12px;
+            background: var(--cyan);
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px var(--bg-primary), 0 0 0 6px var(--cyan), 0 0 20px var(--cyan);
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        .timeline-item:nth-child(even)::before {
+            background: var(--mint);
+            box-shadow: 0 0 0 4px var(--bg-primary), 0 0 0 6px var(--mint), 0 0 20px var(--mint);
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .timeline-date {
+            font-size: 13px;
+            letter-spacing: 1px;
+            color: var(--cyan);
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: inline-block;
+            background: rgba(0, 229, 255, 0.1);
+            padding: 4px 12px;
+            border-radius: 6px;
+        }
+
+        .timeline-title {
+            font-family: 'Fraunces', serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+            line-height: 1.3;
+        }
+
+        .timeline-subtitle {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .timeline-location {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        /* Education Section */
+        .education-grid {
+            display: grid;
+            gap: 30px;
+        }
+
+        .education-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .education-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, var(--cyan), var(--mint));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .education-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .education-card:hover::before {
+            opacity: 1;
+        }
+
+        .education-degree {
+            font-family: 'Fraunces', serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .education-institution {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .education-year {
+            font-size: 14px;
+            color: var(--cyan);
+            font-weight: 500;
+        }
+
+        .subsection-title {
+            font-family: 'Fraunces', serif;
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .subsection-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--cyan), var(--mint));
+            border-radius: 2px;
+        }
+
         .btn-light {
             background: linear-gradient(135deg, var(--cyan), var(--mint));
             color: var(--bg-primary);
@@ -697,6 +988,11 @@
             .projects-grid {
                 grid-template-columns: 1fr;
             }
+
+            .experience-content {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
         }
 
         @media (max-width: 640px) {
@@ -711,6 +1007,18 @@
             .projects,
             .contact {
                 padding: 60px 20px;
+            }
+
+            .experience {
+                padding: 60px 20px;
+            }
+
+            .timeline {
+                padding: 0 0 0 25px;
+            }
+
+            .timeline-item {
+                padding-left: 25px;
             }
 
             .project-content {
@@ -730,6 +1038,46 @@
                     }
                 });
             }
+
+            // Contact form submission
+            const contactForm = document.getElementById('contact-form');
+            const formMessage = document.getElementById('form-message');
+            
+            if (contactForm) {
+                contactForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const submitButton = contactForm.querySelector('.form-submit');
+                    const originalText = submitButton.textContent;
+                    submitButton.textContent = 'Sending...';
+                    submitButton.disabled = true;
+                    
+                    try {
+                        const formData = new FormData(contactForm);
+                        const response = await fetch(contactForm.action, {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'Accept': 'application/json'
+                            }
+                        });
+                        
+                        if (response.ok) {
+                            formMessage.textContent = '✓ Message sent successfully! I\'ll get back to you soon.';
+                            formMessage.className = 'form-message success';
+                            contactForm.reset();
+                        } else {
+                            throw new Error('Form submission failed');
+                        }
+                    } catch (error) {
+                        formMessage.textContent = '✗ Oops! Something went wrong. Please try again or email me directly.';
+                        formMessage.className = 'form-message error';
+                    } finally {
+                        submitButton.textContent = originalText;
+                        submitButton.disabled = false;
+                    }
+                });
+            }
         });
     </script>
 </head>
@@ -738,7 +1086,7 @@
     <div class="name-header">Bhuvan Sarupuri <span class="degree">Ph.D.</span></div>
 
     <!-- Navigation -->
-    <nav class="nav-links"><a href="index.html">Home</a><a href="#projects">Projects</a>
+    <nav class="nav-links"><a href="index.html">Home</a><a href="#projects">Projects</a><a href="#experience">Experience</a><a href="#contact">Contact</a>
         <a href="https://www.linkedin.com/in/bhuvan-sarupuri-ph-d-6448a767/" target="_blank">LinkedIn</a>
     </nav>
 
@@ -890,7 +1238,7 @@
                                 <span>AI Integration</span>
                             </div>
                         </div>
-                        <a href="index__1_.html" class="project-link" target="_blank">View Case Study</a>
+                        <a href="index__1_.html" class="project-link">View Case Study</a>
                     </div>
                 </div>
 
@@ -919,6 +1267,90 @@
         </div>
     </section>
 
+    <!-- Experience & Education Section -->
+    <section class="experience" id="experience">
+        <div class="experience-container">
+            <div class="section-header">
+                <div class="section-label">Journey</div>
+                <h2 class="section-title">Experience & Education</h2>
+                <a href="https://drive.google.com/file/d/17glmg5rejyZC6BYZ6o3LYCTeNPLz21_S/view?usp=sharing" target="_blank" class="btn btn-primary" style="margin-top: 20px; display: inline-block;">Download Full Resume</a>
+            </div>
+            
+            <div class="experience-content">
+                <!-- Experience Timeline -->
+                <div>
+                    <h3 class="subsection-title">Professional Experience</h3>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-date">Jan 2025 - Present</div>
+                            <div class="timeline-title">Senior UX Researcher</div>
+                            <div class="timeline-subtitle">AI & Conversational Interfaces</div>
+                            <div class="timeline-location">TOPdesk, Hungary</div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-date">Feb 2023 - Jan 2025</div>
+                            <div class="timeline-title">Senior UX Researcher</div>
+                            <div class="timeline-subtitle"></div>
+                            <div class="timeline-location">TOPdesk, Hungary</div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-date">Sep 2020 - May 2022</div>
+                            <div class="timeline-title">Postdoctoral HCI Researcher</div>
+                            <div class="timeline-subtitle"></div>
+                            <div class="timeline-location">INRIA/University of Rennes 2, France</div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-date">Jul 2016 - Aug 2020</div>
+                            <div class="timeline-title">Doctoral HCI Researcher</div>
+                            <div class="timeline-subtitle"></div>
+                            <div class="timeline-location">HITLabNZ, University of Canterbury, New Zealand</div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-date">Jul 2018 - Oct 2018</div>
+                            <div class="timeline-title">Visiting Researcher</div>
+                            <div class="timeline-subtitle"></div>
+                            <div class="timeline-location">GRAIL Lab, University of Washington, USA</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Education Section -->
+                <div>
+                    <h3 class="subsection-title">Education</h3>
+                    <div class="education-grid">
+                        <div class="education-card">
+                            <div class="education-degree">Ph.D. Human Interface Technology</div>
+                            <div class="education-institution">University of Canterbury, New Zealand</div>
+                            <div class="education-year">2016-2020</div>
+                        </div>
+
+                        <div class="education-card">
+                            <div class="education-degree">M.S. Human Interface Technology</div>
+                            <div class="education-institution">University of Canterbury, New Zealand</div>
+                            <div class="education-year">2015-2016</div>
+                        </div>
+
+                        <div class="education-card">
+                            <div class="education-degree">M.Tech. Machine Intelligence</div>
+                            <div class="education-institution">DAIICT, India</div>
+                            <div class="education-year">2012-2014</div>
+                        </div>
+
+                        <div class="education-card">
+                            <div class="education-degree">B.Tech. Electronics and Communication</div>
+                            <div class="education-institution">Acharya Nagarjuna University, India</div>
+                            <div class="education-year">2008-2012</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact Section -->
     <section class="contact" id="contact">
         <div class="contact-container">
@@ -926,9 +1358,30 @@
             <p class="contact-description">
                 Interested in discussing UX research, collaboration opportunities, or just want to chat about user-centered design? I'd love to hear from you.
             </p>
-            <div class="contact-buttons">
-                <p>Email: bhuvan.sarupuri@gmail.com</p>
+            
+            <div class="contact-buttons" style="margin-bottom: 30px;">
+                <p>Email directly: bhuvan.sarupuri@gmail.com</p>
             </div>
+            
+            <form class="contact-form" id="contact-form" action="https://formspree.io/f/mgownbzd" method="POST">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" placeholder="Your name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" placeholder="Tell me about your project or inquiry..." required></textarea>
+                </div>
+                
+                <button type="submit" class="form-submit">Send Message</button>
+                <div id="form-message" class="form-message"></div>
+            </form>
         </div>
     </section>
 
