@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Buddy — AI Research Ops Tool | Research Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600;700&family=DM+Sans:wght@400;500;700&family=Fraunces:wght@300;600;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0D47A1;
+            --secondary: #0288D1;
+            --cyan: #00E5FF;
+            --mint: #64FFDA;
+            --accent: #00CED1;
+            --accent-warm: #00BCD4;
+
+            --bg-primary: #0A0E1A;
+            --bg-secondary: #121827;
+            --bg-tertiary: #1A2332;
+            --bg-card: rgba(26, 35, 50, 0.8);
+
+            --text: #E8F0F7;
+            --text-light: #A8B2C1;
+            --text-muted: #6B7788;
+
+            --border: rgba(0, 229, 255, 0.1);
+            --border-hover: rgba(0, 229, 255, 0.3);
+
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.5);
+            --shadow-glow: 0 0 20px rgba(0, 229, 255, 0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text);
+            background: var(--bg-primary);
+            line-height: 1.55;
+            font-size: 15px;
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(at 0% 0%, rgba(0, 229, 255, 0.06) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(2, 136, 209, 0.08) 0px, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            color: var(--text);
+            padding: 80px 20px 28px;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -40%; right: -10%;
+            width: 420px; height: 420px;
+            background: radial-gradient(circle, rgba(0, 229, 255, 0.08) 0%, transparent 65%);
+            filter: blur(40px);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-label {
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--cyan);
+            margin-bottom: 8px;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.2s;
+        }
+
+        .hero-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: clamp(1.4rem, 2.6vw, 1.95rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 10px;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.4s;
+        }
+
+        .hero-subtitle {
+            font-size: 0.92rem;
+            font-weight: 400;
+            color: var(--text-light);
+            margin-bottom: 18px;
+            max-width: 720px;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.6s;
+            line-height: 1.55;
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 16px;
+            margin-bottom: 22px;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.8s;
+            font-size: 0.78rem;
+            color: var(--text-light);
+        }
+
+        .hero-meta-item { display: flex; align-items: center; gap: 6px; }
+        .hero-meta-icon { font-size: 12px; opacity: 0.85; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Key Stats */
+        .key-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 28px 36px;
+            margin-top: 4px;
+            padding-top: 18px;
+            border-top: 1px solid var(--border);
+        }
+
+        .stat-card {
+            background: transparent;
+            padding: 0;
+            border: none;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards;
+        }
+
+        .stat-card:nth-child(1) { animation-delay: 1s; }
+        .stat-card:nth-child(2) { animation-delay: 1.1s; }
+        .stat-card:nth-child(3) { animation-delay: 1.2s; }
+        .stat-card:nth-child(4) { animation-delay: 1.3s; }
+
+        .stat-number {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--cyan);
+            line-height: 1.1;
+        }
+
+        .stat-label {
+            font-size: 0.72rem;
+            color: var(--text-light);
+            margin-top: 1px;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+
+        /* Name Header */
+        .name-header {
+            position: fixed;
+            top: 30px;
+            left: 40px;
+            z-index: 50;
+            font-family: 'Fraunces', serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text);
+            text-decoration: none;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 0.2s;
+            letter-spacing: 0.5px;
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 12px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+        }
+
+        .name-header:hover {
+            border-color: var(--border-hover);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .name-header .degree { color: var(--cyan); font-weight: 300; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Navigation */
+        .nav-links {
+            position: fixed;
+            top: 30px;
+            right: 40px;
+            z-index: 200;
+            display: flex;
+            gap: 30px;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 0.4s;
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 12px 24px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border);
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover { color: var(--cyan); }
+
+        /* Sections */
+        section {
+            padding: 40px 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-header { margin-bottom: 22px; }
+
+        .section-label {
+            font-size: 0.72rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .section-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        .section-intro {
+            font-size: 0.98rem;
+            color: var(--text-light);
+            max-width: 760px;
+            line-height: 1.6;
+        }
+
+        .section-body {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.65;
+            max-width: 820px;
+        }
+
+        .section-body p { margin-bottom: 0.75rem; }
+        .section-body strong { color: var(--text); }
+
+        /* Tags */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin: 1rem 0;
+        }
+
+        .tag {
+            background: rgba(0, 229, 255, 0.08);
+            color: var(--cyan);
+            padding: 0.25rem 0.7rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border: 1px solid var(--border);
+        }
+
+        .tag.accent {
+            background: rgba(100, 255, 218, 0.1);
+            color: var(--mint);
+            border-color: rgba(100, 255, 218, 0.25);
+        }
+
+        .tag.warn {
+            background: rgba(255, 179, 0, 0.08);
+            color: #FFB300;
+            border-color: rgba(255, 179, 0, 0.25);
+        }
+
+        .tag.success {
+            background: rgba(100, 255, 218, 0.08);
+            color: var(--mint);
+            border-color: rgba(100, 255, 218, 0.25);
+        }
+
+        /* Quote */
+        .quote {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 0.9rem 1.25rem;
+            margin: 1.25rem 0;
+            border-radius: 0 8px 8px 0;
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--cyan);
+            font-style: italic;
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.55;
+            max-width: 820px;
+        }
+
+        /* Overview Cards */
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 14px;
+            margin-top: 18px;
+        }
+
+        .overview-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: all 0.25s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .overview-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--border-hover);
+        }
+
+        .overview-icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(0, 229, 255, 0.08);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .overview-card h3 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.15rem;
+            margin-bottom: 6px;
+            color: var(--text);
+        }
+
+        .overview-card p {
+            color: var(--text-light);
+            font-size: 0.85rem;
+            line-height: 1.55;
+        }
+
+        /* Capability / Problem Grid */
+        .capability-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .capability-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--cyan);
+            border-radius: 10px;
+            padding: 16px 18px;
+            transition: all 0.25s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .capability-card:nth-child(2) { border-left-color: var(--mint); }
+        .capability-card:nth-child(3) { border-left-color: #FFB300; }
+        .capability-card:nth-child(4) { border-left-color: #B388FF; }
+
+        .capability-card:hover {
+            transform: translateY(-2px);
+            border-top-color: var(--border-hover);
+            border-right-color: var(--border-hover);
+            border-bottom-color: var(--border-hover);
+        }
+
+        .capability-card .cap-icon {
+            font-size: 1.1rem;
+            margin-bottom: 6px;
+        }
+
+        .capability-card h4 {
+            font-size: 0.98rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: var(--text);
+        }
+
+        .capability-card p {
+            font-size: 0.83rem;
+            color: var(--text-light);
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* Process Steps */
+        .process-steps {
+            counter-reset: step;
+            list-style: none;
+            padding: 0;
+            margin-top: 18px;
+        }
+
+        .process-steps li {
+            counter-increment: step;
+            padding: 1rem 1.25rem 1rem 3.5rem;
+            position: relative;
+            margin-bottom: 8px;
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.25s ease;
+        }
+
+        .process-steps li:hover {
+            border-color: var(--border-hover);
+            transform: translateX(4px);
+        }
+
+        .process-steps li::before {
+            content: counter(step, decimal-leading-zero);
+            position: absolute;
+            left: 1rem;
+            top: 1rem;
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--cyan), var(--mint));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .process-steps li strong {
+            display: block;
+            margin-bottom: 2px;
+            color: var(--text);
+            font-size: 0.98rem;
+            font-weight: 700;
+        }
+
+        .process-steps li p {
+            color: var(--text-light);
+            font-size: 0.85rem;
+            line-height: 1.55;
+            margin: 0;
+        }
+
+        .process-steps li .parallel-tag {
+            display: inline-block;
+            font-size: 0.62rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--mint);
+            border: 1px solid rgba(100, 255, 218, 0.25);
+            padding: 1px 6px;
+            border-radius: 3px;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+
+        /* Output Mode Cards */
+        .modes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 14px;
+            margin-top: 18px;
+        }
+
+        .mode-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 20px 22px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: all 0.25s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .mode-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--border-hover);
+        }
+
+        .mode-card .cmd {
+            font-family: 'Courier New', monospace;
+            font-size: 0.78rem;
+            color: var(--cyan);
+            background: rgba(0, 229, 255, 0.08);
+            border: 1px solid rgba(0, 229, 255, 0.2);
+            border-radius: 4px;
+            padding: 3px 8px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .mode-card h3 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.15rem;
+            color: var(--text);
+            margin-bottom: 10px;
+        }
+
+        .mode-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .mode-card li {
+            font-size: 0.83rem;
+            color: var(--text-light);
+            padding: 5px 0 5px 14px;
+            position: relative;
+            line-height: 1.5;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+
+        .mode-card li:last-child { border-bottom: none; }
+
+        .mode-card li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 12px;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--cyan);
+            opacity: 0.6;
+        }
+
+        /* Video Demo */
+        .demo-frame {
+            margin-top: 18px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 10px;
+            box-shadow: var(--shadow-md);
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .demo-frame:hover {
+            border-color: var(--border-hover);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .demo-frame video {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            background: #000;
+        }
+
+        .demo-caption {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        /* Source / Owner subtitle inside overview-card */
+        .source-owner {
+            font-size: 0.68rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .wip-pill {
+            display: inline-block;
+            background: rgba(255, 179, 0, 0.12);
+            color: #FFB300;
+            border: 1px solid rgba(255, 179, 0, 0.3);
+            padding: 1px 7px;
+            border-radius: 3px;
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            font-weight: 700;
+            margin-left: 6px;
+            vertical-align: middle;
+        }
+
+        /* Architecture flow connector */
+        .arch-flow {
+            text-align: center;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            margin: 16px 0 4px;
+            position: relative;
+        }
+
+        .arch-flow::before,
+        .arch-flow::after {
+            content: '';
+            display: inline-block;
+            width: 40px;
+            height: 1px;
+            background: var(--border-hover);
+            vertical-align: middle;
+            margin: 0 12px;
+        }
+
+        /* Mode-card synth variant (highlighted synthesis agent) */
+        .mode-card.synth {
+            border-color: rgba(100, 255, 218, 0.25);
+            background: linear-gradient(180deg, rgba(100, 255, 218, 0.04), var(--bg-card));
+        }
+
+        .mode-card.synth .cmd {
+            color: var(--mint);
+            background: rgba(100, 255, 218, 0.08);
+            border-color: rgba(100, 255, 218, 0.25);
+        }
+
+        /* Subheading */
+        .subheading {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.05rem;
+            color: var(--cyan);
+            margin-top: 18px;
+            margin-bottom: 6px;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+        }
+
+        .subheading--gap { margin-top: 28px; }
+
+        /* Stack Layers */
+        .stack-layers {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-top: 18px;
+        }
+
+        .stack-row {
+            display: flex;
+            align-items: baseline;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .stack-layer-name {
+            font-size: 0.7rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            min-width: 100px;
+            flex-shrink: 0;
+            padding-top: 4px;
+            font-weight: 700;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-primary);
+            color: var(--text-light);
+            padding: 32px 20px 20px;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            font-size: 0.85rem;
+        }
+
+        .footer-content { max-width: 1200px; margin: 0 auto; }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover { color: var(--cyan); }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 968px) {
+            .name-header, .nav-links {
+                position: static;
+                margin: 12px;
+                animation: fadeIn 1s ease forwards;
+            }
+            .nav-links { justify-content: center; }
+        }
+
+        @media (max-width: 768px) {
+            .overview-grid, .capability-grid, .modes-grid {
+                grid-template-columns: 1fr;
+            }
+            section { padding: 40px 20px; }
+            .process-steps li { padding: 1rem 1rem 1rem 3rem; }
+            .process-steps li::before { left: 0.85rem; }
+            .stack-row { flex-direction: column; align-items: flex-start; gap: 6px; }
+            .stack-layer-name { min-width: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Name Header -->
+    <a href="index.html" class="name-header">Bhuvan Sarupuri <span class="degree">Ph.D.</span></a>
+
+    <!-- Navigation -->
+    <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="index.html#projects">Projects</a>
+        <a href="index.html#experience">Experience</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="https://www.linkedin.com/in/bhuvan-sarupuri-ph-d-6448a767/" target="_blank">LinkedIn</a>
+    </nav>
+
+    <!-- Hero -->
+    <div class="hero">
+        <div class="hero-content">
+            <div class="hero-label">The AI-Assisted Researcher · Where Do I Draw the Line?</div>
+            <h1 class="hero-title">Research Buddy — Making Existing Research Reach More Decisions</h1>
+            <p class="hero-subtitle">
+                A work-in-progress internal tool that puts six fragmented research and product sources behind
+                a single plain-language query, runs qualitative and quantitative agents in parallel, and
+                reformats the synthesised findings for whoever is asking — researcher, designer, or PM.
+            </p>
+
+            <div class="hero-meta">
+                <div class="hero-meta-item">
+                    <div class="hero-meta-icon">🏢</div>
+                    <span>TOPdesk</span>
+                </div>
+                <div class="hero-meta-item">
+                    <div class="hero-meta-icon">📅</div>
+                    <span>2025</span>
+                </div>
+                <div class="hero-meta-item">
+                    <div class="hero-meta-icon">🛠️</div>
+                    <span>Senior UX Researcher</span>
+                </div>
+                <div class="hero-meta-item">
+                    <div class="hero-meta-icon">🚧</div>
+                    <span>Work in Progress</span>
+                </div>
+            </div>
+
+            <div class="key-stats">
+                <div class="stat-card">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">Connected Sources</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Specialised Agents</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Role-Specific Outputs</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Trust Tests</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Demo Video -->
+    <section id="demo">
+        <div class="section-header fade-in">
+            <div class="section-label">Research Buddy In Action</div>
+            <h2 class="section-title">Ask Once. Get a Synthesised, Role-Shaped Brief.</h2>
+            <p class="section-intro">
+                A short walkthrough — posing a plain-language question, the qualitative and quantitative
+                agents working in parallel across the connected sources, and the synthesised brief shaped
+                for the asker's role.
+            </p>
+        </div>
+
+        <div class="demo-frame fade-in">
+            <video controls preload="metadata" playsinline>
+                <source src="buddy5.mp4" type="video/mp4">
+                Your browser doesn't support embedded video. <a href="buddy5.mp4">Download the walkthrough</a>.
+            </video>
+            <div class="demo-caption">Research Buddy — recorded walkthrough (click to play)</div>
+        </div>
+    </section>
+
+    <!-- The Problem -->
+    <section id="problem">
+        <div class="section-header fade-in">
+            <div class="section-label">The Problem</div>
+            <h2 class="section-title">Designers and PMs Make Decisions Without Checking Existing Research.</h2>
+            <p class="section-intro">
+                Research data lives in six tools and nobody searches all six. Each department installed
+                the tool that worked for them — so the research that already answers a product question is
+                often invisible to the person asking it.
+            </p>
+        </div>
+
+        <div class="quote fade-in">
+            "We should add this feature." → "Do we have research on this?" → "Where would I even look?"
+            → "I'll just go with my assumptions, or make yet another research request."
+        </div>
+
+        <div class="section-body fade-in">
+            <p>
+                Research exists. It's been done. It lives in Condens, in an old SharePoint deck, in
+                Productboard notes from six months ago. But finding it means logging into multiple tools,
+                running multiple searches, and reading dozens of docs — so people skip it.
+            </p>
+            <p>
+                <strong>They're not lazy. That's an infrastructure problem.</strong>
+            </p>
+        </div>
+
+        <div class="tags fade-in">
+            <span class="tag">AI Research Ops</span>
+            <span class="tag">Multi-Agent System</span>
+            <span class="tag accent">Internal Tooling</span>
+            <span class="tag accent">Self-Serve Research</span>
+            <span class="tag warn">Work in Progress</span>
+        </div>
+    </section>
+
+    <!-- Connected Sources -->
+    <section id="sources">
+        <div class="section-header fade-in">
+            <div class="section-label">Connected Sources</div>
+            <h2 class="section-title">Six Tools. One Plain-Language Query.</h2>
+            <p class="section-intro">
+                Each source is owned by a different team — research, product, customer success, analytics —
+                and stores a different kind of evidence. Research Buddy queries them in parallel so the
+                asker doesn't have to know which tool holds the answer.
+            </p>
+        </div>
+
+        <div class="overview-grid fade-in">
+            <div class="overview-card">
+                <div class="overview-icon">🎙️</div>
+                <h3>Condens</h3>
+                <p class="source-owner">Research team</p>
+                <p>Interview insights, session recordings, highlights.</p>
+            </div>
+            <div class="overview-card">
+                <div class="overview-icon">📋</div>
+                <h3>Productboard</h3>
+                <p class="source-owner">Product team</p>
+                <p>Feature requests, user feedback, roadmap priorities.</p>
+            </div>
+            <div class="overview-card">
+                <div class="overview-icon">📝</div>
+                <h3>Typeform</h3>
+                <p class="source-owner">Research / Product / CS</p>
+                <p>Survey responses, open-ended answers, form data.</p>
+            </div>
+            <div class="overview-card">
+                <div class="overview-icon">⭐</div>
+                <h3>Insocial</h3>
+                <p class="source-owner">Customer Success</p>
+                <p>Product feedback, NPS responses.</p>
+            </div>
+            <div class="overview-card">
+                <div class="overview-icon">📁</div>
+                <h3>SharePoint</h3>
+                <p class="source-owner">Everyone</p>
+                <p>Notes, presentations, decks.</p>
+            </div>
+            <div class="overview-card">
+                <div class="overview-icon">📈</div>
+                <h3>Qlik <span class="wip-pill">In Progress ⚡</span></h3>
+                <p class="source-owner">Analytics / Sales</p>
+                <p>Churn data, business metrics, usage analytics.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- What I Tried to Build -->
+    <section id="approach">
+        <div class="section-header fade-in">
+            <div class="section-label">What I Tried to Build</div>
+            <h2 class="section-title">Three Design Principles That Reduce the Friction.</h2>
+        </div>
+
+        <ol class="process-steps fade-in">
+            <li>
+                <strong>A single query across all sources</strong>
+                <p>Ask in plain language. All sources queried at the same time. Less tab-switching, no need to know which tool holds the answer.</p>
+            </li>
+            <li>
+                <strong>Role-aware framing</strong>
+                <p>Same data, returned differently depending on who's asking. A PM gets business framing. A designer gets pain points. A researcher gets evidence and methodology.</p>
+            </li>
+            <li>
+                <strong>Cross-source comparison</strong>
+                <p>Qual from Condens alongside product usage data from Qlik, and product feedback from Insocial alongside feature votes from Productboard — in the same answer, not in seven tabs.</p>
+            </li>
+        </ol>
+    </section>
+
+    <!-- Architecture / How It Works -->
+    <section id="architecture">
+        <div class="section-header fade-in">
+            <div class="section-label">How Research Buddy Works Under the Hood</div>
+            <h2 class="section-title">Two Parallel Agents. One Synthesiser. Three Output Modes.</h2>
+            <p class="section-intro">
+                A qualitative agent and a quantitative agent run in parallel against the connected sources.
+                A third agent — the Data Scientist — cross-references their findings, flags gaps and
+                contradictions, and recommends follow-ups before the answer is shaped to the asker's role.
+            </p>
+        </div>
+
+        <h3 class="subheading">Agents</h3>
+        <div class="modes-grid fade-in">
+            <div class="mode-card">
+                <div class="cmd">parallel</div>
+                <h3>🔬 Qual Researcher</h3>
+                <ul>
+                    <li>Quotes, themes, observations</li>
+                    <li>Pulls from Condens, Productboard, SharePoint</li>
+                    <li>Returns evidence with source, item, and date</li>
+                </ul>
+            </div>
+            <div class="mode-card">
+                <div class="cmd">parallel</div>
+                <h3>📊 Quant Researcher</h3>
+                <ul>
+                    <li>Metrics, NPS, survey distributions</li>
+                    <li>Pulls from Typeform, Insocial NPS, Qlik</li>
+                    <li>Returns numbers with the question they came from</li>
+                </ul>
+            </div>
+            <div class="mode-card synth">
+                <div class="cmd">synthesise</div>
+                <h3>🧠 Data Scientist</h3>
+                <ul>
+                    <li>Cross-references qual + quant</li>
+                    <li>Flags gaps and contradictions</li>
+                    <li>Recommends follow-up research</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="arch-flow fade-in">↓ shaped to the asker's role ↓</div>
+
+        <h3 class="subheading subheading--gap">Output Modes</h3>
+        <div class="modes-grid fade-in">
+            <div class="mode-card">
+                <div class="cmd">/research</div>
+                <h3>UX Researcher</h3>
+                <ul>
+                    <li>Evidence with full methodology</li>
+                    <li>What each source returned (or didn't)</li>
+                    <li>Recommended follow-up research</li>
+                </ul>
+            </div>
+            <div class="mode-card">
+                <div class="cmd">/designer-brief</div>
+                <h3>Product Designer</h3>
+                <ul>
+                    <li>Pain points and mental models</li>
+                    <li>Current UX gaps surfaced from the evidence</li>
+                </ul>
+            </div>
+            <div class="mode-card">
+                <div class="cmd">/pm-summary</div>
+                <h3>Product Manager</h3>
+                <ul>
+                    <li>Executive summary and business impact</li>
+                    <li>Decision-affecting gaps called out</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Where AI Earns It / Where I Still Own It -->
+    <section id="boundaries">
+        <div class="section-header fade-in">
+            <div class="section-label">Pattern Detection at Scale. Not Interpretation.</div>
+            <h2 class="section-title">Where AI Earns It, and Where I Still Own It.</h2>
+            <p class="section-intro">
+                AI handles the volume problem well but misses the nuances. The split between what the
+                agents do and what I do is deliberate, and it's the part I'd defend hardest.
+            </p>
+        </div>
+
+        <div class="capability-grid fade-in">
+            <div class="capability-card">
+                <div class="cap-icon">🤖</div>
+                <h4>Where AI earns it</h4>
+                <p><strong>Thousands of Insocial product feedback responses</strong> — clustering open-ended comments, surfacing recurring phrases, segmenting by theme.</p>
+                <p style="margin-top:8px;"><strong>Large Typeform surveys</strong> — finding distributions in open-ended answers that would take days to read manually.</p>
+                <p style="margin-top:8px;"><strong>Demographic and product usage data from Qlik</strong> — relevant quantitative data with charts.</p>
+            </div>
+            <div class="capability-card">
+                <div class="cap-icon">🧑‍🔬</div>
+                <h4>Where I still own it</h4>
+                <p><strong>What the patterns mean</strong> — AI surfaces clusters; I decide what's a signal.</p>
+                <p style="margin-top:8px;"><strong>Writing conclusions</strong> — AI drafts; I rewrite after reading representative samples from each cluster.</p>
+                <p style="margin-top:8px;"><strong>Presenting to stakeholders</strong> — every claim I make is traceable back to a named participant or source.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Three Tests -->
+    <section id="trust">
+        <div class="section-header fade-in">
+            <div class="section-label">Trust Framework</div>
+            <h2 class="section-title">Three Tests Before I Trust Any AI Output.</h2>
+            <p class="section-intro">
+                These aren't aspirational principles — they're the conditions Research Buddy is built
+                around, and the questions I run any AI-generated finding through before using it.
+            </p>
+        </div>
+
+        <ol class="process-steps fade-in">
+            <li>
+                <strong>Can I trace every claim back to a named participant or source?</strong>
+                <p>If not, I don't use it. Research Buddy hardcodes this — every finding requires source, item name, and date.</p>
+            </li>
+            <li>
+                <strong>Is AI doing aggregation or interpretation?</strong>
+                <p>Aggregation and pattern detection: yes. Deciding what patterns mean, writing conclusions, making recommendations: human.</p>
+            </li>
+            <li>
+                <strong>Would I stake a product decision on this without reading the originals?</strong>
+                <p>If the answer is no, that's exactly where the human review step goes.</p>
+            </li>
+        </ol>
+    </section>
+
+    <!-- If It Works -->
+    <section id="closing">
+        <div class="section-header fade-in">
+            <div class="section-label">If It Works</div>
+            <h2 class="section-title">Research Reaches More Decisions.</h2>
+        </div>
+
+        <div class="section-body fade-in">
+            <p>
+                A designer asks, <em>"What do users struggle with in onboarding?"</em> and finds research
+                that already exists, instead of assuming none does.
+            </p>
+            <p>
+                A PM asks about NPS feedback on a feature and gets Insocial, Productboard, and Condens in
+                one place — and then goes and reads the sources.
+            </p>
+            <p>
+                Research becomes something the org can reach for itself. <strong>It is still work in
+                progress</strong> — Qlik integration is in flight, the trust framework is enforced more
+                rigidly in some sources than others, and the role outputs will keep evolving as designers
+                and PMs use them.
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="index.html#projects">Projects</a>
+                <a href="index.html#experience">Experience</a>
+                <a href="index.html#contact">Contact</a>
+                <a href="https://www.linkedin.com/in/bhuvan-sarupuri-ph-d-6448a767/" target="_blank">LinkedIn</a>
+            </div>
+            <p style="margin-top: 30px; opacity: 0.7;">
+                © 2025 Bhuvan Sarupuri. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -100px 0px' });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

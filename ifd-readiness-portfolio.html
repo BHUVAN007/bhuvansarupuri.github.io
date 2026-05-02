@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intelligent Front Door — Readiness & Maturity Framework | Research Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600;700&family=DM+Sans:wght@400;500;700&family=Fraunces:wght@300;600;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0D47A1;
+            --secondary: #0288D1;
+            --cyan: #00E5FF;
+            --mint: #64FFDA;
+            --accent: #00CED1;
+            --accent-warm: #00BCD4;
+
+            --bg-primary: #0A0E1A;
+            --bg-secondary: #121827;
+            --bg-tertiary: #1A2332;
+            --bg-card: rgba(26, 35, 50, 0.8);
+
+            --text: #E8F0F7;
+            --text-light: #A8B2C1;
+            --text-muted: #6B7788;
+
+            --border: rgba(0, 229, 255, 0.1);
+            --border-hover: rgba(0, 229, 255, 0.3);
+
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.5);
+            --shadow-glow: 0 0 20px rgba(0, 229, 255, 0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--text);
+            background: var(--bg-primary);
+            line-height: 1.55;
+            font-size: 15px;
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(at 0% 0%, rgba(0, 229, 255, 0.06) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(2, 136, 209, 0.08) 0px, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%);
+            color: var(--text);
+            padding: 80px 20px 28px;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -40%; right: -10%;
+            width: 420px; height: 420px;
+            background: radial-gradient(circle, rgba(0, 229, 255, 0.08) 0%, transparent 65%);
+            filter: blur(40px);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-label {
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--cyan);
+            margin-bottom: 8px;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.2s;
+        }
+
+        .hero-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: clamp(1.4rem, 2.6vw, 1.95rem);
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 10px;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.4s;
+        }
+
+        .hero-subtitle {
+            font-size: 0.92rem;
+            font-weight: 400;
+            color: var(--text-light);
+            margin-bottom: 18px;
+            max-width: 720px;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.6s;
+            line-height: 1.55;
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 16px;
+            margin-bottom: 22px;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.8s;
+            font-size: 0.78rem;
+            color: var(--text-light);
+        }
+
+        .hero-meta-item { display: flex; align-items: center; gap: 6px; }
+        .hero-meta-icon { font-size: 12px; opacity: 0.85; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Key Stats */
+        .key-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 28px 36px;
+            margin-top: 4px;
+            padding-top: 18px;
+            border-top: 1px solid var(--border);
+        }
+
+        .stat-card {
+            background: transparent;
+            padding: 0;
+            border: none;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards;
+        }
+
+        .stat-card:nth-child(1) { animation-delay: 1s; }
+        .stat-card:nth-child(2) { animation-delay: 1.1s; }
+        .stat-card:nth-child(3) { animation-delay: 1.2s; }
+        .stat-card:nth-child(4) { animation-delay: 1.3s; }
+
+        .stat-number {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--cyan);
+            line-height: 1.1;
+        }
+
+        .stat-label {
+            font-size: 0.72rem;
+            color: var(--text-light);
+            margin-top: 1px;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+
+        /* Name Header */
+        .name-header {
+            position: fixed;
+            top: 30px;
+            left: 40px;
+            z-index: 50;
+            font-family: 'Fraunces', serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text);
+            text-decoration: none;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 0.2s;
+            letter-spacing: 0.5px;
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 12px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+        }
+
+        .name-header:hover {
+            border-color: var(--border-hover);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .name-header .degree { color: var(--cyan); font-weight: 300; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Navigation */
+        .nav-links {
+            position: fixed;
+            top: 30px;
+            right: 40px;
+            z-index: 200;
+            display: flex;
+            gap: 30px;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 0.4s;
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 12px 24px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border);
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover { color: var(--cyan); }
+
+        /* Sections */
+        section {
+            padding: 40px 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-header { margin-bottom: 22px; }
+
+        .section-label {
+            font-size: 0.72rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .section-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        .section-intro {
+            font-size: 0.98rem;
+            color: var(--text-light);
+            max-width: 760px;
+            line-height: 1.6;
+        }
+
+        .section-body {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.65;
+            max-width: 820px;
+        }
+
+        .section-body p { margin-bottom: 0.75rem; }
+        .section-body strong { color: var(--text); }
+
+        /* Tags */
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin: 1rem 0;
+        }
+
+        .tag {
+            background: rgba(0, 229, 255, 0.08);
+            color: var(--cyan);
+            padding: 0.25rem 0.7rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border: 1px solid var(--border);
+        }
+
+        .tag.accent {
+            background: rgba(100, 255, 218, 0.1);
+            color: var(--mint);
+            border-color: rgba(100, 255, 218, 0.25);
+        }
+
+        .tag.warn {
+            background: rgba(255, 179, 0, 0.08);
+            color: #FFB300;
+            border-color: rgba(255, 179, 0, 0.25);
+        }
+
+        .tag.success {
+            background: rgba(100, 255, 218, 0.08);
+            color: var(--mint);
+            border-color: rgba(100, 255, 218, 0.25);
+        }
+
+        /* Confidential note */
+        .confidential-note {
+            background: rgba(0, 229, 255, 0.06);
+            border: 1px solid rgba(0, 229, 255, 0.25);
+            border-radius: 8px;
+            padding: 0.6rem 1rem;
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.82rem;
+            color: var(--accent-warm);
+        }
+
+        .confidential-note .icon { font-size: 1rem; }
+
+        /* Quote */
+        .quote {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-left: 3px solid var(--cyan);
+            padding: 0.9rem 1.25rem;
+            margin: 1.25rem 0;
+            border-radius: 0 8px 8px 0;
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--cyan);
+            font-style: italic;
+            color: var(--text-light);
+            font-size: 0.92rem;
+            line-height: 1.55;
+        }
+
+        .quote .attribution {
+            font-style: normal;
+            font-size: 0.78rem;
+            margin-top: 0.5rem;
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        /* Overview Cards (Strategic Context grid-2) */
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 14px;
+            margin-top: 18px;
+        }
+
+        .overview-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: all 0.25s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .overview-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--border-hover);
+        }
+
+        .overview-icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(0, 229, 255, 0.08);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        .overview-card h3 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.15rem;
+            margin-bottom: 6px;
+            color: var(--text);
+        }
+
+        .overview-card p {
+            color: var(--text-light);
+            font-size: 0.85rem;
+            line-height: 1.55;
+        }
+
+        /* Capability Grid (6 cards w/ colored left borders) */
+        .capability-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .capability-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--cyan);
+            border-radius: 10px;
+            padding: 14px 16px;
+            transition: all 0.25s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .capability-card:nth-child(2) { border-left-color: var(--mint); }
+        .capability-card:nth-child(3) { border-left-color: #FFB300; }
+        .capability-card:nth-child(4) { border-left-color: #B388FF; }
+        .capability-card:nth-child(5) { border-left-color: var(--accent-warm); }
+        .capability-card:nth-child(6) { border-left-color: #FF5370; }
+
+        .capability-card:hover {
+            transform: translateY(-2px);
+            border-top-color: var(--border-hover);
+            border-right-color: var(--border-hover);
+            border-bottom-color: var(--border-hover);
+        }
+
+        .capability-card h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: var(--text);
+        }
+
+        .capability-card p {
+            font-size: 0.82rem;
+            color: var(--text-light);
+            line-height: 1.5;
+            margin: 0;
+        }
+
+        /* Stage Pipeline */
+        .stage-pipeline {
+            display: flex;
+            gap: 4px;
+            margin: 18px 0;
+            overflow-x: auto;
+            border-radius: 10px;
+        }
+
+        .stage-pipeline .stage {
+            flex: 1;
+            min-width: 150px;
+            padding: 14px 12px;
+            text-align: center;
+            color: var(--text);
+            position: relative;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg-card);
+            transition: all 0.25s ease;
+        }
+
+        .stage-pipeline .stage:nth-child(1) { border-top: 3px solid #FF5370; }
+        .stage-pipeline .stage:nth-child(2) { border-top: 3px solid #FFB300; }
+        .stage-pipeline .stage:nth-child(3) { border-top: 3px solid #FFD740; }
+        .stage-pipeline .stage:nth-child(4) { border-top: 3px solid var(--mint); }
+        .stage-pipeline .stage:nth-child(5) { border-top: 3px solid var(--cyan); }
+
+        .stage-pipeline .stage:hover {
+            transform: translateY(-3px);
+            border-right-color: var(--border-hover);
+            border-bottom-color: var(--border-hover);
+            border-left-color: var(--border-hover);
+        }
+
+        .stage-pipeline .stage .stage-num {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--cyan);
+            line-height: 1;
+        }
+
+        .stage-pipeline .stage .stage-name {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 6px;
+            color: var(--text);
+        }
+
+        .stage-pipeline .stage .stage-desc {
+            font-size: 0.72rem;
+            color: var(--text-light);
+            margin-top: 4px;
+            font-style: italic;
+        }
+
+        /* Process Steps */
+        .process-steps {
+            counter-reset: step;
+            list-style: none;
+            padding: 0;
+            margin-top: 18px;
+        }
+
+        .process-steps li {
+            counter-increment: step;
+            padding: 1rem 1.25rem 1rem 3.5rem;
+            position: relative;
+            margin-bottom: 8px;
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            transition: all 0.25s ease;
+        }
+
+        .process-steps li:hover {
+            border-color: var(--border-hover);
+            transform: translateX(4px);
+        }
+
+        .process-steps li::before {
+            content: counter(step, decimal-leading-zero);
+            position: absolute;
+            left: 1rem;
+            top: 1rem;
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--cyan), var(--mint));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .process-steps li strong {
+            display: block;
+            margin-bottom: 2px;
+            color: var(--text);
+            font-size: 0.98rem;
+            font-weight: 700;
+        }
+
+        .process-steps li p {
+            color: var(--text-light);
+            font-size: 0.85rem;
+            line-height: 1.55;
+            margin: 0;
+        }
+
+        /* Data Table */
+        .data-table-wrap {
+            overflow-x: auto;
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            margin: 1rem 0;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        .data-table th, .data-table td {
+            padding: 0.65rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+        }
+
+        .data-table th {
+            background: rgba(0, 229, 255, 0.06);
+            font-weight: 700;
+            color: var(--cyan);
+            text-transform: uppercase;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+        }
+
+        .data-table td { color: var(--text-light); }
+        .data-table td strong { color: var(--text); }
+        .data-table tr:last-child td { border-bottom: none; }
+        .data-table tr:hover td { background: rgba(0, 229, 255, 0.04); }
+
+        /* Chart Placeholders */
+        .chart-block { margin: 1.25rem 0; }
+
+        .chart-block h3 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.1rem;
+            color: var(--text);
+            margin-bottom: 0.6rem;
+        }
+
+        .chart-placeholder {
+            position: relative;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.5rem;
+            overflow: hidden;
+            min-height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .chart-placeholder .chart-blur {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            gap: 10px;
+            padding: 2rem;
+            filter: blur(10px);
+            opacity: 0.55;
+        }
+
+        .chart-placeholder .bar { border-radius: 4px; }
+
+        .chart-placeholder .overlay,
+        .radar-placeholder .overlay {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 0.9rem 1.4rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-hover);
+            box-shadow: var(--shadow-sm);
+            max-width: 440px;
+        }
+
+        .chart-placeholder .overlay .lock,
+        .radar-placeholder .overlay .lock {
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .chart-placeholder .overlay strong,
+        .radar-placeholder .overlay strong {
+            color: var(--cyan);
+            display: block;
+            margin-bottom: 0.25rem;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .chart-placeholder .overlay p,
+        .radar-placeholder .overlay p {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin: 0;
+            line-height: 1.45;
+        }
+
+        /* Radar Placeholder */
+        .radar-placeholder {
+            position: relative;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 2rem 1.5rem;
+            overflow: hidden;
+            min-height: 240px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .radar-placeholder .hex {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.4;
+            filter: blur(6px);
+        }
+
+        .radar-placeholder .hex:nth-child(1) {
+            width: 220px; height: 220px;
+            border: 2px solid var(--cyan);
+        }
+        .radar-placeholder .hex:nth-child(2) {
+            width: 165px; height: 165px;
+            border: 2px solid var(--mint);
+        }
+        .radar-placeholder .hex:nth-child(3) {
+            width: 110px; height: 110px;
+            border: 2px solid var(--accent-warm);
+        }
+        .radar-placeholder .hex:nth-child(4) {
+            width: 60px; height: 60px;
+            border: 2px solid #B388FF;
+        }
+
+        .radar-placeholder .fill {
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            background: rgba(0, 229, 255, 0.18);
+            clip-path: polygon(50% 5%, 95% 30%, 80% 85%, 20% 85%, 5% 30%);
+            filter: blur(8px);
+        }
+
+        /* Findings list */
+        .findings-container {
+            max-width: 880px;
+            margin: 14px auto 0;
+        }
+
+        .finding-item {
+            display: flex;
+            gap: 14px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .finding-item:last-child { border-bottom: none; }
+
+        .finding-marker {
+            flex-shrink: 0;
+            width: 26px;
+            height: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.18), rgba(100, 255, 218, 0.12));
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            color: var(--cyan);
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+
+        .finding-content { flex: 1; min-width: 0; }
+
+        .finding-content p {
+            color: var(--text-light);
+            line-height: 1.55;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        .finding-content strong { color: var(--text); }
+
+        /* Impact / Collaboration / Reflection Grid */
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .impact-card {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            padding: 16px;
+            border-radius: 10px;
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border);
+            transition: all 0.25s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .impact-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-3px);
+        }
+
+        .impact-icon {
+            font-size: 0.95rem;
+            flex-shrink: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 229, 255, 0.08);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+        }
+
+        .impact-content { flex: 1; }
+
+        .impact-card h3 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: var(--text);
+        }
+
+        .impact-card p {
+            color: var(--text-light);
+            line-height: 1.5;
+            font-size: 0.82rem;
+        }
+
+        /* Skills cards */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .skill-card {
+            background: var(--bg-secondary);
+            padding: 16px 18px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            transition: all 0.25s ease;
+        }
+
+        .skill-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-2px);
+        }
+
+        .skill-card h4 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.05rem;
+            color: var(--cyan);
+            margin-bottom: 6px;
+        }
+
+        .skill-card p {
+            color: var(--text-light);
+            font-size: 0.83rem;
+            line-height: 1.5;
+        }
+
+        /* Subheading */
+        .subheading {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.05rem;
+            color: var(--cyan);
+            margin-top: 18px;
+            margin-bottom: 6px;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+        }
+
+        .subheading--gap { margin-top: 28px; }
+
+        /* Footer */
+        footer {
+            background: var(--bg-primary);
+            color: var(--text-light);
+            padding: 32px 20px 20px;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            font-size: 0.85rem;
+        }
+
+        .footer-content { max-width: 1200px; margin: 0 auto; }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover { color: var(--cyan); }
+
+        /* Scroll Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .name-header, .nav-links {
+                position: static;
+                margin: 20px auto;
+                text-align: center;
+            }
+            .nav-links { justify-content: center; flex-wrap: wrap; }
+        }
+
+        @media (max-width: 768px) {
+            .overview-grid, .impact-grid, .capability-grid, .skills-grid {
+                grid-template-columns: 1fr;
+            }
+            .stage-pipeline { flex-direction: column; }
+            .stage-pipeline .stage { min-width: 0; }
+            section { padding: 40px 20px; }
+            .process-steps li { padding: 1rem 1rem 1rem 3rem; }
+            .process-steps li::before { left: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Name Header -->
+    <a href="index.html" class="name-header">Bhuvan Sarupuri <span class="degree">Ph.D.</span></a>
+
+    <!-- Navigation -->
+    <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="index.html#projects">Projects</a>
+        <a href="index.html#experience">Experience</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="https://www.linkedin.com/in/bhuvan-sarupuri-ph-d-6448a767/" target="_blank">LinkedIn</a>
+    </nav>
+
+    <!-- Hero -->
+    <div class="hero">
+        <div class="hero-content">
+            <div class="hero-label">Strategic Framework & Research</div>
+            <h1 class="hero-title">Intelligent Front Door — Readiness & Maturity Framework</h1>
+            <p class="hero-subtitle">
+                Designing a readiness assessment framework that maps where customers stand on the path to
+                intelligent service delivery — informing product strategy, AI roadmap priorities, and the
+                long-term vision for TOPdesk's platform.
+            </p>
+
+            <div class="hero-meta">
+                <div class="hero-meta-item">
+                    <div class="hero-meta-icon">🏢</div>
+                    <span>TOPdesk</span>
+                </div>
+                <div class="hero-meta-item">
+                    <div class="hero-meta-icon">📅</div>
+                    <span>2024–2025</span>
+                </div>
+                <div class="hero-meta-item">
+                    <div class="hero-meta-icon">🌍</div>
+                    <span>Multi-region (NL, DE, BE, UK + others)</span>
+                </div>
+                <div class="hero-meta-item">
+                    <div class="hero-meta-icon">🛠️</div>
+                    <span>Framework Design & Research</span>
+                </div>
+            </div>
+
+            <div class="key-stats">
+                <div class="stat-card">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">Capability Dimensions</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Maturity Stages</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">~4,900</div>
+                    <div class="stat-label">Customers Assessed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">7</div>
+                    <div class="stat-label">Industry Benchmarks</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Overview -->
+    <section id="overview">
+        <div class="section-header fade-in">
+            <div class="section-label">Project Overview</div>
+            <h2 class="section-title">Mapping the Path to Intelligent Service Delivery</h2>
+        </div>
+
+        <div class="section-body fade-in">
+            <p>
+                The Intelligent Front Door (IFD) is a strategic concept describing the shift from fragmented,
+                channel-by-channel service delivery toward a single intelligent entry point that understands
+                what users need and routes them to the right outcome with the least friction. I designed a
+                comprehensive readiness framework that assesses how close each customer organization is to
+                achieving this vision.
+            </p>
+            <p>
+                The primary goal is to inform <strong>product strategy and the long-term AI roadmap</strong> —
+                understanding which capabilities the customer base has today, where the gaps are, and what the
+                platform needs to build (and in what order) to make intelligent service delivery a reality.
+            </p>
+            <p>
+                The framework measures <strong>six observable capabilities</strong> and assigns each customer an
+                overall maturity stage using a <strong>weakest-link rule</strong> — the lowest-scoring capability
+                constrains the entire front door. This approach reveals where organizations are truly blocked,
+                not where they think they are, and helps prioritize product investment and roadmap sequencing.
+            </p>
+            <p>
+                The project synthesizes findings from Gartner, Ivanti, HDI, SDI, and Forrester into a
+                TOPdesk-specific scoring system that contextualizes customer data against industry benchmarks.
+            </p>
+        </div>
+
+        <div class="confidential-note fade-in">
+            <span class="icon">🔒</span>
+            <span>Data visualizations are blurred to protect confidential customer information. The framework design, methodology, and strategic impact are described in full.</span>
+        </div>
+
+        <div class="tags fade-in">
+            <span class="tag">Strategic Framework</span>
+            <span class="tag">Maturity Assessment</span>
+            <span class="tag accent">Industry Benchmarking</span>
+            <span class="tag accent">Stakeholder Strategy</span>
+            <span class="tag warn">What-If Simulation</span>
+            <span class="tag success">Commercial Enablement</span>
+        </div>
+    </section>
+
+    <!-- Strategic Context -->
+    <section id="context">
+        <div class="section-header fade-in">
+            <div class="section-label">Why It Matters</div>
+            <h2 class="section-title">Strategic Context</h2>
+            <p class="section-intro">
+                The ITSM market is undergoing a fundamental shift. AI-enabled service delivery is moving from
+                aspirational to essential, but most organizations are unprepared. Research reveals a critical
+                insight: <strong>readiness — not product selection — determines outcomes</strong>.
+            </p>
+        </div>
+
+        <div class="quote fade-in">
+            "The 4× spread in deflection rates (15% to 54%) across organizations using the same platforms
+            shows that how ready you are matters far more than what you bought."
+            <div class="attribution">— Key finding from industry benchmark analysis</div>
+        </div>
+
+        <div class="overview-grid">
+            <div class="overview-card fade-in">
+                <div class="overview-icon">📉</div>
+                <h3>The Problem</h3>
+                <p>Gartner projects $2B in wasted spend from organizations buying AI capabilities they aren't ready to use. Without readiness assessment, investments fail. By 2027, 50% of service desk AI projects will be abandoned.</p>
+            </div>
+            <div class="overview-card fade-in">
+                <div class="overview-icon">💡</div>
+                <h3>The Opportunity</h3>
+                <p>An evidence-based framework that tells organizations exactly what capabilities they need to build — and in what order — before investing in AI-enabled service delivery. Preventing overspend while accelerating readiness.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Framework Design -->
+    <section id="framework">
+        <div class="section-header fade-in">
+            <div class="section-label">Framework</div>
+            <h2 class="section-title">Framework Design</h2>
+        </div>
+
+        <h3 class="subheading">Six Capabilities</h3>
+        <p class="section-body" style="margin-bottom: 0;">
+            Each capability measures a distinct, observable aspect of front-door readiness. Together they form
+            a complete picture of an organization's ability to deliver intelligent service experiences.
+        </p>
+
+        <div class="capability-grid">
+            <div class="capability-card fade-in">
+                <h4>📡 Channel Architecture</h4>
+                <p>How many ways can users reach you, and are they connected? Measures portal adoption, channel diversity, and intake distribution.</p>
+            </div>
+            <div class="capability-card fade-in">
+                <h4>🧠 Request Comprehension</h4>
+                <p>Can the system figure out what users need? Proxied from observable signals — form structure, categorization patterns, and routing efficiency.</p>
+            </div>
+            <div class="capability-card fade-in">
+                <h4>⚙️ Resolution Pathways</h4>
+                <p>Once intent is understood, how many ways can it get resolved? Measures automation adoption, workflow maturity, and self-service depth.</p>
+            </div>
+            <div class="capability-card fade-in">
+                <h4>📚 Content & Knowledge</h4>
+                <p>Is there something behind the door? KB depth, deflection rates, content freshness, and knowledge utilization patterns.</p>
+            </div>
+            <div class="capability-card fade-in">
+                <h4>🔗 Contextual Fabric</h4>
+                <p>Does the system know who this user is? Integration depth, asset data richness, caller history utilization, and relationship context.</p>
+            </div>
+            <div class="capability-card fade-in">
+                <h4>📊 Experience Management</h4>
+                <p>How is the front door measured and improved? Feedback loops, measurement practices, and continuous improvement signals.</p>
+            </div>
+        </div>
+
+        <h3 class="subheading subheading--gap">Weakest-Link Rule</h3>
+        <p class="section-body">
+            The framework's core principle: <strong>overall maturity = lowest individual capability score</strong>.
+            An organization scoring 4-4-4-2-4-4 is Stage 2, not Stage 3.6. This forces attention to the actual
+            bottleneck rather than celebrating strengths while ignoring constraints. It mirrors how real service
+            experiences work — a brilliant chatbot is useless if the knowledge base behind it is empty.
+        </p>
+
+        <h3 class="subheading subheading--gap">Five Maturity Stages</h3>
+        <div class="stage-pipeline fade-in">
+            <div class="stage">
+                <div class="stage-num">1</div>
+                <div class="stage-name">Fragmented</div>
+                <div class="stage-desc">"I don't know where to go"</div>
+            </div>
+            <div class="stage">
+                <div class="stage-num">2</div>
+                <div class="stage-name">Consolidated</div>
+                <div class="stage-desc">"I know where, but it doesn't help"</div>
+            </div>
+            <div class="stage">
+                <div class="stage-num">3</div>
+                <div class="stage-name">Guided</div>
+                <div class="stage-desc">"It usually understands me"</div>
+            </div>
+            <div class="stage">
+                <div class="stage-num">4</div>
+                <div class="stage-name">Intelligent</div>
+                <div class="stage-desc">"It usually just handles it"</div>
+            </div>
+            <div class="stage">
+                <div class="stage-num">5</div>
+                <div class="stage-name">Ambient</div>
+                <div class="stage-desc">"I didn't even notice IT"</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Research & Benchmarking -->
+    <section id="research">
+        <div class="section-header fade-in">
+            <div class="section-label">Grounded in Evidence</div>
+            <h2 class="section-title">Research & Industry Benchmarking</h2>
+            <p class="section-intro">
+                The framework is grounded in synthesis of seven major industry research sources, contextualized
+                against TOPdesk's global customer base.
+            </p>
+        </div>
+
+        <div class="data-table-wrap fade-in">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Source</th>
+                        <th>Key Insight</th>
+                        <th>How It's Used</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Gartner (2024–25)</strong></td>
+                        <td>50% of service desk AI projects abandoned by 2027; $2B overspend from premature investment</td>
+                        <td>Validates readiness-first approach; calibrates Stage 3–4 thresholds</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ivanti DEX 2025</strong></td>
+                        <td>36% would choose chatbot for IT (up 5pts/year); 89% report siloed data as blocker</td>
+                        <td>Calibrates Channel Architecture scoring; identifies progression barriers</td>
+                    </tr>
+                    <tr>
+                        <td><strong>HDI 2024</strong></td>
+                        <td>Only 11% use KB for &gt;33% of tickets; knowledge remains primary bottleneck</td>
+                        <td>Benchmarks Content & Knowledge thresholds against industry reality</td>
+                    </tr>
+                    <tr>
+                        <td><strong>SDI 2024</strong></td>
+                        <td>&lt;12% achieved self-service ROI; most orgs overestimate their maturity</td>
+                        <td>Grounds Stage 3+ expectations; prevents inflated self-assessment</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Forrester TEI 2025</strong></td>
+                        <td>Quantified ROI of AI-enabled service delivery; cost-benefit thresholds</td>
+                        <td>Informs what-if simulator parameters; validates investment scenarios</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Dashboard -->
+    <section id="dashboard">
+        <div class="section-header fade-in">
+            <div class="section-label">Visualization</div>
+            <h2 class="section-title">Dashboard & Analysis</h2>
+            <p class="section-intro">
+                The framework delivers insights through interactive dashboards that serve different stakeholder
+                needs — from high-level strategic views for leadership to account-level drill-downs for
+                customer-facing teams.
+            </p>
+        </div>
+
+        <div class="chart-block fade-in">
+            <h3>Capability Scoring & Weakest-Link Analysis</h3>
+            <div class="radar-placeholder">
+                <div class="hex"></div>
+                <div class="hex"></div>
+                <div class="hex"></div>
+                <div class="hex"></div>
+                <div class="fill"></div>
+                <div class="overlay">
+                    <div class="lock">🔒</div>
+                    <strong>Confidential</strong>
+                    <p>Average capability scores across ~4,900 customers showing which capabilities most constrain the front door.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-block fade-in">
+            <h3>Stage Distribution by Segment</h3>
+            <div class="chart-placeholder">
+                <div class="chart-blur">
+                    <div class="bar" style="width:18%; height:55%; background:#FF5370;"></div>
+                    <div class="bar" style="width:18%; height:80%; background:#FFB300;"></div>
+                    <div class="bar" style="width:18%; height:35%; background:#FFD740;"></div>
+                    <div class="bar" style="width:18%; height:15%; background:#64FFDA;"></div>
+                    <div class="bar" style="width:18%; height:5%; background:#00E5FF;"></div>
+                </div>
+                <div class="overlay">
+                    <div class="lock">🔒</div>
+                    <strong>Confidential</strong>
+                    <p>Distribution across 5 maturity stages, segmented by product line, region, ARR tier, organization size, and sector.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-block fade-in">
+            <h3>Industry Benchmark Comparison</h3>
+            <div class="chart-placeholder">
+                <div class="chart-blur">
+                    <div class="bar" style="width:14%; height:65%; background:#00E5FF;"></div>
+                    <div class="bar" style="width:14%; height:40%; background:#A8B2C1;"></div>
+                    <div class="bar" style="width:14%; height:45%; background:#00E5FF;"></div>
+                    <div class="bar" style="width:14%; height:55%; background:#A8B2C1;"></div>
+                    <div class="bar" style="width:14%; height:70%; background:#00E5FF;"></div>
+                    <div class="bar" style="width:14%; height:25%; background:#A8B2C1;"></div>
+                </div>
+                <div class="overlay">
+                    <div class="lock">🔒</div>
+                    <strong>Confidential</strong>
+                    <p>TOPdesk customer base performance vs. Gartner, HDI, Ivanti, and SDI industry benchmarks across key metrics.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-block fade-in">
+            <h3>What-If Simulator</h3>
+            <div class="chart-placeholder">
+                <div class="chart-blur">
+                    <div class="bar" style="width:42%; height:70%; background:rgba(168, 178, 193, 0.45);"></div>
+                    <div class="bar" style="width:42%; height:88%; background:rgba(0, 229, 255, 0.45);"></div>
+                </div>
+                <div class="overlay">
+                    <div class="lock">🔒</div>
+                    <strong>Confidential</strong>
+                    <p>Interactive simulator modeling the impact of capability improvements on stage progression across the customer base.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Methodology -->
+    <section id="process">
+        <div class="section-header fade-in">
+            <div class="section-label">Approach</div>
+            <h2 class="section-title">Design Process</h2>
+        </div>
+
+        <ol class="process-steps">
+            <li class="fade-in">
+                <strong>Industry Research Synthesis</strong>
+                <p>Analyzed 7 major industry reports (Gartner, Ivanti, HDI, SDI, Forrester, ScreenMeet, SmartDev) to establish a grounded understanding of where the market stands and where it's heading. Synthesized findings into a coherent picture of readiness drivers and blockers.</p>
+            </li>
+            <li class="fade-in">
+                <strong>Capability Model Design</strong>
+                <p>Defined 6 measurable capabilities based on what differentiates mature service organizations from immature ones. Each capability maps to specific, observable platform behaviors rather than subjective assessments — ensuring the framework works at scale without surveys.</p>
+            </li>
+            <li class="fade-in">
+                <strong>Scoring Calibration</strong>
+                <p>Discussed scoring thresholds with colleagues who know the accounts to check whether the model reflects reality. Ran sensitivity analysis to test how threshold changes affect stage distributions.</p>
+            </li>
+            <li class="fade-in">
+                <strong>Benchmarking Framework</strong>
+                <p>Built cross-cutting analyses: by region, product line, ARR tier, organization size, and sector. Contextualized every internal metric against relevant industry benchmarks to answer "how do we compare?" not just "where are we?"</p>
+            </li>
+            <li class="fade-in">
+                <strong>What-If Simulation</strong>
+                <p>Built interactive simulators: "If KB adoption goes from X% to Y%, how many customers advance a stage?" Makes the framework explorable rather than static.</p>
+            </li>
+            <li class="fade-in">
+                <strong>Communication</strong>
+                <p>Prepared presentations and summaries for different audiences, translating the technical framework into accessible language.</p>
+            </li>
+        </ol>
+    </section>
+
+    <!-- Impact -->
+    <section id="impact">
+        <div class="section-header fade-in">
+            <div class="section-label">Outcomes</div>
+            <h2 class="section-title">Usefulness & Outcomes</h2>
+        </div>
+
+        <h3 class="subheading">For Product Strategy & AI Roadmap</h3>
+        <div class="findings-container fade-in">
+            <div class="finding-item">
+                <div class="finding-marker">→</div>
+                <div class="finding-content">
+                    <p>Shows which capability is the actual bottleneck for the customer base — usually <strong>Content & Knowledge</strong>, not Channel Architecture — directly informing where to invest platform development effort.</p>
+                </div>
+            </div>
+            <div class="finding-item">
+                <div class="finding-marker">→</div>
+                <div class="finding-content">
+                    <p>Maps what percentage of customers are ready for specific AI features (chatbots, automated routing, proactive support) — guiding rollout sequencing and go/no-go decisions.</p>
+                </div>
+            </div>
+            <div class="finding-item">
+                <div class="finding-marker">→</div>
+                <div class="finding-content">
+                    <p><strong>What-if simulators</strong> model the effect of platform improvements: "if we improve KB tooling and lift adoption, how many more customers become ready for guided experiences?"</p>
+                </div>
+            </div>
+            <div class="finding-item">
+                <div class="finding-marker">→</div>
+                <div class="finding-content">
+                    <p><strong>Industry benchmarks</strong> provide realistic timelines — grounding the AI vision in where the market actually is, not where marketing says it should be.</p>
+                </div>
+            </div>
+            <div class="finding-item">
+                <div class="finding-marker">→</div>
+                <div class="finding-content">
+                    <p>Sector analysis shows that regulated industries face fundamentally different barriers — informing whether the roadmap needs <strong>segment-specific paths</strong>.</p>
+                </div>
+            </div>
+        </div>
+
+        <h3 class="subheading subheading--gap">Also Useful for Customer-Facing Teams</h3>
+        <div class="findings-container fade-in">
+            <div class="finding-item">
+                <div class="finding-marker">→</div>
+                <div class="finding-content">
+                    <p>Account-level scoring supports targeted conversations about where a customer is and what would help them progress.</p>
+                </div>
+            </div>
+            <div class="finding-item">
+                <div class="finding-marker">→</div>
+                <div class="finding-content">
+                    <p>Channel mix analysis shows which customer segments are ready for chat-first experiences vs. still needing portal basics.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Collaboration -->
+    <section id="collaboration">
+        <div class="section-header fade-in">
+            <div class="section-label">Working Together</div>
+            <h2 class="section-title">Collaboration</h2>
+        </div>
+
+        <div class="impact-grid">
+            <div class="impact-card fade-in">
+                <div class="impact-icon">📢</div>
+                <div class="impact-content">
+                    <h3>Internal Presentations</h3>
+                    <p>Shared framework and findings with stakeholders across the business, explaining the methodology and what the data shows.</p>
+                </div>
+            </div>
+            <div class="impact-card fade-in">
+                <div class="impact-icon">🔄</div>
+                <div class="impact-content">
+                    <h3>Threshold Discussions</h3>
+                    <p>Discussed scoring thresholds with colleagues who know the accounts to check whether the model aligns with reality.</p>
+                </div>
+            </div>
+            <div class="impact-card fade-in">
+                <div class="impact-icon">💻</div>
+                <div class="impact-content">
+                    <h3>Self-Service Tooling</h3>
+                    <p>Built dashboards that people can use on their own rather than requesting ad-hoc analysis from me.</p>
+                </div>
+            </div>
+            <div class="impact-card fade-in">
+                <div class="impact-icon">📚</div>
+                <div class="impact-content">
+                    <h3>Industry Research</h3>
+                    <p>Synthesized 7 industry reports to ground the framework in published data rather than internal assumptions alone.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills">
+        <div class="section-header fade-in">
+            <div class="section-label">Toolkit</div>
+            <h2 class="section-title">Skills & Methods Applied</h2>
+        </div>
+
+        <div class="skills-grid">
+            <div class="skill-card fade-in">
+                <h4>Research & Analysis</h4>
+                <p>Industry analysis synthesis, maturity model design, measurement methodology, benchmarking.</p>
+            </div>
+            <div class="skill-card fade-in">
+                <h4>Data & Visualization</h4>
+                <p>Python, Pandas, Plotly, Streamlit, sensitivity analysis, what-if simulation, interactive dashboards.</p>
+            </div>
+            <div class="skill-card fade-in">
+                <h4>Communication</h4>
+                <p>Presenting findings to different audiences, translating technical methodology into plain language.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reflections -->
+    <section id="reflections">
+        <div class="section-header fade-in">
+            <div class="section-label">Looking Back</div>
+            <h2 class="section-title">Reflections</h2>
+        </div>
+
+        <div class="impact-grid">
+            <div class="impact-card fade-in">
+                <div class="impact-icon">🔗</div>
+                <div class="impact-content">
+                    <h3>Weakest-Link Changed the Conversation</h3>
+                    <p>People initially wanted averages instead of weakest-link. But once they saw how it mirrors real experience (a broken link breaks the chain), it clicked.</p>
+                </div>
+            </div>
+            <div class="impact-card fade-in">
+                <div class="impact-icon">📊</div>
+                <div class="impact-content">
+                    <h3>Benchmarks Beat Absolutes</h3>
+                    <p>"You're at Stage 2" didn't prompt much discussion. "You're at Stage 2, and 80% of similar orgs are too — but the top 12% have moved to Stage 3" did. External context helps.</p>
+                </div>
+            </div>
+            <div class="impact-card fade-in">
+                <div class="impact-icon">🎛️</div>
+                <div class="impact-content">
+                    <h3>Simulators Create Ownership</h3>
+                    <p>When people could model their own scenarios ("what if we get 60% on SSP?"), they engaged more deeply with the data than with static charts.</p>
+                </div>
+            </div>
+            <div class="impact-card fade-in">
+                <div class="impact-icon">👁️</div>
+                <div class="impact-content">
+                    <h3>Observable &gt; Self-Reported</h3>
+                    <p>Measuring what customers do (not what they say) at scale produces signals without requiring survey participation or response bias.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="index.html#projects">Projects</a>
+                <a href="index.html#experience">Experience</a>
+                <a href="index.html#contact">Contact</a>
+                <a href="https://www.linkedin.com/in/bhuvan-sarupuri-ph-d-6448a767/" target="_blank">LinkedIn</a>
+            </div>
+            <p style="margin-top: 30px; opacity: 0.7;">
+                © 2025 Bhuvan Sarupuri. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -100px 0px' });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
