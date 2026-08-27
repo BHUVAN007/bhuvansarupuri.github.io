@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluating the AI Conversation Service (VSA & Copilot) - AI Evaluation Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-dark-navy: #0D47A1;
+            --primary-cyan: #00E5FF;
+            --primary-teal: #0288D1;
+            --accent-orange: #FFB300;
+            --accent-warm-orange: #FF5370;
+            --mint: #64FFDA;
+
+            --bg-primary: #0A0E1A;
+            --bg-secondary: #121827;
+            --bg-tertiary: #1A2332;
+            --bg-card: rgba(26, 35, 50, 0.8);
+
+            --text-dark: #E8F0F7;
+            --text-medium: #A8B2C1;
+            --text-light: #6B7788;
+
+            --border-color: rgba(0, 229, 255, 0.1);
+            --border-hover: rgba(0, 229, 255, 0.3);
+
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.5);
+            --shadow-glow: 0 0 20px rgba(0, 229, 255, 0.3);
+
+            --white: #E8F0F7;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--bg-primary);
+            background-image:
+                radial-gradient(at 0% 0%, rgba(0, 229, 255, 0.05) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(2, 136, 209, 0.05) 0px, transparent 50%);
+            background-attachment: fixed;
+            padding-top: 100px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Hero */
+        .hero {
+            position: relative;
+            background: transparent;
+            color: var(--text-dark);
+            padding: 2.5rem 0 1.75rem;
+            margin-bottom: 2.5rem;
+            overflow: hidden;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: -5%;
+            transform: translateY(-50%);
+            width: 55%;
+            height: 110%;
+            background: radial-gradient(circle, rgba(0, 229, 255, 0.15) 0%, transparent 60%);
+            filter: blur(60px);
+        }
+
+        .hero .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 2.6rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            line-height: 1.15;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-medium);
+            margin-bottom: 1rem;
+            max-width: 760px;
+        }
+
+        .hero-role {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            margin-bottom: 0;
+            padding-top: 0.9rem;
+            border-top: 1px solid var(--border-color);
+            display: inline-block;
+        }
+
+        section {
+            margin-bottom: 3rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        h2::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-cyan), var(--mint));
+            border-radius: 2px;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text-dark);
+        }
+
+        h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        p {
+            font-size: 1.05rem;
+            color: var(--text-medium);
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+
+        ul, ol {
+            padding-left: 1.5rem;
+            color: var(--text-medium);
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        li { margin-bottom: 0.5rem; }
+
+        strong { color: var(--text-dark); }
+
+        /* Cards */
+        .card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--border-hover);
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
+        }
+
+        /* Process grid */
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.25rem;
+            margin-top: 1.5rem;
+        }
+
+        .process-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 16px;
+            padding: 1.5rem;
+            border-left: 4px solid var(--primary-cyan);
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .process-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
+            border-left-color: var(--mint);
+            border-color: var(--border-hover);
+        }
+
+        .process-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-cyan), var(--mint));
+            color: var(--bg-primary);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: 700;
+            font-size: 1.125rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 229, 255, 0.3);
+        }
+
+        .process-card p { font-size: 1rem; color: var(--text-light); margin-bottom: 0; }
+
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
+        }
+
+        .stat-number {
+            font-size: 2.75rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-cyan), var(--mint));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            margin-top: 0.5rem;
+        }
+
+        /* Quote */
+        .quote {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-left: 4px solid var(--primary-cyan);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            font-style: italic;
+            font-size: 1.05rem;
+            color: var(--text-dark);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Note / disclaimer box */
+        .note-box {
+            background: rgba(255, 179, 0, 0.08);
+            border-left: 4px solid var(--accent-orange);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border: 1px solid rgba(255, 179, 0, 0.25);
+        }
+
+        .note-box p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+            color: var(--text-medium);
+        }
+
+        .note-box strong { color: var(--accent-orange); }
+
+        /* Screenshots */
+        .artifact-showcase {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+        }
+
+        .screenshot {
+            width: 100%;
+            display: block;
+            margin: 1rem auto 0.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+        }
+
+        /* Screenshot with obscured regions */
+        .shot {
+            position: relative;
+            display: block;
+            margin: 1rem auto 0.5rem;
+            line-height: 0;
+        }
+
+        .shot img {
+            width: 100%;
+            display: block;
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .shot .redact {
+            position: absolute;
+            backdrop-filter: blur(7px) saturate(0.7);
+            -webkit-backdrop-filter: blur(7px) saturate(0.7);
+            background: rgba(236, 241, 248, 0.35);
+            border-radius: 4px;
+            pointer-events: none;
+        }
+
+        /* Chips */
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin: 1rem 0 1.5rem;
+        }
+
+        .chip {
+            background: rgba(0, 229, 255, 0.06);
+            border: 1px solid var(--border-color);
+            border-radius: 999px;
+            padding: 0.45rem 0.95rem;
+            font-size: 0.9rem;
+            color: var(--text-medium);
+        }
+
+        .chip strong { color: var(--text-dark); font-weight: 600; }
+
+        /* Fixed two-up grid (no orphan row) */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.25rem;
+            margin-top: 1.5rem;
+        }
+
+        .grid-2 .card { margin-bottom: 0; }
+
+        .grid-2 h3 {
+            font-size: 1.2rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .grid-2 p { font-size: 1rem; margin-bottom: 0; }
+
+        /* Screenshot frames */
+        .shots {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.25rem;
+            margin-top: 1.5rem;
+        }
+
+        .frame {
+            display: block;
+            text-decoration: none;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+        }
+
+        .frame:hover {
+            transform: translateY(-4px);
+            border-color: var(--border-hover);
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
+        }
+
+        .frame-bar {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.65rem 0.9rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .frame-bar .dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: rgba(168, 178, 193, 0.3);
+        }
+
+        .frame-title {
+            font-size: 0.82rem;
+            color: var(--text-medium);
+            margin-left: 0.45rem;
+        }
+
+        .verdict {
+            margin-left: auto;
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            padding: 0.1rem 0.5rem;
+            border-radius: 5px;
+        }
+
+        .verdict.surface { color: var(--primary-cyan); border: 1px solid var(--border-hover); }
+
+        .frame img { width: 100%; display: block; }
+
+        .frame .frame-caption {
+            padding: 0.85rem 1rem 1rem;
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 0;
+            line-height: 1.55;
+        }
+
+        @media (max-width: 860px) {
+            .grid-2, .shots { grid-template-columns: 1fr; }
+        }
+
+        /* Two-column split */
+        .split {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.25rem;
+            margin-top: 1.5rem;
+        }
+
+        .split .card { margin-bottom: 0; }
+
+        .split h3 {
+            font-size: 1.2rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .split ul { margin-bottom: 0; padding-left: 1.2rem; font-size: 0.97rem; }
+
+        .tag {
+            display: inline-block;
+            font-size: 0.7rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--primary-cyan);
+            border: 1px solid var(--border-hover);
+            border-radius: 5px;
+            padding: 0.05rem 0.4rem;
+            margin-left: 0.35rem;
+            vertical-align: 1px;
+            white-space: nowrap;
+        }
+
+        .lede {
+            font-size: 1.15rem;
+            color: var(--text-dark);
+            margin-bottom: 1.25rem;
+        }
+
+        .image-caption {
+            text-align: center;
+            margin-top: 0.25rem;
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+        /* Table */
+        .principles-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            background: var(--bg-card);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .principles-table th, .principles-table td {
+            text-align: left;
+            padding: 0.9rem 1.2rem;
+            font-size: 0.95rem;
+            color: var(--text-medium);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .principles-table th {
+            color: var(--primary-cyan);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+        }
+
+        .principles-table tr:last-child td { border-bottom: none; }
+
+        .principles-table th.num, .principles-table td.num {
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+            white-space: nowrap;
+        }
+
+        .principles-table td.num { color: var(--text-dark); font-weight: 600; }
+
+        /* Opportunities-style cards for edge cases */
+        .opportunities {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.25rem;
+            margin-top: 1.5rem;
+        }
+
+        .opportunity-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 16px;
+            padding: 1.25rem;
+            border-left: 4px solid var(--primary-cyan);
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .opportunity-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
+            border-left-color: var(--mint);
+            border-color: var(--border-hover);
+        }
+
+        .opportunity-card p { font-size: 0.95rem; color: var(--text-light); margin-bottom: 0; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .hero-subtitle { font-size: 1.15rem; }
+            .container { padding: 0 1rem; }
+            .hero::before { opacity: 0.2; width: 80%; right: -10%; }
+        }
+
+        footer {
+            background: var(--bg-secondary);
+            padding: 2rem 0;
+            margin-top: 3rem;
+            text-align: center;
+            color: var(--text-medium);
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Name Header + Nav */
+        .name-header {
+            position: fixed;
+            top: 30px;
+            left: 40px;
+            z-index: 1000;
+            font-family: 'Fraunces', serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-dark);
+            text-decoration: none;
+            letter-spacing: 0.5px;
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 12px 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+        }
+
+        .name-header:hover {
+            border-color: var(--border-hover);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .name-header .degree {
+            color: var(--primary-cyan);
+            font-weight: 300;
+        }
+
+        .nav-links {
+            position: fixed;
+            top: 30px;
+            right: 40px;
+            z-index: 1000;
+            display: flex;
+            gap: 30px;
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 12px 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-links a {
+            color: var(--text-medium);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover { color: var(--primary-cyan); }
+
+        @media (max-width: 968px) {
+            .name-header, .nav-links {
+                position: static;
+                margin: 20px auto;
+                text-align: center;
+            }
+            .nav-links { justify-content: center; flex-wrap: wrap; }
+            body { padding-top: 20px; }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@300;600;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <a href="index.html" class="name-header">Bhuvan Sarupuri <span class="degree">Ph.D.</span></a>
+
+    <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="index.html#projects">Projects</a>
+        <a href="index.html#experience">Experience</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="https://www.linkedin.com/in/bhuvan-sarupuri-ph-d-6448a767/" target="_blank">LinkedIn</a>
+    </nav>
+
+
+    <div class="hero">
+        <div class="container">
+            <h1>Evaluating an AI Conversation Service</h1>
+            <p class="hero-subtitle">A framework for judging generated answers on two new AI chat surfaces at TOPdesk, a self-service assistant (VSA) and an operator-facing Copilot, and the product changes it drove.</p>
+
+            <p class="hero-role">I designed the evaluation, built the review interface, ran the sessions and wrote the analysis.</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <section id="overview">
+            <h2>The Problem</h2>
+            <p class="lede">Two AI chat surfaces were being built on retrieval-augmented generation, and there was no systematic way to say whether a generated answer was helpful, safe to send, or correctly declining to answer.</p>
+            <p>That is the setup where a feature ships on the strength of a few good demo answers, and the fabricated citation or the mishandled safety-ambiguous query surfaces only when a customer finds it. What was missing was not more sample answers. It was a framework that made those judgments repeatable, and a review setting that let people make them well.</p>
+
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number">147</div>
+                    <div class="stat-label">Answers Judged</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">Recorded Sessions</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">2</div>
+                    <div class="stat-label">AI Surfaces</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">15</div>
+                    <div class="stat-label">Findings, Evidence-Ranked</div>
+                </div>
+            </div>
+
+            <div class="note-box">
+                <p><strong>A note on confidentiality:</strong> this is TOPdesk product work. Participant quotes, incident references, prompt text and model outputs are TOPdesk-internal; findings are stated at the level of pattern rather than instance. The screenshots use fabricated sample data built for this write-up, and the answer and ticket text in them is blurred.</p>
+            </div>
+        </section>
+
+        <section id="interface">
+            <h2>The Review Interface</h2>
+            <p class="lede">I built the review interface to look like the product itself, because judging a conversation out of context is a different task from judging it where it actually happens.</p>
+            <p>Both surfaces are conversational: the thing under evaluation is a turn in a conversation, not a paragraph in a spreadsheet. A spreadsheet of question-and-answer pairs asks a reviewer to imagine the surrounding product and then judge what they imagined. So the tool loads the case workbook and renders each turn inside a recreation of TOPdesk's own incident screen, with the AI panel docked exactly where it sits in the real product, and with the retrieved knowledge items and the ones actually cited sitting alongside the answer. Operators judged in the context they know from daily use, which kept their reactions about the answer rather than about the format they were reading it in. Each case takes a verdict and a free-text note, and notes persist across re-runs, so a revised answer set can be compared against the previous round without losing reviewer history.</p>
+
+            <div class="shots">
+                <a class="frame" href="vsa-copilot-images/ssp-eval-viewer.png" target="_blank" rel="noopener">
+                    <span class="frame-bar">
+                        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                        <span class="frame-title">End-user assistant</span>
+                        <span class="verdict surface">Self-service portal</span>
+                    </span>
+                    <img src="vsa-copilot-images/ssp-eval-viewer.png" alt="Test-case viewer for the end-user assistant: a list of numbered test cases on the left, and on the right the self-service portal in AI Mode with the user's question, the generated answer and its sources. Answer text is blurred.">
+                    <p class="frame-caption">Each test case opens in the self-service portal itself: AI Mode, the question as the user typed it, the answer and its sources.</p>
+                </a>
+                <a class="frame" href="vsa-copilot-images/copilot-eval-viewer.png" target="_blank" rel="noopener">
+                    <span class="frame-bar">
+                        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                        <span class="frame-title">Operator assistant</span>
+                        <span class="verdict surface">Incident view</span>
+                    </span>
+                    <img src="vsa-copilot-images/copilot-eval-viewer.png" alt="Test-case viewer for the operator assistant: a numbered case rail on the left, the recreated TOPdesk incident view in the middle, and the Ask AI panel on the right with the operator's question, the answer and the retrieved knowledge items. Answer and ticket text are blurred.">
+                    <p class="frame-caption">The operator side sits in the incident it belongs to, with Ask AI docked where it appears in the product and the retrieved knowledge items below the answer.</p>
+                </a>
+            </div>
+            <p class="image-caption" style="text-align: left; margin-top: 0.75rem;">Click either frame for the full-size view. Sample tickets and answers written for this page, not real customer or operator data, with answer and ticket text blurred regardless.</p>
+        </section>
+
+        <section id="framework">
+            <h2>The Framework</h2>
+            <p>Both surfaces sit on the same retrieval stack, but they are not the same product and could not be judged the same way. Four rules did most of the work of keeping the results honest.</p>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h3>Two bars, never combined</h3>
+                    <p>The end-user assistant was judged on helpfulness, tone and appropriateness, but not on correctness, since no reviewer owned the knowledge base. For the operator assistant, a pass meant the draft was <em>useful to the operator</em>, not that it was ready to send to a caller. Different bars, different people, different case sets: the two rates are reported side by side and never pooled or compared.</p>
+                </div>
+                <div class="card">
+                    <h3>"AI pass, human fail"</h3>
+                    <p>The operator questions were ours, written to probe, including deliberately awkward phrasings. When an objection was really about how <em>we</em> worded the question, it graded the test design rather than the product, and was excluded. Robustness to a badly formed prompt stayed in: a real prompt can contain anything.</p>
+                </div>
+                <div class="card">
+                    <h3>Evidence weight, not conviction</h3>
+                    <p>Every finding carries how many participants raised it, on how many cases, and whether it was volunteered or drawn out by a moderator question. A strongly worded reaction from one session stays a single reaction rather than being promoted into a theme.</p>
+                </div>
+                <div class="card">
+                    <h3>A reason on every verdict</h3>
+                    <p>Passes needed a stated reason too, not just failures. Each failure was also tagged with a root cause plus, where relevant, a contributing second one, so the taxonomy shows what drives failures instead of listing symptoms flat.</p>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 2.5rem;">Coverage</h3>
+            <table class="principles-table">
+                <tr><th>Set</th><th>Participants</th><th class="num">Judged</th><th class="num">Pass</th><th class="num">Fail</th><th class="num">Rate</th></tr>
+                <tr><td>End-user assistant (VSA)</td><td>3</td><td class="num">95</td><td class="num">65</td><td class="num">30</td><td class="num">68.4%</td></tr>
+                <tr><td>Operator assistant (Copilot)</td><td>2</td><td class="num">52</td><td class="num">45</td><td class="num">7</td><td class="num">86.5%</td></tr>
+            </table>
+            <p style="font-size: 0.92rem; color: var(--text-light); margin-top: 0.75rem;">Qualitative research on a small sample: every number indicates direction rather than measurement, and the two rates answer different questions.</p>
+
+            <h3 style="margin-top: 2.5rem;">The Failure Taxonomy</h3>
+            <p>Failures clustered into seven root causes, each carrying its own kind of fix: conversation design, interface, retrieval, prompt, or knowledge-base content.</p>
+            <div class="chips">
+                <span class="chip">Answered too early, or assumed wrong</span>
+                <span class="chip">No form, button or escalation destination</span>
+                <span class="chip">Formatting, ordering, wall of text</span>
+                <span class="chip">Weak content: retrieval, over-summary</span>
+                <span class="chip">Prompt injection: role and format manipulation</span>
+                <span class="chip">Missed context signal: urgency, repeat user, privacy</span>
+                <span class="chip">Out-of-scope and general-knowledge handling</span>
+            </div>
+        </section>
+
+        <section id="surfaced">
+            <h2>What It Surfaced</h2>
+            <p>Fifteen findings, each with a recommendation and a confidence label. The strongest were the ones participants reached independently, without being asked.</p>
+
+            <div class="split">
+                <div class="card">
+                    <h3>End-user assistant</h3>
+                    <ul>
+                        <li><strong>It answers before it knows enough.</strong><span class="tag">largest cause</span> Questions that fork on an unknown detail get one reading picked and answered as fact.</li>
+                        <li><strong>It describes an action instead of offering one.</strong><span class="tag">3 of 3, unprompted</span> Answers resolving to "submit a form" left the user to go and find it.</li>
+                        <li><strong>Urgency has no route to a person</strong>, so time pressure is met with more self-help.</li>
+                        <li><strong>Knowledge-base content reaches the user unfiltered</strong>, and retrieval returns the wrong article type for the question asked.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>Operator assistant</h3>
+                    <ul>
+                        <li><strong>It acts only when the operator composes a prompt.</strong><span class="tag">2 of 2, unprompted</span> Both operators arrived here from opposite directions.</li>
+                        <li><strong>The requester's hedged claim is treated as fact</strong> rather than as the first thing to check.</li>
+                        <li><strong>Security-sensitive incidents carry no risk signal</strong> and no route to a qualified person.</li>
+                        <li><strong>Retrieval is swayed by framing.</strong> The operator's guess that nothing is documented becomes the system's conclusion.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="quote">
+                The finding that paid for the framework: the most concrete defects all appeared in answers that <strong>passed</strong>. A pass rate on its own would have hidden every one of them. What surfaced them was requiring a stated reason on each verdict, including the positive ones.
+            </div>
+        </section>
+
+        <section id="impact">
+            <h2>What Changed</h2>
+            <div class="card">
+                <p>The evaluation fed straight back into the product rather than stopping at a report. Findings were labelled safe to act on now or directional, so the team could tell which ones carried enough evidence to build on, and they drove three kinds of change:</p>
+                <ul>
+                    <li><strong>Product iterations</strong> on the conversation design and the surrounding interface: where the assistant needs to ask before answering, and where an answer needs a working control rather than a description of one.</li>
+                    <li><strong>Prompt changes</strong> for both surfaces, informed as much by the responses participants praised as by the failures: ten of those were captured with the query, the answer as returned, and the reviewer's reasoning, giving prompt work positive exemplars instead of only a defect list.</li>
+                    <li><strong>Extra guardrails</strong> on the paths where a wrong answer costs the most: unfiltered knowledge-base content reaching a user, and security-sensitive requests being handled without a risk signal or a route to a qualified person.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="limits">
+            <h2>What This Evidence Cannot Carry</h2>
+            <p>Two limits decide how far each finding can be pushed, and both are stated in the report rather than left for a reader to infer:</p>
+            <ul>
+                <li><strong>Every participant works at TOPdesk.</strong> Nobody has yet judged these answers as a customer, against their own knowledge base.</li>
+                <li><strong>Nothing here measures correctness.</strong> Reviewers could not verify content they did not own. That check belongs to whoever owns the knowledge base.</li>
+            </ul>
+            <p>Which makes the highest-value follow-up easy to name: run the same evaluation with customers, on their own knowledge base. It is the only route to a correctness check and the only real test of whether the operator findings generalise.</p>
+        </section>
+
+        <section id="reflections">
+            <h2>Reflections</h2>
+            <div class="split">
+                <div class="card">
+                    <h3>What held up</h3>
+                    <ul>
+                        <li>Requiring a reason on every verdict, not just the failures.</li>
+                        <li>Refusing to combine the two pass rates, however much a single headline number would have been easier to present.</li>
+                        <li>Recording corrections rather than smoothing them over. A recovered session recording re-sourced several operator findings, and that is stated in the report.</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <h3>What I would do differently</h3>
+                    <ul>
+                        <li>Settle the judging bar before the first session rather than half an hour into it.</li>
+                        <li>Protect session time: one session ran out with fourteen cases unjudged.</li>
+                        <li>Get more than one session of operator feedback before letting any theme read as more than directional.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="quote">
+                A pass rate hides the defects that ride along inside passing answers. The decisions that mattered were not about judging more cases. They were about what each verdict was allowed to conclude, and about giving reviewers a setting where their judgment was worth having.
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p style="font-weight: 600;">AI Evaluation Portfolio: Conversation Service Eval Project</p>
+            <p style="margin-top: 0.5rem; font-size: 0.875rem;">TOPdesk &middot; 2026</p>
+        </div>
+    </footer>
+</body>
+</html>
