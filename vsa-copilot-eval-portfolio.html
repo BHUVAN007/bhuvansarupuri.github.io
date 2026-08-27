@@ -487,6 +487,15 @@
             white-space: nowrap;
         }
 
+        .process-card h4 .tag {
+            margin-left: 0.5rem;
+            font-size: 0.62rem;
+            letter-spacing: 0.07em;
+            white-space: normal;
+        }
+
+        .process-card h4 { line-height: 1.4; margin-bottom: 0.6rem; }
+
         .lede {
             font-size: 1.15rem;
             color: var(--text-dark);
@@ -827,31 +836,29 @@
                 <li><strong>Every participant works at TOPdesk.</strong> Nobody has yet judged these answers as a customer, against their own knowledge base.</li>
                 <li><strong>Nothing here measures correctness.</strong> Reviewers could not verify content they did not own. That check belongs to whoever owns the knowledge base.</li>
             </ul>
-            <p>Which makes the highest-value follow-up easy to name: run the same evaluation with customers, on their own knowledge base. It is the only route to a correctness check and the only real test of whether the operator findings generalise.</p>
+            <p>Both limits point the same way, and they set the follow-up work below.</p>
         </section>
 
-        <section id="reflections">
-            <h2>Reflections</h2>
-            <div class="split">
-                <div class="card">
-                    <h3>What held up</h3>
-                    <ul>
-                        <li>Requiring a reason on every verdict, not just the failures.</li>
-                        <li>Refusing to combine the two pass rates, however much a single headline number would have been easier to present.</li>
-                        <li>Recording corrections rather than smoothing them over. A recovered session recording re-sourced several operator findings, and that is stated in the report.</li>
-                    </ul>
+        <section id="followups">
+            <h2>Follow-ups</h2>
+            <h3 style="font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--primary-cyan); margin-bottom: 0;">Research</h3>
+
+            <div class="process-grid">
+                <div class="process-card">
+                    <span class="process-number">1</span>
+                    <h4>Run the same evaluation on the customer side<span class="tag">largest gap</span></h4>
+                    <p>Every tester so far works at TOPdesk. Repeat both halves with customer service desk agents and customer end users, reviewing answers drawn from their own knowledge base.</p>
                 </div>
-                <div class="card">
-                    <h3>What I would do differently</h3>
-                    <ul>
-                        <li>Settle the judging bar before the first session rather than half an hour into it.</li>
-                        <li>Protect session time: one session ran out with fourteen cases unjudged.</li>
-                        <li>Get more than one session of operator feedback before letting any theme read as more than directional.</li>
-                    </ul>
+                <div class="process-card">
+                    <span class="process-number">2</span>
+                    <h4>Put the external-sources question to Sales and Consultancy, and to customers directly<span class="tag">feeds decision one</span></h4>
+                    <p>The argument for it is commercial, about customers whose knowledge base is too small to carry the feature. Internal testing will not answer it, and the people who would enable the setting are the ones to ask.</p>
                 </div>
-            </div>
-            <div class="quote">
-                A pass rate hides the defects that ride along inside passing answers. The decisions that mattered were not about judging more cases. They were about what each verdict was allowed to conclude, and about giving reviewers a setting where their judgment was worth having.
+                <div class="process-card">
+                    <span class="process-number">3</span>
+                    <h4>Check the answers against the source articles, and let customers check their own<span class="tag">needed before pass rates are shared externally</span></h4>
+                    <p>The study did not ask whether the answers are true. A customer reviewing answers drawn from their own knowledge base can assess whether an answer is faithful to it, so this fits inside the customer sessions rather than beside them.</p>
+                </div>
             </div>
         </section>
     </div>
