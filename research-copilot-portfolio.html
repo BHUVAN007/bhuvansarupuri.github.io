@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="A copilot that lets any product role run real research on their own: 26 tasks across the research lifecycle and 7 chained workflows, built as configuration rather than code.">
+<meta name="description" content="A copilot that lets any product role run real research on their own: 20 tasks across the research lifecycle and 6 chained workflows, built as configuration rather than code.">
     <title>TOPdesk Research Copilot | Bhuvan Sarupuri</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -208,6 +208,7 @@
       <div><div class="k">For</div><div class="v">TOPdesk (self-directed)</div></div>
       <div><div class="k">Year</div><div class="v">2026</div></div>
       <div><div class="k">Stack</div><div class="v">TypeScript, Node, Claude</div></div>
+      <div><div class="k">Status</div><div class="v">Built · awaiting adoption data</div></div>
     </div>
   
       <aside class="scope-note measure">
@@ -223,7 +224,7 @@
     <p class="muted measure">Talk to it or type. It works out which research task you need, opens it, and grounds everything in TOPdesk's real product docs, so it does not sound like generic UX advice.</p>
     <ul class="points">
       <li><b>Talk or type</b> what you are working on. It routes you to the right task and brings your context along.</li>
-      <li><b>26 tasks</b> across the whole research lifecycle, from framing a study to proving its impact.</li>
+      <li><b>20 tasks</b> across the whole research lifecycle, from framing a study to proving its impact.</li>
     </ul>
     <figure>
       <div class="browser">
@@ -291,7 +292,7 @@
     <div class="agents">
       <div class="agent"><span class="d qual"></span><b>Qualitative</b><span>7 skills</span></div>
       <div class="agent"><span class="d quant"></span><b>Quantitative</b><span>2 skills</span></div>
-      <div class="agent"><span class="d mixed"></span><b>Mixed methods</b><span>17 skills</span></div>
+      <div class="agent"><span class="d mixed"></span><b>Mixed methods</b><span>11 skills</span></div>
     </div>
     <p class="muted measure">Every skill belongs to one of three method agents. The stakeholder, a PM or a lead, is a role in the work, not an agent, so the tool never pretends a person is automated.</p>
 
@@ -305,7 +306,7 @@
       <div class="note">One skill is one spec. A single engine reads it, asks Claude for structured output, grounds it in the TOPdesk docs, and holds the guardrails. Adding a task is a few lines of YAML, not a new screen.</div>
     </div>
 
-    <h3 style="margin-top:38px;font-size:19px">Seven workflows chain the skills</h3>
+    <h3 style="margin-top:38px;font-size:19px">Six workflows chain the skills</h3>
     <p class="muted measure" style="margin-top:10px">A workflow is an ordered run of skills with review gates, so bigger jobs stay on rails.</p>
     <div class="wf">
       <div class="r"><span class="name">Discovery</span><span class="desc">Generative research, intake to activation</span><span class="steps">7 skills · 2 gates</span></div>
@@ -314,7 +315,6 @@
       <div class="r"><span class="name">Impact</span><span class="desc">ROI, impact tracking, business case</span><span class="steps">3 skills · 1 gate</span></div>
       <div class="r"><span class="name">IA</span><span class="desc">Card sort to tree test</span><span class="steps">3 skills · 1 gate</span></div>
       <div class="r"><span class="name">Mixed</span><span class="desc">Qual depth plus quant scale</span><span class="steps">5 skills · 1 gate</span></div>
-      <div class="r"><span class="name">Career</span><span class="desc">UXR career strategy and value story</span><span class="steps">6 skills · 1 gate</span></div>
     </div>
 
     <h3 style="margin-top:38px;font-size:19px">How a request flows</h3>
@@ -358,13 +358,17 @@
       <figcaption>Real output from the "Write insights" task. It uses TOPdesk's own terms and cites what it is based on.</figcaption>
     </figure>
 
+    <aside class="scope-note measure" style="margin-top:34px">
+      <span class="eyebrow">Where it stands</span>
+      <p>The copilot is built and runs end to end. What it does not have yet is evidence of use. I am waiting on the first round of feedback and on adoption metrics &mdash; which tasks get picked up, which get abandoned halfway, and whether the router sends people to the task they actually needed &mdash; before deciding what to change next.</p>
+    </aside>
+
   </section>
 
   <footer class="wrap">
     <div class="who">Bhuvan Sarupuri<span>UX Research · heybhuvan.com</span></div>
     <div class="links">
       <a href="https://heybhuvan.com">heybhuvan.com</a>
-      <a href="https://github.com/BHUVAN007/topdesk-research-intake">Source on GitHub</a>
     </div>
     <p style="width: 100%; margin-top: 1.25rem; font-size: 0.875rem; opacity: 0.7;">&copy; 2026 Bhuvan Sarupuri. All rights reserved.</p>
   </footer>
