@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="A copilot that lets any product role run real research on their own: 26 tasks across the research lifecycle and 7 chained workflows, built as configuration rather than code.">
+    <title>TOPdesk Research Copilot | Bhuvan Sarupuri</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Fraunces:wght@300;600;900&display=swap">
+<style>
+  :root {
+    --bg: #eef2f4; --surface: #ffffff; --surface-2: #f4f8fa; --ink: #17242c; --muted: #55636d; --faint: #8895a0;
+    --line: #dde5ea; --line-strong: #c7d2da; --accent: #0a7da0; --accent-deep: #0a6382; --accent-soft: #e2eff4;
+    --coral: #e65038; --warn: #b0761a; --warn-soft: #f6ecd7; --crit: #bf4630; --crit-soft: #f7e3dd;
+    --f-head: "Bricolage Grotesque", system-ui, sans-serif;
+    --f-body: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --f-mono: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  }
+  :root:not([data-theme="light"]) { @media (prefers-color-scheme: dark) {
+    --bg: #0d151a; --surface: #131f26; --surface-2: #16242c; --ink: #e9f1f4; --muted: #94a4ad; --faint: #66767e;
+    --line: #22323a; --line-strong: #2e3f48; --accent: #23a6c9; --accent-deep: #7fcfe4; --accent-soft: #12262e;
+    --coral: #f0715a; --warn: #d69a3f; --warn-soft: #2a2416; --crit: #e0745c; --crit-soft: #2c1c18;
+  } }
+  :root[data-theme="dark"] {
+    --bg: #0d151a; --surface: #131f26; --surface-2: #16242c; --ink: #e9f1f4; --muted: #94a4ad; --faint: #66767e;
+    --line: #22323a; --line-strong: #2e3f48; --accent: #23a6c9; --accent-deep: #7fcfe4; --accent-soft: #12262e;
+    --coral: #f0715a; --warn: #d69a3f; --warn-soft: #2a2416; --crit: #e0745c; --crit-soft: #2c1c18;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 18px; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 26px; }
+  .measure { max-width: 880px; }
+  h1, h2, h3 { font-family: var(--f-head); font-weight: 700; line-height: 1.14; letter-spacing: -0.015em; margin: 0; text-wrap: balance; }
+  a { color: var(--accent-deep); }
+  .eyebrow { font-family: var(--f-mono); font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-deep); font-weight: 600; }
+
+  .part { padding: 62px 0; border-bottom: 1px solid var(--line); }
+  .part:first-of-type { padding-top: 124px; }
+  .part:last-of-type { border-bottom: none; }
+  h1 { font-size: clamp(34px, 5vw, 46px); margin-top: 16px; }
+  h1.measure { max-width: 1040px; }
+  h2 { font-size: clamp(26px, 4vw, 33px); margin-top: 16px; }
+  p { margin: 18px 0 0; }
+  p.muted { color: var(--muted); }
+  .lede { font-size: 21px; line-height: 1.55; }
+
+  .meta { display: flex; flex-wrap: wrap; gap: 26px; margin-top: 28px; }
+  .meta .k { font-family: var(--f-mono); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--faint); }
+  .meta .v { font-weight: 600; margin-top: 4px; font-size: 16px; }
+
+  ul.points { list-style: none; padding: 0; margin: 24px 0 0; max-width: 880px; }
+  ul.points li { position: relative; padding-left: 22px; margin-bottom: 12px; color: var(--muted); }
+  ul.points li b { color: var(--ink); font-weight: 600; }
+  ul.points li::before { content: ""; position: absolute; left: 0; top: 10px; width: 9px; height: 9px; border-radius: 2px; background: var(--coral); }
+
+  figure { margin: 30px 0 0; }
+  figcaption { font-family: var(--f-mono); font-size: 13px; color: var(--faint); margin-top: 10px; }
+  .shots { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 700px) { .shots { grid-template-columns: 1fr; } }
+
+  .browser { border-radius: 11px; overflow: hidden; border: 1px solid var(--line-strong); box-shadow: 0 12px 30px -16px rgba(20,34,43,.35); background: #fff; }
+  .browser .bar { display: flex; align-items: center; gap: 6px; padding: 8px 12px; background: #e7edf0; border-bottom: 1px solid #d6dee3; }
+  .browser .bar i { width: 10px; height: 10px; border-radius: 50%; }
+  .browser .bar .u { flex: 1; font-family: var(--f-mono); font-size: 11px; color: #58656d; background: #fff; border: 1px solid #d6dee3; border-radius: 5px; padding: 3px 10px; margin-left: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  .app { font-family: system-ui, sans-serif; background: #eef2f4; color: #17242c; padding: 15px; font-size: 12.5px; }
+  .app .ah { display: flex; align-items: center; gap: 8px; padding-bottom: 11px; border-bottom: 1px solid #dde5ea; }
+  .app .ah .nm { font-weight: 700; font-size: 13px; } .app .ah .nm b { color: #55636d; font-weight: 500; }
+  .app .h1 { font-family: var(--f-head); font-weight: 700; font-size: 19px; margin: 13px 0 3px; letter-spacing: -0.01em; }
+  .app .sub { color: #55636d; font-size: 12px; margin-bottom: 11px; }
+  .app .ask { display: flex; gap: 6px; margin-bottom: 12px; }
+  .app .ask .mic { width: 30px; border: 1px solid #dde5ea; border-radius: 8px; background: #fff; display: grid; place-items: center; }
+  .app .ask input { flex: 1; border: 1px solid #dde5ea; border-radius: 8px; padding: 8px 10px; font-size: 11.5px; color: #55636d; background: #fff; }
+  .app .ask .b { background: #0a7da0; color: #fff; border-radius: 8px; padding: 8px 14px; font-weight: 600; font-size: 11.5px; }
+  .app .pl { font-size: 9px; text-transform: uppercase; letter-spacing: .09em; color: #8895a0; font-weight: 700; margin: 11px 0 6px; }
+  .app .chips { display: flex; flex-wrap: wrap; gap: 5px; }
+  .app .c { font-size: 10.5px; border: 1px solid #dde5ea; background: #fff; border-radius: 7px; padding: 5px 9px; display: inline-flex; align-items: center; gap: 5px; }
+  .app .c .d { width: 6px; height: 6px; border-radius: 50%; }
+  .qual { background: #3f7a55; } .quant { background: #9a6a12; } .mixed { background: #0a7da0; }
+
+  /* intake form mockup */
+  .app .field { margin-bottom: 10px; }
+  .app .field label { display: block; font-size: 9.5px; font-weight: 700; color: #17242c; margin-bottom: 4px; }
+  .app .inp { background: #fff; border: 1px solid #dde5ea; border-radius: 7px; padding: 8px 10px; font-size: 11.5px; color: #17242c; }
+  .app .inp.sel { display: flex; justify-content: space-between; } .app .inp.sel::after { content: "▾"; color: #8895a0; }
+  /* question rows */
+  .app .qrow { display: flex; gap: 6px; align-items: center; background: #fff; border: 1px solid #dde5ea; border-radius: 7px; padding: 7px 10px; margin-bottom: 5px; font-size: 11.5px; }
+  .app .qrow .n { font-family: var(--f-mono); font-size: 9px; color: #0a6382; font-weight: 700; }
+  .app .flags { display: flex; gap: 4px; margin-left: auto; }
+  .app .fl { font-family: var(--f-mono); font-size: 8.5px; font-weight: 700; padding: 2px 5px; border-radius: 4px; }
+  .app .fl.c { color: #bf4630; background: #f7e3dd; } .app .fl.w { color: #b0761a; background: #f6ecd7; } .app .fl.ok { color: #2c6a45; background: #e6f2ea; }
+  .app .runs { background: #fff; border: 1px solid #dde5ea; border-radius: 8px; padding: 10px; margin-top: 6px; }
+  .app .run { padding: 6px 0; border-top: 1px solid #eef1ef; } .app .run:first-child { border-top: none; }
+  .app .run .t { font-size: 11.5px; font-weight: 600; } .app .run .m { font-family: var(--f-mono); font-size: 9px; color: #8895a0; margin-top: 1px; }
+  .pill2 { font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 20px; } .pill2.mixed { background: #e2eff4; color: #0a6382; }
+
+  /* skill output mockup */
+  .out { font-family: system-ui, sans-serif; padding: 15px; background: #fff; font-size: 12px; }
+  .out .mode { font-size: 9.5px; text-transform: uppercase; letter-spacing: .07em; color: #2c6a45; font-weight: 700; }
+  .out .ot { font-family: var(--f-head); font-weight: 700; font-size: 15px; margin: 5px 0 9px; letter-spacing: -0.01em; }
+  .out h5 { margin: 11px 0 5px; font-size: 10px; text-transform: uppercase; letter-spacing: .05em; color: #0a6382; }
+  .out ul { margin: 0; padding-left: 16px; } .out li { margin-bottom: 5px; line-height: 1.45; }
+
+  /* architecture */
+  .arch { border: 1px solid var(--line); border-radius: 14px; background: var(--surface); padding: 20px; margin-top: 30px; }
+  .arch .layer { display: flex; align-items: stretch; gap: 10px; flex-wrap: wrap; }
+  .arch .box { flex: 1; min-width: 120px; border: 1px solid var(--line); border-radius: 10px; padding: 12px 13px; background: var(--surface-2); }
+  .arch .box .t { font-weight: 700; font-size: 13.5px; }
+  .arch .box .s { font-size: 12px; color: var(--muted); margin-top: 4px; line-height: 1.4; }
+  .arch .flowlbl { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--faint); margin: 16px 0 8px; }
+  .arch .down { text-align: center; color: var(--accent); font-family: var(--f-mono); margin: 6px 0; }
+  .arch .engine { border-color: var(--coral); }
+  .arch .engine .t { color: var(--coral); }
+
+  .model { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 26px; }
+  @media (max-width: 700px) { .model { grid-template-columns: 1fr; } }
+  .mcard { border: 1px solid var(--line); border-radius: 12px; padding: 16px; background: var(--surface); }
+  .mcard .n { font-family: var(--f-head); font-weight: 700; font-size: 30px; letter-spacing: -0.03em; }
+  .mcard .h { font-weight: 700; margin-top: 4px; } .mcard .s { color: var(--muted); font-size: 13.5px; margin-top: 6px; line-height: 1.5; }
+
+  .wf { margin-top: 26px; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  .wf .r { display: grid; grid-template-columns: 130px 1fr auto; gap: 12px; align-items: center; padding: 12px 15px; border-top: 1px solid var(--line); }
+  .wf .r:first-child { border-top: none; }
+  .wf .r .name { font-weight: 700; font-size: 14px; }
+  .wf .r .desc { font-size: 13px; color: var(--muted); }
+  .wf .r .steps { font-family: var(--f-mono); font-size: 11px; color: var(--faint); white-space: nowrap; }
+  @media (max-width: 640px) { .wf .r { grid-template-columns: 1fr; gap: 4px; } .wf .r .steps { white-space: normal; } }
+
+  .agents { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 24px; }
+  .agent { border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; background: var(--surface); display: flex; align-items: center; gap: 10px; }
+  .agent .d { width: 11px; height: 11px; border-radius: 50%; } .agent b { font-size: 14px; } .agent span { font-family: var(--f-mono); font-size: 12px; color: var(--muted); }
+
+  .spec { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; margin-top: 26px; }
+  .spec .code { background: var(--surface-2); font-family: var(--f-mono); font-size: 12px; line-height: 1.6; padding: 16px; white-space: pre-wrap; color: var(--ink); }
+  .spec .note { padding: 12px 16px; font-size: 13.5px; color: var(--muted); border-top: 1px solid var(--line); }
+
+
+  footer { padding: 42px 0 62px; }
+  footer .who { font-family: var(--f-head); font-weight: 700; font-size: 16px; }
+  footer .who span { display: block; color: var(--muted); font-size: 13px; font-weight: 400; margin-top: 3px; }
+  footer .links { margin-top: 14px; display: flex; gap: 20px; flex-wrap: wrap; font-family: var(--f-mono); font-size: 14px; }
+  footer a { text-decoration: none; } footer a:hover { text-decoration: underline; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+</style>
+<style>
+    .name-header {
+        position: fixed; top: 30px; left: 40px; z-index: 1000;
+        font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600;
+        color: var(--ink); text-decoration: none; letter-spacing: 0.5px;
+        background: var(--surface); padding: 12px 24px; border-radius: 12px;
+        border: 1px solid var(--line-strong); box-shadow: 0 8px 24px -14px rgba(20,34,43,.45);
+        transition: all .3s ease;
+    }
+    .name-header:hover { border-color: var(--accent); }
+    .name-header .degree { color: var(--accent); font-weight: 300; }
+    .nav-links {
+        position: fixed; top: 30px; right: 40px; z-index: 1000;
+        display: flex; gap: 30px; align-items: center;
+        background: var(--surface); padding: 12px 24px; border-radius: 12px;
+        border: 1px solid var(--line-strong); box-shadow: 0 8px 24px -14px rgba(20,34,43,.45);
+    }
+    .nav-links a {
+        color: var(--muted); text-decoration: none;
+        font-size: 14px; font-weight: 500; letter-spacing: 0.5px;
+        transition: color .3s ease;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .scope-note {
+        margin-top: 30px;
+        padding: 18px 20px;
+        border: 1px solid var(--line-strong);
+        border-left: 3px solid var(--warn);
+        border-radius: 9px;
+        background: var(--warn-soft);
+    }
+    .scope-note p { margin-top: 8px; font-size: 16.5px; color: var(--muted); }
+    .scope-note .eyebrow { color: var(--warn); }
+    @media (max-width: 968px) {
+        .name-header, .nav-links { position: static; margin: 16px auto 0; width: max-content; }
+        .nav-links { flex-wrap: wrap; justify-content: center; }
+        .part:first-of-type { padding-top: 34px; }
+    }
+</style>
+</head>
+<body>
+    <a href="index.html" class="name-header">Bhuvan Sarupuri <span class="degree">Ph.D.</span></a>
+
+    <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="index.html#projects">Projects</a>
+        <a href="index.html#experience">Experience</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="https://www.linkedin.com/in/bhuvan-sarupuri-ph-d-6448a767/" target="_blank" rel="noopener">LinkedIn</a>
+    </nav>
+
+
+
+<main>
+  <!-- 1 · WHY -->
+  <section class="part wrap">
+    <span class="eyebrow">Why I built it</span>
+    <h1 class="measure">TOPdesk Research Copilot</h1>
+    <p class="lede measure">If you are a PM, a designer, or a support lead at TOPdesk, doing research usually means waiting for a researcher, or skipping it. I wanted to open that up. This is a copilot that lets any product role run real research on their own, so a good decision does not have to wait for a specialist.</p>
+    <p class="muted measure">You tell it what you are trying to figure out. It takes you to the right task and does the heavy lifting, in TOPdesk's own language.</p>
+    <div class="meta">
+      <div><div class="k">Role</div><div class="v">Research, design &amp; build</div></div>
+      <div><div class="k">For</div><div class="v">TOPdesk (self-directed)</div></div>
+      <div><div class="k">Year</div><div class="v">2026</div></div>
+      <div><div class="k">Stack</div><div class="v">TypeScript, Node, Claude</div></div>
+    </div>
+  
+      <aside class="scope-note measure">
+        <span class="eyebrow">Scope</span>
+        <p>TOPdesk has a democratisation matrix that sets out which research any product role can run, and which stays with a trained researcher. The line is drawn on methodology, depth and rigour. This copilot works inside that matrix rather than around it: it opens up the tasks the matrix marks as safe to democratise, and leaves the studies that call for a specialist where they belong.</p>
+      </aside>
+    </section>
+
+  <!-- 2 · WHAT -->
+  <section class="part wrap">
+    <span class="eyebrow">What it does</span>
+    <h2 class="measure">Say what you are doing. It runs the task.</h2>
+    <p class="muted measure">Talk to it or type. It works out which research task you need, opens it, and grounds everything in TOPdesk's real product docs, so it does not sound like generic UX advice.</p>
+    <ul class="points">
+      <li><b>Talk or type</b> what you are working on. It routes you to the right task and brings your context along.</li>
+      <li><b>26 tasks</b> across the whole research lifecycle, from framing a study to proving its impact.</li>
+    </ul>
+    <figure>
+      <div class="browser">
+        <div class="bar"><i style="background:#e6706a"></i><i style="background:#e3b34e"></i><i style="background:#54b487"></i><span class="u">localhost:4000</span></div>
+        <div class="app">
+          <div class="ah"><svg viewBox="0 0 40 38" width="18" height="17" aria-hidden="true"><path d="m17.1 22.6984-17.1-17.19996c7.3-7.3 19.1-7.3 26.4 0l3.7 3.7z" fill="#c24530"/><path d="m26.4 32 13.2-13.2-13.2-13.3-13.2 13.3-13.2 13.2c7.3 7.3 19.1 7.3 26.4 0z" fill="#e65038"/></svg><span class="nm">TOPdesk <b>Research Copilot</b></span></div>
+          <div class="h1">What do you want to do?</div>
+          <div class="sub">Tell me what you are working on and I will take you to the right task, or pick one below.</div>
+          <div class="ask"><span class="mic">🎤</span><input value="I ran 6 operator interviews and need to make sense of them" readonly><span class="b">Send</span></div>
+          <div class="pl">Frame &amp; plan</div><div class="chips"><span class="c"><span class="d mixed"></span>Frame a study</span><span class="c"><span class="d mixed"></span>Choose a method</span><span class="c"><span class="d qual"></span>Build a screener</span></div>
+          <div class="pl">Collect</div><div class="chips"><span class="c"><span class="d qual"></span>Interview guide</span><span class="c"><span class="d quant"></span>Build a survey</span><span class="c"><span class="d qual"></span>Card sort</span></div>
+          <div class="pl">Make sense</div><div class="chips"><span class="c"><span class="d qual"></span>Synthesise notes</span><span class="c"><span class="d mixed"></span>Write insights</span></div>
+          <div class="pl">Share &amp; prove</div><div class="chips"><span class="c"><span class="d mixed"></span>Structure a report</span><span class="c"><span class="d quant"></span>Research ROI</span><span class="c"><span class="d mixed"></span>Track impact</span></div>
+        </div>
+      </div>
+      <figcaption>The home screen. Tasks grouped by research phase, so anyone can find where to start.</figcaption>
+    </figure>
+  </section>
+
+  <!-- 3 · INSIDE A TASK -->
+  <section class="part wrap">
+    <span class="eyebrow">Inside a task</span>
+    <h2 class="measure">Framing a study, without knowing the theory.</h2>
+    <p class="muted measure">Take the most common starting point. You describe the problem in plain words, and the task pressure-tests it: it flags biased or fuzzy questions, names the assumption worth testing first, and suggests a method. You end up with a real plan, not a blank page.</p>
+    <figure>
+      <div class="shots">
+        <div class="browser">
+          <div class="bar"><i style="background:#e6706a"></i><i style="background:#e3b34e"></i><i style="background:#54b487"></i><span class="u">localhost:4000/intake</span></div>
+          <div class="app">
+            <div class="pl" style="margin-top:0">Stakeholder frame</div>
+            <div class="field"><label>Stakeholder</label><div class="inp">Priya Nair, Service Desk Lead</div></div>
+            <div class="field"><label>What is the problem?</label><div class="inp">Employees still email requests instead of using the self-service portal, so first-line load stays high.</div></div>
+            <div class="field"><label>Leap-of-faith assumption</label><div class="inp">People can find the right service in the portal without help.</div></div>
+            <div class="pl">TOPdesk context</div>
+            <div class="field"><label>Product area</label><div class="inp sel">Self-Service Portal</div></div>
+          </div>
+        </div>
+        <div class="browser">
+          <div class="bar"><i style="background:#e6706a"></i><i style="background:#e3b34e"></i><i style="background:#54b487"></i><span class="u">localhost:4000/intake · check</span></div>
+          <div class="app">
+            <div class="pl" style="margin-top:0">Question check, 3 reviewed</div>
+            <div class="qrow"><span class="n">Q1</span> Why do not people use the portal? <span class="flags"><span class="fl w">VAGUE</span></span></div>
+            <div class="qrow"><span class="n">Q2</span> Is the clunky form slow and annoying? <span class="flags"><span class="fl c">LEADING</span><span class="fl c">2-IN-1</span></span></div>
+            <div class="qrow"><span class="n">Q3</span> Where do operators lose time on a call? <span class="flags"><span class="fl ok">CLEAR</span></span></div>
+            <div class="pl">Recommended method</div>
+            <div class="qrow"><span class="pill2 mixed">mixed</span> Moderated task test plus intercept survey <span class="flags"><span class="fl ok">n≈8 + 120</span></span></div>
+            <div class="runs">
+              <div class="run"><div class="t">Portal adoption, self-service</div><div class="m">run-3f2a · brief saved</div></div>
+              <div class="run"><div class="t">Change-approval friction</div><div class="m">run-9c1b · brief saved</div></div>
+              <div class="run"><div class="t">CMDB data-quality gaps</div><div class="m">run-7dd4 · brief saved</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <figcaption>The framing task: a filled brief on the left, its checks and plan on the right. Bias flags, a method, and saved runs.</figcaption>
+    </figure>
+  </section>
+
+  <!-- 4 · UNDER THE HOOD -->
+  <section class="part wrap">
+    <span class="eyebrow">Under the hood</span>
+    <h2 class="measure">Agents, skills, and workflows.</h2>
+    <p class="muted measure">The whole system is config, not code. Every task is a skill, skills belong to a method agent, and skills chain into workflows. That is what makes it easy to grow and keeps every task consistent.</p>
+
+    <div class="agents">
+      <div class="agent"><span class="d qual"></span><b>Qualitative</b><span>7 skills</span></div>
+      <div class="agent"><span class="d quant"></span><b>Quantitative</b><span>2 skills</span></div>
+      <div class="agent"><span class="d mixed"></span><b>Mixed methods</b><span>17 skills</span></div>
+    </div>
+    <p class="muted measure">Every skill belongs to one of three method agents. The stakeholder, a PM or a lead, is a role in the work, not an agent, so the tool never pretends a person is automated.</p>
+
+    <div class="spec">
+      <div class="code">- name: affinity-synthesis
+  owner-agent: qual
+  purpose: cluster notes into themes with evidence links
+  inputs: raw notes, quotes, transcript excerpts
+  outputs: theme clusters, supporting quotes, evidence ratings
+  guardrails: do not present qualitative themes as population stats</div>
+      <div class="note">One skill is one spec. A single engine reads it, asks Claude for structured output, grounds it in the TOPdesk docs, and holds the guardrails. Adding a task is a few lines of YAML, not a new screen.</div>
+    </div>
+
+    <h3 style="margin-top:38px;font-size:19px">Seven workflows chain the skills</h3>
+    <p class="muted measure" style="margin-top:10px">A workflow is an ordered run of skills with review gates, so bigger jobs stay on rails.</p>
+    <div class="wf">
+      <div class="r"><span class="name">Discovery</span><span class="desc">Generative research, intake to activation</span><span class="steps">7 skills · 2 gates</span></div>
+      <div class="r"><span class="name">Report</span><span class="desc">Findings into a report and shareout</span><span class="steps">5 skills · 1 gate</span></div>
+      <div class="r"><span class="name">Usability</span><span class="desc">A usability test, guide to recommendations</span><span class="steps">5 skills · 1 gate</span></div>
+      <div class="r"><span class="name">Impact</span><span class="desc">ROI, impact tracking, business case</span><span class="steps">3 skills · 1 gate</span></div>
+      <div class="r"><span class="name">IA</span><span class="desc">Card sort to tree test</span><span class="steps">3 skills · 1 gate</span></div>
+      <div class="r"><span class="name">Mixed</span><span class="desc">Qual depth plus quant scale</span><span class="steps">5 skills · 1 gate</span></div>
+      <div class="r"><span class="name">Career</span><span class="desc">UXR career strategy and value story</span><span class="steps">6 skills · 1 gate</span></div>
+    </div>
+
+    <h3 style="margin-top:38px;font-size:19px">How a request flows</h3>
+    <div class="arch">
+      <div class="flowlbl">Three ways in</div>
+      <div class="layer">
+        <div class="box"><div class="t">Talk to it</div><div class="s">Voice or text. A router picks the task.</div></div>
+        <div class="box"><div class="t">The task hub</div><div class="s">Pick a task from the home screen.</div></div>
+        <div class="box"><div class="t">A direct link</div><div class="s">/task?skill=… opens one task.</div></div>
+      </div>
+      <div class="down">↓</div>
+      <div class="layer"><div class="box" style="flex:1 1 100%"><div class="t">Node server</div><div class="s">A small plain HTTP server routes each request. No framework.</div></div></div>
+      <div class="down">↓</div>
+      <div class="layer"><div class="box engine" style="flex:1 1 100%"><div class="t">The skill-runner</div><div class="s">Reads the skill's spec, asks Claude for structured JSON, grounds it in the TOPdesk docs, and enforces the guardrails. If the AI is off, a plain rule-based fallback runs instead.</div></div></div>
+      <div class="down">↓</div>
+      <div class="layer">
+        <div class="box"><div class="t">Claude</div><div class="s">Structured JSON output.</div></div>
+        <div class="box"><div class="t">TOPdesk docs</div><div class="s">Keyword retrieval for grounding.</div></div>
+        <div class="box"><div class="t">Config (YAML)</div><div class="s">Skills, workflows, methods, docs.</div></div>
+      </div>
+    </div>
+
+    <figure>
+      <div class="browser">
+        <div class="bar"><i style="background:#e6706a"></i><i style="background:#e3b34e"></i><i style="background:#54b487"></i><span class="u">localhost:4000/task?skill=insight-writer</span></div>
+        <div class="out">
+          <div class="mode">Real output, from six mocked operator interviews</div>
+          <div class="ot">Fragmented canned replies and skipped categorisation hurt first-line priority</div>
+          <h5>Insights</h5>
+          <ul>
+            <li>Operators keep private canned-reply files instead of shared Knowledge Items, so the same answers get rewritten and quality drifts between people.</li>
+            <li>Categorisation gets skipped because the form feels slow, so priority is set on incomplete data and tickets land in the wrong queue.</li>
+          </ul>
+          <h5>Next steps</h5>
+          <ul>
+            <li>Move the most-used canned replies into shared Knowledge Items.</li>
+            <li>Trim the intake form: fewer required fields, smart defaults.</li>
+          </ul>
+        </div>
+      </div>
+      <figcaption>Real output from the "Write insights" task. It uses TOPdesk's own terms and cites what it is based on.</figcaption>
+    </figure>
+
+  </section>
+
+  <footer class="wrap">
+    <div class="who">Bhuvan Sarupuri<span>UX Research · heybhuvan.com</span></div>
+    <div class="links">
+      <a href="https://heybhuvan.com">heybhuvan.com</a>
+      <a href="https://github.com/BHUVAN007/topdesk-research-intake">Source on GitHub</a>
+    </div>
+    <p style="width: 100%; margin-top: 1.25rem; font-size: 0.875rem; opacity: 0.7;">&copy; 2026 Bhuvan Sarupuri. All rights reserved.</p>
+  </footer>
+</main>
+
+<script>
+  (function () {
+    try { var s = localStorage.getItem('td-theme'); if (s) document.documentElement.setAttribute('data-theme', s); } catch (e) {}
+  })();
+</script>
+
+</body>
+</html>

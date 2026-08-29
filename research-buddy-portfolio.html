@@ -3,33 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Research Buddy — AI Research Ops Tool | Research Portfolio</title>
+    <meta name="description" content="An internal tool putting six fragmented research and customer data sources behind one plain-language query, with qualitative and quantitative agents running in parallel and a third synthesising for the asker's role.">
+    <title>Research Buddy &mdash; AI-Assisted Research Retrieval | Bhuvan Sarupuri</title>
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600;700&family=DM+Sans:wght@400;500;700&family=Fraunces:wght@300;600;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #0D47A1;
-            --secondary: #0288D1;
-            --cyan: #00E5FF;
-            --mint: #64FFDA;
-            --accent: #00CED1;
-            --accent-warm: #00BCD4;
+            --primary: #6F62A8;
+            --secondary: #8B7FC7;
+            --cyan: #B9AEE8;
+            --mint: #D8CFF5;
+            --accent: #A79BD6;
+            --accent-warm: #C3B6EC;
 
-            --bg-primary: #0A0E1A;
-            --bg-secondary: #121827;
-            --bg-tertiary: #1A2332;
-            --bg-card: rgba(26, 35, 50, 0.8);
+            --bg-primary: #14111F;
+            --bg-secondary: #1B1730;
+            --bg-tertiary: #262039;
+            --bg-card: rgba(38, 32, 57, 0.8);
 
-            --text: #E8F0F7;
-            --text-light: #A8B2C1;
-            --text-muted: #6B7788;
+            --text: #F2EFFA;
+            --text-light: #BDB5D4;
+            --text-muted: #8A82A6;
 
-            --border: rgba(0, 229, 255, 0.1);
-            --border-hover: rgba(0, 229, 255, 0.3);
+            --border: rgba(185, 174, 232, 0.1);
+            --border-hover: rgba(185, 174, 232, 0.3);
 
             --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
             --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
             --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.5);
-            --shadow-glow: 0 0 20px rgba(0, 229, 255, 0.3);
+            --shadow-glow: 0 0 20px rgba(185, 174, 232, 0.3);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -42,7 +43,7 @@
             font-size: 15px;
             overflow-x: hidden;
             background-image:
-                radial-gradient(at 0% 0%, rgba(0, 229, 255, 0.06) 0px, transparent 50%),
+                radial-gradient(at 0% 0%, rgba(185, 174, 232, 0.06) 0px, transparent 50%),
                 radial-gradient(at 100% 100%, rgba(2, 136, 209, 0.08) 0px, transparent 50%);
             background-attachment: fixed;
         }
@@ -62,7 +63,7 @@
             position: absolute;
             top: -40%; right: -10%;
             width: 420px; height: 420px;
-            background: radial-gradient(circle, rgba(0, 229, 255, 0.08) 0%, transparent 65%);
+            background: radial-gradient(circle, rgba(185, 174, 232, 0.08) 0%, transparent 65%);
             filter: blur(40px);
             pointer-events: none;
         }
@@ -279,7 +280,7 @@
         }
 
         .tag {
-            background: rgba(0, 229, 255, 0.08);
+            background: rgba(185, 174, 232, 0.08);
             color: var(--cyan);
             padding: 0.25rem 0.7rem;
             border-radius: 4px;
@@ -350,7 +351,7 @@
         .overview-icon {
             width: 32px;
             height: 32px;
-            background: rgba(0, 229, 255, 0.08);
+            background: rgba(185, 174, 232, 0.08);
             border: 1px solid var(--border);
             border-radius: 8px;
             display: flex;
@@ -520,8 +521,8 @@
             font-family: 'Courier New', monospace;
             font-size: 0.78rem;
             color: var(--cyan);
-            background: rgba(0, 229, 255, 0.08);
-            border: 1px solid rgba(0, 229, 255, 0.2);
+            background: rgba(185, 174, 232, 0.08);
+            border: 1px solid rgba(185, 174, 232, 0.2);
             border-radius: 4px;
             padding: 3px 8px;
             display: inline-block;
@@ -752,7 +753,61 @@
             .stack-row { flex-direction: column; align-items: flex-start; gap: 6px; }
             .stack-layer-name { min-width: 0; }
         }
-    </style>
+            .role-line {
+            font-size: 0.92rem;
+            line-height: 1.6;
+            opacity: 0.75;
+            margin-top: 0.9rem;
+            margin-bottom: 0;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 240px;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .hero-content > *:not(.hero-visual) {
+            grid-column: 1;
+        }
+
+        .hero-visual {
+            grid-column: 2;
+            grid-row: 1 / -1;
+            align-self: center;
+            margin: 0;
+            max-width: 240px;
+        }
+
+        @media (max-width: 860px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            .hero-visual {
+                grid-column: 1;
+                grid-row: auto;
+                max-width: 180px;
+            }
+        }
+
+        .hero-visual-media {
+            width: 100%;
+            display: block;
+            border-radius: 20px;
+            border: 1px solid var(--border-hover);
+            box-shadow: var(--shadow-lg), var(--shadow-glow);
+        }
+
+        .hero-visual figcaption {
+            margin-top: 0.75rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+</style>
 </head>
 <body>
 
@@ -774,10 +829,12 @@
             <div class="hero-label">The AI-Assisted Researcher · Where Do I Draw the Line?</div>
             <h1 class="hero-title">Research Buddy — Making Existing Research Reach More Decisions</h1>
             <p class="hero-subtitle">
-                A work-in-progress internal tool that puts six fragmented research and product sources behind
+                An internal tool that puts six fragmented research and product sources behind
                 a single plain-language query, runs qualitative and quantitative agents in parallel, and
                 reformats the synthesised findings for whoever is asking — researcher, designer, or PM.
             </p>
+            <p class="role-line">My role: I designed and built Research Buddy end to end.</p>
+
 
             <div class="hero-meta">
                 <div class="hero-meta-item">
@@ -793,15 +850,15 @@
                     <span>Senior UX Researcher</span>
                 </div>
                 <div class="hero-meta-item">
-                    <div class="hero-meta-icon">🚧</div>
-                    <span>Work in Progress</span>
+                    <div class="hero-meta-icon">✅</div>
+                    <span>Built and in use</span>
                 </div>
             </div>
 
             <div class="key-stats">
                 <div class="stat-card">
-                    <div class="stat-number">6</div>
-                    <div class="stat-label">Connected Sources</div>
+                    <div class="stat-number">5 / 6</div>
+                    <div class="stat-label">Sources Live</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number">3</div>
@@ -816,6 +873,13 @@
                     <div class="stat-label">Trust Tests</div>
                 </div>
             </div>
+            <figure class="hero-visual">
+                <video class="hero-visual-media" autoplay loop muted playsinline poster="img/research-buddy-visual.jpg"
+                       aria-label="Animated illustration of a small white robot with a glowing halo, standing against a lavender background">
+                    <img src="img/research-buddy-visual.jpg" alt="Illustration of a small white robot with a glowing halo, standing against a lavender background">
+                </video>
+                <figcaption>Research Buddy, as the team pictures it. The tool itself is internal.</figcaption>
+            </figure>
         </div>
     </div>
 
@@ -834,7 +898,7 @@
         <div class="demo-frame fade-in">
             <video controls preload="metadata" playsinline>
                 <source src="buddy5.mp4" type="video/mp4">
-                Your browser doesn't support embedded video. <a href="buddy5.mp4">Download the walkthrough</a>.
+                Your browser does not support embedded video. <a href="buddy5.mp4">Download the walkthrough</a>.
             </video>
             <div class="demo-caption">Research Buddy — recorded walkthrough (click to play)</div>
         </div>
@@ -854,17 +918,17 @@
 
         <div class="quote fade-in">
             "We should add this feature." → "Do we have research on this?" → "Where would I even look?"
-            → "I'll just go with my assumptions, or make yet another research request."
+            → "I will just go with my assumptions, or make yet another research request."
         </div>
 
         <div class="section-body fade-in">
             <p>
-                Research exists. It's been done. It lives in Condens, in an old SharePoint deck, in
+                Research exists. It is been done. It lives in Condens, in an old SharePoint deck, in
                 Productboard notes from six months ago. But finding it means logging into multiple tools,
                 running multiple searches, and reading dozens of docs — so people skip it.
             </p>
             <p>
-                <strong>They're not lazy. That's an infrastructure problem.</strong>
+                <strong>They are not lazy. That is an infrastructure problem.</strong>
             </p>
         </div>
 
@@ -873,7 +937,7 @@
             <span class="tag">Multi-Agent System</span>
             <span class="tag accent">Internal Tooling</span>
             <span class="tag accent">Self-Serve Research</span>
-            <span class="tag warn">Work in Progress</span>
+            <span class="tag accent">Built and in use</span>
         </div>
     </section>
 
@@ -885,7 +949,8 @@
             <p class="section-intro">
                 Each source is owned by a different team — research, product, customer success, analytics —
                 and stores a different kind of evidence. Research Buddy queries them in parallel so the
-                asker doesn't have to know which tool holds the answer.
+                asker does not have to know which tool holds the answer. Five are live; Qlik is still
+                being connected.
             </p>
         </div>
 
@@ -943,7 +1008,7 @@
             </li>
             <li>
                 <strong>Role-aware framing</strong>
-                <p>Same data, returned differently depending on who's asking. A PM gets business framing. A designer gets pain points. A researcher gets evidence and methodology.</p>
+                <p>Same data, returned differently depending on who is asking. A PM gets business framing. A designer gets pain points. A researcher gets evidence and methodology.</p>
             </li>
             <li>
                 <strong>Cross-source comparison</strong>
@@ -1004,7 +1069,7 @@
                 <h3>UX Researcher</h3>
                 <ul>
                     <li>Evidence with full methodology</li>
-                    <li>What each source returned (or didn't)</li>
+                    <li>What each source returned (or did not)</li>
                     <li>Recommended follow-up research</li>
                 </ul>
             </div>
@@ -1034,7 +1099,7 @@
             <h2 class="section-title">Where AI Earns It, and Where I Still Own It.</h2>
             <p class="section-intro">
                 AI handles the volume problem well but misses the nuances. The split between what the
-                agents do and what I do is deliberate, and it's the part I'd defend hardest.
+                agents do and what I do is deliberate, and it is the part I would defend hardest.
             </p>
         </div>
 
@@ -1049,7 +1114,7 @@
             <div class="capability-card">
                 <div class="cap-icon">🧑‍🔬</div>
                 <h4>Where I still own it</h4>
-                <p><strong>What the patterns mean</strong> — AI surfaces clusters; I decide what's a signal.</p>
+                <p><strong>What the patterns mean</strong> — AI surfaces clusters; I decide what is a signal.</p>
                 <p style="margin-top:8px;"><strong>Writing conclusions</strong> — AI drafts; I rewrite after reading representative samples from each cluster.</p>
                 <p style="margin-top:8px;"><strong>Presenting to stakeholders</strong> — every claim I make is traceable back to a named participant or source.</p>
             </div>
@@ -1062,7 +1127,7 @@
             <div class="section-label">Trust Framework</div>
             <h2 class="section-title">Three Tests Before I Trust Any AI Output.</h2>
             <p class="section-intro">
-                These aren't aspirational principles — they're the conditions Research Buddy is built
+                These are not aspirational principles — they are the conditions Research Buddy is built
                 around, and the questions I run any AI-generated finding through before using it.
             </p>
         </div>
@@ -1070,7 +1135,7 @@
         <ol class="process-steps fade-in">
             <li>
                 <strong>Can I trace every claim back to a named participant or source?</strong>
-                <p>If not, I don't use it. Research Buddy hardcodes this — every finding requires source, item name, and date.</p>
+                <p>If not, I do not use it. Research Buddy hardcodes this — every finding requires source, item name, and date.</p>
             </li>
             <li>
                 <strong>Is AI doing aggregation or interpretation?</strong>
@@ -1078,35 +1143,87 @@
             </li>
             <li>
                 <strong>Would I stake a product decision on this without reading the originals?</strong>
-                <p>If the answer is no, that's exactly where the human review step goes.</p>
+                <p>If the answer is no, that is exactly where the human review step goes.</p>
             </li>
         </ol>
     </section>
 
-    <!-- If It Works -->
-    <section id="closing">
+    <!-- Where this stands -->
+    <!-- Voice and typed input -->
+    <section id="articulation">
         <div class="section-header fade-in">
-            <div class="section-label">If It Works</div>
-            <h2 class="section-title">Research Reaches More Decisions.</h2>
+            <div class="section-label">In design &middot; not yet built</div>
+            <h2 class="section-title">The Hard Part Is Not Typing. It Is Phrasing the Question.</h2>
+            <p class="section-intro">
+                Product managers using Research Buddy kept saying they would rather talk to it than write to
+                it. Taken literally that is a request for a microphone. Taken seriously it is something else:
+                they know what decision they are facing, and they cannot compress it into a query.
+            </p>
         </div>
 
         <div class="section-body fade-in">
             <p>
-                A designer asks, <em>"What do users struggle with in onboarding?"</em> and finds research
-                that already exists, instead of assuming none does.
+                Voice on its own does not fix that. Sending a transcript straight to retrieval produces the
+                same weak query, only longer and with filler in it. So the design I am working on treats
+                speaking and typing as two ways to fill one query object, with a confirmation step in
+                between that is the actual feature.
             </p>
+        </div>
+
+        <div class="capability-grid fade-in">
+            <div class="capability-card">
+                <div class="cap-icon">🎙️</div>
+                <h4>Talking, for people who think out loud</h4>
+                <p>A PM describes the decision in their own words: what they are weighing, what they have heard, and what they doubt. That is not a query, but it carries the decision, the hypothesis and the uncertainty, all of which a typed query throws away.</p>
+                <p style="margin-top:8px;">Buddy does not answer it. It plays back what it heard as an editable structure: topic, decision, doubt, sources, time window. Approving a query is far easier than composing one, which is the whole point.</p>
+            </div>
+            <div class="capability-card">
+                <div class="cap-icon">⌨️</div>
+                <h4>Typing, for people who already know</h4>
+                <p>Structured askers skip the microphone and fill the same fields directly, or type a sentence and get the same panel back for review.</p>
+                <p style="margin-top:8px;">Both paths converge on one query object, so there is one retrieval contract to maintain rather than two interfaces that drift apart.</p>
+            </div>
+        </div>
+
+        <div class="section-body fade-in">
+            <p class="subheading subheading--gap">One clarifying turn, where it costs least</p>
             <p>
-                A PM asks about NPS feedback on a feature and gets Insocial, Productboard, and Condens in
-                one place — and then goes and reads the sources.
+                My evaluation of TOPdesk's AI chat surfaces found that the largest single failure cause was
+                answering a question that forks on an unknown detail, rather than asking. Spoken input forks
+                more often than typed input, because it is vaguer. So when the topic resolves to more than
+                one module, or the doubt is unstated, Buddy asks exactly one question before it searches.
+                Putting that question inside the confirmation panel makes it cost a tap rather than a
+                conversational round trip.
             </p>
-            <p>
-                Research becomes something the org can reach for itself. <strong>It is still work in
-                progress</strong> — Qlik integration is in flight, the trust framework is enforced more
-                rigidly in some sources than others, and the role outputs will keep evolving as designers
-                and PMs use them.
+            <p class="subheading subheading--gap">Three details that decide whether it feels good</p>
+            <p><strong>Keep the transcript, collapsed.</strong> People want to check they were heard. They do not want to reread their own rambling every time.</p>
+            <p style="margin-top:8px;"><strong>Product nouns break transcription.</strong> Knowledge item, SLM, Insocial, module names. Topic fields need one-tap correction and a custom vocabulary.</p>
+            <p style="margin-top:8px;"><strong>Leave an escape.</strong> A direct send that skips the panel, or the scaffold becomes a toll on people who already know what they want.</p>
+            <p style="margin-top:18px;">
+                There is a second-order benefit that decided it for me. Every confirmed panel is a labelled
+                record of what somebody actually meant by their question, which is the evaluation set this
+                tool does not otherwise have.
             </p>
         </div>
     </section>
+
+    <section id="closing">
+        <div class="section-header fade-in">
+            <div class="section-label">Status</div>
+            <h2 class="section-title">Where this stands</h2>
+        </div>
+
+        <div class="section-body fade-in">
+            <p>
+                Research Buddy is built, running, and used by product managers, designers and researchers.
+            </p>
+            <p>
+                It is not instrumented, so I cannot tell you how many queries it handles or how much time it
+                saves, and I would rather say that than invent a number.
+            </p>
+        </div>
+    </section>
+
 
     <!-- Footer -->
     <footer>
@@ -1119,7 +1236,7 @@
                 <a href="https://www.linkedin.com/in/bhuvan-sarupuri-ph-d-6448a767/" target="_blank">LinkedIn</a>
             </div>
             <p style="margin-top: 30px; opacity: 0.7;">
-                © 2025 Bhuvan Sarupuri. All rights reserved.
+                © 2026 Bhuvan Sarupuri. All rights reserved.
             </p>
         </div>
     </footer>

@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evaluating the AI Conversation Service (VSA & Copilot) - AI Evaluation Portfolio</title>
+    <meta name="description" content="An evaluation framework for two RAG-backed AI chat surfaces at TOPdesk: 147 answers judged case by case, a seven-cause failure taxonomy, and fifteen findings ranked by evidence.">
+    <title>Evaluating an AI Conversation Service (VSA &amp; Copilot) | Bhuvan Sarupuri</title>
     <style>
         * {
             margin: 0;
@@ -347,6 +348,36 @@
             pointer-events: none;
         }
 
+        .frame.locked {
+            cursor: default;
+        }
+
+        .frame.locked:hover {
+            transform: none;
+        }
+
+        .lock-body {
+            padding: 2.75rem 1.5rem 2.25rem;
+            text-align: center;
+            background:
+                repeating-linear-gradient(135deg, rgba(0, 229, 255, 0.03) 0 12px, transparent 12px 24px);
+        }
+
+        .lock-mark {
+            font-size: 1.9rem;
+            margin-bottom: 0.9rem;
+            opacity: 0.65;
+        }
+
+        .lock-body p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 0.35rem;
+            line-height: 1.55;
+        }
+
+        .lock-body p strong { color: var(--text-medium); }
+
         /* Chips */
         .chips {
             display: flex;
@@ -681,7 +712,7 @@
             <h1>Evaluating an AI Conversation Service</h1>
             <p class="hero-subtitle">A framework for judging generated answers on two new AI chat surfaces at TOPdesk, a self-service assistant (VSA) and an operator-facing Copilot, and the product changes it drove.</p>
 
-            <p class="hero-role">I designed the evaluation, built the review interface, ran the sessions and wrote the analysis.</p>
+            <p class="hero-role">My role: I designed the evaluation, built the review interface, ran the sessions, and wrote the analysis.</p>
         </div>
     </div>
 
@@ -721,26 +752,31 @@
             <p>Both surfaces are conversational: the thing under evaluation is a turn in a conversation, not a paragraph in a spreadsheet. A spreadsheet of question-and-answer pairs asks a reviewer to imagine the surrounding product and then judge what they imagined. So the tool loads the case workbook and renders each turn inside a recreation of TOPdesk's own incident screen, with the AI panel docked exactly where it sits in the real product, and with the retrieved knowledge items and the ones actually cited sitting alongside the answer. Operators judged in the context they know from daily use, which kept their reactions about the answer rather than about the format they were reading it in. Each case takes a verdict and a free-text note, and notes persist across re-runs, so a revised answer set can be compared against the previous round without losing reviewer history.</p>
 
             <div class="shots">
-                <a class="frame" href="vsa-copilot-images/ssp-eval-viewer.png" target="_blank" rel="noopener">
+                <div class="frame locked">
                     <span class="frame-bar">
                         <span class="dot"></span><span class="dot"></span><span class="dot"></span>
                         <span class="frame-title">End-user assistant</span>
-                        <span class="verdict surface">Self-service portal</span>
+                        <span class="verdict surface">Withheld</span>
                     </span>
-                    <img src="vsa-copilot-images/ssp-eval-viewer.png" alt="Test-case viewer for the end-user assistant: a list of numbered test cases on the left, and on the right the self-service portal in AI Mode with the user's question, the generated answer and its sources. Answer text is blurred.">
-                    <p class="frame-caption">Each test case opens in the self-service portal itself: AI Mode, the question as the user typed it, the answer and its sources.</p>
-                </a>
-                <a class="frame" href="vsa-copilot-images/copilot-eval-viewer.png" target="_blank" rel="noopener">
+                    <div class="lock-body">
+                        <div class="lock-mark" aria-hidden="true">&#128274;</div>
+                        <p><strong>Self-service portal, AI Mode</strong></p>
+                        <p>The test-case viewer rendering each question inside the portal itself, with the answer and its sources.</p>
+                    </div>
+                </div>
+                <div class="frame locked">
                     <span class="frame-bar">
                         <span class="dot"></span><span class="dot"></span><span class="dot"></span>
                         <span class="frame-title">Operator assistant</span>
-                        <span class="verdict surface">Incident view</span>
+                        <span class="verdict surface">Withheld</span>
                     </span>
-                    <img src="vsa-copilot-images/copilot-eval-viewer.png" alt="Test-case viewer for the operator assistant: a numbered case rail on the left, the recreated TOPdesk incident view in the middle, and the Ask AI panel on the right with the operator's question, the answer and the retrieved knowledge items. Answer and ticket text are blurred.">
-                    <p class="frame-caption">The operator side sits in the incident it belongs to, with Ask AI docked where it appears in the product and the retrieved knowledge items below the answer.</p>
-                </a>
+                    <div class="lock-body">
+                        <div class="lock-mark" aria-hidden="true">&#128274;</div>
+                        <p><strong>Incident view, Ask AI panel</strong></p>
+                        <p>The same viewer for the operator side, with the AI panel docked where it appears in the product and the retrieved knowledge items below the answer.</p>
+                    </div>
+                </div>
             </div>
-            <p class="image-caption" style="text-align: left; margin-top: 0.75rem;">Click either frame for the full-size view. Sample tickets and answers written for this page, not real customer or operator data, with answer and ticket text blurred regardless.</p>
         </section>
 
         <section id="framework">
@@ -867,6 +903,7 @@
         <div class="container">
             <p style="font-weight: 600;">AI Evaluation Portfolio: Conversation Service Eval Project</p>
             <p style="margin-top: 0.5rem; font-size: 0.875rem;">TOPdesk &middot; 2026</p>
+            <p style="margin-top: 1.25rem; font-size: 0.875rem; opacity: 0.7;">&copy; 2026 Bhuvan Sarupuri. All rights reserved.</p>
         </div>
     </footer>
 </body>

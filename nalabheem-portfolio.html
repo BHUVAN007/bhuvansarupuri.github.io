@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NalaBheem — Precision Nutrition Recipe Generator | Portfolio</title>
+    <meta name="description" content="Building a precision-nutrition recipe assistant and the evaluation infrastructure to test it: 100+ traces open coded, a six-code error taxonomy, and manual versus automated evaluation compared.">
+    <title>NalaBheem &mdash; Nutrition AI | Bhuvan Sarupuri</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -203,7 +204,15 @@
             footer { flex-direction: column; gap: 1.5rem; text-align: center; }
             .results-header { flex-direction: column; align-items: flex-start; }
         }
-    </style>
+            .role-line {
+            font-size: 0.92rem;
+            line-height: 1.6;
+            opacity: 0.75;
+            margin-top: 0.9rem;
+            margin-bottom: 0;
+        }
+
+</style>
 </head>
 <body>
         <!-- Navigation -->
@@ -218,14 +227,9 @@
     <section class="hero">
         <div class="hero-content">
             <div class="hero-badge">🎓 AI Evaluation Case Study • <span>Course Project</span><span class="wip-badge">🚧 In Progress</span></div>
-            <h1>Precision Nutrition<br>Meets <span class="highlight">Rigorous Evaluation</span></h1>
-            <p class="hero-subtitle">Building a recipe generator that doesn't hallucinate — and proving it with systematic evaluation methodology learned from the Maven Evals course.</p>
-            <div class="hero-actions">
-                <a href="https://nalabheem-bot-665525402335.us-central1.run.app/" target="_blank" class="btn btn-primary">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                    Try NalaBheem Live
-                </a>
-            </div>
+            <h1>NalaBheem &mdash; Nutrition AI,<br>Built and <span class="highlight">Evaluated</span></h1>
+            <p class="hero-subtitle">Building a recipe generator that does not hallucinate — and proving it with systematic evaluation methodology learned from the Maven Evals course.</p>
+            <p class="role-line">My role: personal project. I built the generator and the evaluation infrastructure.</p>
         </div>
         <div class="hero-demo">
             <div class="app-mockup">
@@ -247,7 +251,7 @@
         <div class="section-header"><span class="section-label">Overview</span><h2 class="section-title">What is NalaBheem?</h2><p class="section-desc">A precision nutrition recipe assistant that generates accurate, goal-aligned recipes — backed by rigorous evaluation.</p></div>
         <div class="overview-content">
             <div class="overview-text">
-                <p><strong style="color: var(--text-primary)">NalaBheem</strong> is an AI-powered recipe assistant that generates nutrition-precise recipes tailored to specific fitness goals: weight loss, muscle gain, or maintenance. Named after legendary strength and mastery, it enforces strict macro targets, requires ingredient qualifiers, and validates nutrition calculations.</p>
+                <p><strong style="color: var(--text-primary)">NalaBheem</strong> is an AI-powered recipe assistant that generates nutrition-precise recipes tailored to specific fitness goals: weight loss, muscle gain, or maintenance. Named for Nala, the legendary cook of the Mahabharata, and Bhima, its strongman, it enforces strict macro targets, requires ingredient qualifiers, and validates nutrition calculations.</p>
                 <p>But building an AI that gives accurate nutrition advice is only half the challenge. The other half? <strong style="color: var(--text-primary)">Proving it actually works.</strong></p>
                 <p>This project applies rigorous evaluation methodology learned from a <a href="https://maven.com/parlance-labs/evals" target="_blank">Maven AI Evals course</a> — combining open coding of 100+ traces, custom error taxonomies, and systematic comparison of manual vs. automated evaluation to surface real issues.</p>
             </div>
@@ -275,7 +279,7 @@
         <div class="codes-grid">
             <div class="code-card"><span class="code-badge">MACRO_UNACHIEVABLE</span><h4>Impossible Constraints</h4><p>Triggered when user constraints make the requested macros mathematically impossible to achieve.</p></div>
             <div class="code-card"><span class="code-badge">ING_QUALIFIER_MISSING</span><h4>Missing Ingredient Details</h4><p>Ingredient lacks required qualifiers: fat %, lean %, skin-on/off, raw vs cooked, drained weight.</p></div>
-            <div class="code-card"><span class="code-badge">MACRO_PROTEIN_LOW</span><h4>Protein Below Target</h4><p>Protein per serving doesn't meet goal minimum: &lt;40g weight loss, ≤50g muscle gain, &lt;30g maintenance.</p></div>
+            <div class="code-card"><span class="code-badge">MACRO_PROTEIN_LOW</span><h4>Protein Below Target</h4><p>Protein per serving falls below the goal minimum: &lt;40g weight loss, &lt;50g muscle gain, &lt;30g maintenance.</p></div>
             <div class="code-card"><span class="code-badge">MACRO_CARB_POLICY_VIOLATION</span><h4>Starchy Carbs Violation</h4><p>Weight-loss recipe includes starchy carbs by default when the policy prohibits them.</p></div>
             <div class="code-card"><span class="code-badge">NUTR_FIELD_MISSING</span><h4>Incomplete Nutrition Panel</h4><p>Fiber or sodium is missing from the required nutrition panel output fields.</p></div>
             <div class="code-card"><span class="code-badge">NUTR_MISMATCH_CALC</span><h4>Calculation Deviation</h4><p>Computed macros deviate from USDA reference data: ±5% for macros or &gt;±20 kcal for calories.</p></div>
@@ -287,15 +291,15 @@
         
 
         <div class="screenshot-grid">
-            <div class="screenshot-item"><img src="./nalabheem-images/screenshot01.webp" alt="Manual Annotation Interface"><div class="screenshot-overlay"><div class="screenshot-number">Screenshot 01</div><h4>Manual Annotation Interface</h4></div></div>
-            <div class="screenshot-item"><img src="./nalabheem-images/screenshot02.webp" alt="Annotation Tracker"><div class="screenshot-overlay"><div class="screenshot-number">Screenshot 02</div><h4>Annotation Tracker</h4></div></div>
-            <div class="screenshot-item"><img src="./nalabheem-images/screenshot03.webp" alt="Evaluation Results"><div class="screenshot-overlay"><div class="screenshot-number">Screenshot 03</div><h4>Evaluation Results Comparison</h4></div></div>
-            <div class="screenshot-item"><img src="./nalabheem-images/screenshot04.webp" alt="Agreement Analysis"><div class="screenshot-overlay"><div class="screenshot-number">Screenshot 04</div><h4>Agreement Rate Analysis</h4></div></div>
+            <div class="screenshot-item"><img src="./screenshot01.webp" alt="Annotation tool showing the list of recorded chatbot interactions queued for review"><div class="screenshot-overlay"><div class="screenshot-number">Screenshot 01</div><h4>Manual Annotation Interface</h4></div></div>
+            <div class="screenshot-item"><img src="./screenshot02.webp" alt="Annotation view of one interaction: the user query and generated recipe on the left, and on the right a pass or fail verdict with six nutrition error codes such as macro unachievable and nutrition label missing fields"><div class="screenshot-overlay"><div class="screenshot-number">Screenshot 02</div><h4>Annotation Tracker</h4></div></div>
+            <div class="screenshot-item"><img src="./screenshot03.webp" alt="Promptfoo results table showing 65 percent of 20 cases passing, with per-case verdicts, generated recipes and latency"><div class="screenshot-overlay"><div class="screenshot-number">Screenshot 03</div><h4>Evaluation Results Comparison</h4></div></div>
+            <div class="screenshot-item"><img src="./screenshot04.webp" alt="Comparison of manual against automated evaluation: 40 percent agreement, 8 false positives and 4 false negatives, with notes on which evaluators were too strict or too lenient"><div class="screenshot-overlay"><div class="screenshot-number">Screenshot 04</div><h4>Agreement Rate Analysis</h4></div></div>
         </div>
     </section>
 
     <section class="results" id="results">
-        <div class="section-header"><span class="section-label">Current State</span><h2 class="section-title">What the Evals Revealed</h2><p class="section-desc">The evaluation process is working — it's catching real issues that need to be fixed.</p></div>
+        <div class="section-header"><span class="section-label">Current State</span><h2 class="section-title">What the Evals Revealed</h2><p class="section-desc">The evaluation process is working — it is catching real issues that need to be fixed.</p></div>
         <div class="results-container">
             <div class="results-header">
                 <h3>Manual vs Automated Evaluation</h3>
@@ -313,18 +317,18 @@
                 <div class="insights-section">
                     <h4>Issues Detected — Ready for Prompt Iteration</h4>
                     <div class="insight-card type-1"><span class="insight-type">Type 1 Error — 8 cases</span><div class="insight-content"><p><strong>PromptFoo PASS, Manual FAIL:</strong> Automated evaluators missed nutrition calculation accuracy issues. Notes mention "underestimated calories" and "macros way off" — these are real issues in the prompt that need correction.</p></div></div>
-                    <div class="insight-card type-2"><span class="insight-type">Type 2 Error — 4 cases</span><div class="insight-content"><p><strong>PromptFoo FAIL, Manual PASS:</strong> All flagged for "Nutrition label missing required fields: Fiber, Sodium" — the <code>NUTR-FIELD-MISSING</code> evaluator may need recalibration for context-specific requirements.</p></div></div>
+                    <div class="insight-card type-2"><span class="insight-type">Type 2 Error — 4 cases</span><div class="insight-content"><p><strong>PromptFoo FAIL, Manual PASS:</strong> All flagged for "Nutrition label missing required fields: Fiber, Sodium" — the <code>NUTR_FIELD_MISSING</code> evaluator may need recalibration for context-specific requirements.</p></div></div>
                 </div>
             </div>
         </div>
     </section>
 
     <section class="next-steps" id="next-steps">
-        <div class="section-header"><span class="section-label">Roadmap</span><h2 class="section-title">Next Steps</h2><p class="section-desc">The evaluation framework is catching issues — now it's time to fix them.</p></div>
+        <div class="section-header"><span class="section-label">Roadmap</span><h2 class="section-title">Next Steps</h2><p class="section-desc">The evaluation framework is catching issues — now it is time to fix them.</p></div>
         <div class="next-steps-content">
             <div class="next-steps-grid">
                 <div class="next-step-card"><h4>🎯 Prompt Refinement</h4><p>Address the 8 Type 1 errors by improving macro calculation instructions and adding explicit calorie validation steps to the system prompt.</p></div>
-                <div class="next-step-card"><h4>⚙️ Evaluator Tuning</h4><p>Recalibrate the NUTR-FIELD-MISSING evaluator to be context-aware — not every query requires fiber and sodium fields.</p></div>
+                <div class="next-step-card"><h4>⚙️ Evaluator Tuning</h4><p>Recalibrate the NUTR_FIELD_MISSING evaluator to be context-aware — not every query requires fiber and sodium fields.</p></div>
                 <div class="next-step-card"><h4>🔁 Re-run & Compare</h4><p>After prompt changes, re-run the full eval suite to measure improvement and track progress toward higher agreement rates.</p></div>
             </div>
         </div>
@@ -332,23 +336,22 @@
 
     <section class="cta">
         <div class="cta-content">
-            <h2>Try the Current Version of <span style="color: var(--primary-green)">NalaBheem</span></h2>
-            <p>The bot is live and functional — ongoing evaluation is helping make it better with each iteration.</p>
+            <h2>Evaluating <span style="color: var(--primary-green)">NalaBheem</span></h2>
+            <p>The evaluation methodology behind this project came from the Maven Evals course. The bot itself is not currently hosted.</p>
             <div class="cta-buttons">
-                <a href="https://nalabheem-bot-665525402335.us-central1.run.app/" target="_blank" class="btn btn-primary"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>Launch NalaBheem</a>
-                <a href="https://maven.com/parlance-labs/evals" target="_blank" class="btn btn-secondary">Learn Evals →</a>
+                <a href="https://maven.com/parlance-labs/evals" target="_blank" class="btn btn-secondary">Learn Evals &rarr;</a>
             </div>
         </div>
     </section>
 
     <footer>
         <div class="footer-brand">Evaluation methodology learned from <a href="https://maven.com/parlance-labs/evals" target="_blank">Maven Evals Course</a></div>
-        <div class="footer-links"><a href="https://nalabheem-bot-665525402335.us-central1.run.app/" target="_blank">Try NalaBheem</a></div>
+        <p style="margin-top: 1.25rem; font-size: 0.875rem; opacity: 0.7;">&copy; 2026 Bhuvan Sarupuri. All rights reserved.</p>
     </footer>
 
     <div class="lightbox" id="lightbox" onclick="closeLightbox()">
         <button class="lightbox-close" onclick="closeLightbox()">×</button>
-        <img id="lightbox-img" src="" alt="Enlarged screenshot">
+        <img id="lightbox-img" src="" alt="Enlarged view of the selected evaluation screenshot">
     </div>
 
     <script>

@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Knowledge Management Research - UX Case Study</title>
+    <meta name="description" content="A mixed-methods study of how knowledge managers structure a knowledge base and who they need to restrict access for: survey, card sorting, concept testing and usability testing across 62 participants.">
+    <title>Knowledge Management Research | Bhuvan Sarupuri</title>
     <style>
         * {
             margin: 0;
@@ -429,6 +430,46 @@
             }
         }
 
+
+        footer {
+            padding: 40px;
+            background: #1a1a1a;
+            color: #9aa0a6;
+            text-align: center;
+            border-top: 1px solid #333;
+        }
+
+        footer a {
+            color: #ff6b35;
+            text-decoration: none;
+            margin: 0 12px;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+
+        .hero-content h1 {
+            font-size: 3rem;
+            line-height: 1.15;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            max-width: 640px;
+            margin: 0 auto;
+            opacity: 0.92;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+        }
+
+        @media (max-width: 968px) {
+            .hero-content h1 { font-size: 2rem; }
+            .hero-subtitle { font-size: 1.05rem; }
+        }
+
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@300;600;900&display=swap" rel="stylesheet">
 </head>
@@ -450,6 +491,8 @@
         <div class="hero">
             <div class="hero-content">
                 <!-- Phoenix and Knowledge Tree Cover Image -->
+                <h1>Knowledge Management Research</h1>
+                <p class="hero-subtitle">Why knowledge managers cannot restrict access, and what they need instead</p>
             </div>
         </div>
 
@@ -493,7 +536,7 @@
                     </div>
                 </div>
 
-                <p style="margin-top: 2rem; font-size: 1.1rem;">Despite being an essential module in TOPdesk, Knowledge Management remains significantly underutilized, directly impacting Incident Management—the most used and impactful module in the platform.</p>
+                <p style="margin-top: 2rem; font-size: 1.1rem;">Despite being an essential module in TOPdesk, Knowledge Management remains significantly underutilised, directly impacting Incident Management—the most used and impactful module in the platform.</p>
             </section>
 
             <!-- Research Objectives -->
@@ -502,7 +545,7 @@
                 <ul class="insights-list">
                     <li><strong>Understand</strong> application managers' needs regarding Knowledge Base structure and permissions</li>
                     <li><strong>Validate</strong> whether the proposed restricted access concept aligns with user expectations</li>
-                    <li><strong>Challenge</strong> and explore existing assumptions about user behavior and preferences</li>
+                    <li><strong>Challenge</strong> and explore existing assumptions about user behaviour and preferences</li>
                 </ul>
             </section>
 
@@ -518,7 +561,7 @@
                     </div>
                     <div class="method-card">
                         <h4>2. Card Sorting (n=5)</h4>
-                        <p>Investigated how users conceptualize knowledge organization—organization-based vs. self-service portal-based</p>
+                        <p>Investigated how users conceptualize knowledge organisation—organisation-based vs. self-service portal-based</p>
                     </div>
                     <div class="method-card">
                         <h4>3. Concept Testing (n=7)</h4>
@@ -531,12 +574,12 @@
                 </div>
             </section>
 
+
             <!-- Key Insights: Card Sorting -->
             <section class="section">
                 <h2 class="section-title">Key Insights from Card Sorting</h2>
-                
-                <ul class="insights-list">
-                    <li><strong>100% of participants mirrored their organization structure</strong> into the Knowledge Base structure, revealing a strong mental model</li>
+<ul class="insights-list">
+                    <li><strong>100% of participants mirrored their organisation structure</strong> into the Knowledge Base structure, revealing a strong mental model</li>
                     <li><strong>Universal need for controlled visibility:</strong> All participants expressed support for visibility for internal operators but firmly opposed giving them create/edit/publish access</li>
                 </ul>
             </section>
@@ -546,7 +589,7 @@
                 <h2 class="section-title">Concept Testing Findings</h2>
                 
                 <ul class="insights-list">
-                    <li><strong>Tree structure strongly preferred:</strong> 71% (5/7) of participants favored tree structure over tagging, especially among long-time TOPdesk users (>10 years)</li>
+                    <li><strong>Tree structure strongly preferred:</strong> 71% (5/7) of participants favoured tree structure over tagging, especially among long-time TOPdesk users (>10 years)</li>
                     <li><strong>Tagging appreciated for specific use cases:</strong> filtering and bulk actions, but not as primary navigation</li>
                     <li><strong>Structure dependency revealed:</strong> Users rely on hierarchical structure for navigation due to limited search capabilities—an important product insight</li>
                 </ul>
@@ -555,8 +598,7 @@
             <!-- Usability Testing Results -->
             <section class="section">
                 <h2 class="section-title">Usability Testing Results</h2>
-                
-                <div class="results-highlight">
+<div class="results-highlight">
                     <h3 style="font-size: 1.5rem;">System Usability Scale (SUS) Score</h3>
                     <div class="sus-score">85.4</div>
                     <div class="grade">Grade A | Excellent | Acceptable</div>
@@ -633,22 +675,17 @@
                 <div class="key-takeaways">
                     <div class="takeaway-item">
                         <h4 style="color: #ff6b35; margin-bottom: 0.5rem;">1. Implement Deep Nesting Capability</h4>
-                        <p>Application Managers require <strong>more than three levels</strong> in the tree structure, ideally supporting <strong>infinite nesting</strong> to mirror complex organizational hierarchies</p>
+                        <p>The assumption was that three layers would be enough. Testing showed Application Managers require <strong>more than five levels</strong>, ideally supporting <strong>infinite nesting</strong>, to mirror complex organisational hierarchies</p>
                     </div>
                     
                     <div class="takeaway-item">
-                        <h4 style="color: #ff6b35; margin-bottom: 0.5rem;">2. Dual Group System Required</h4>
-                        <p>Visibility in self-service portals is tailored to <strong>person groups</strong>, while editing permissions rely on <strong>operator groups</strong>. Both are essential for flexibility</p>
+                        <h4 style="color: #ff6b35; margin-bottom: 0.5rem;">2. Support Both Person and Operator Groups</h4>
+                        <p>Visibility in self-service portals is tailored to <strong>person groups</strong>, while editing permissions rely on <strong>operator groups</strong>, so both are essential &mdash; 68% (13/19) said operator groups alone were not enough. Assigning roles to individual persons could be valuable but is <strong>not a must-have</strong></p>
                     </div>
                     
                     <div class="takeaway-item">
-                        <h4 style="color: #ff6b35; margin-bottom: 0.5rem;">3. Support Both Person & Operator Groups</h4>
-                        <p>There is a strong need to include both group types. The ability to assign roles to individual persons could be valuable but is <strong>not a must-have</strong></p>
-                    </div>
-                    
-                    <div class="takeaway-item">
-                        <h4 style="color: #ff6b35; margin-bottom: 0.5rem;">4. Implement Granular Role-Based Permissions</h4>
-                        <p>Role-based permissions should differentiate between <strong>viewing, editing, and managing</strong> capabilities. Customizable roles are appreciated but not essential based on user data</p>
+                        <h4 style="color: #ff6b35; margin-bottom: 0.5rem;">3. Implement Granular Role-Based Permissions</h4>
+                        <p>Role-based permissions should differentiate between <strong>viewing, editing, and managing</strong> capabilities. Customisable roles are appreciated but not essential based on user data</p>
                     </div>
                 </div>
             </section>
@@ -663,7 +700,7 @@
                         <ul style="list-style: none; padding: 0;">
                             <li>✓ Faster incident resolution</li>
                             <li>✓ Prevention of incidents through self-service</li>
-                            <li>✓ Better knowledge organization</li>
+                            <li>✓ Better knowledge organisation</li>
                         </ul>
                     </div>
                     <div class="overview-card">
@@ -688,5 +725,20 @@
         <div class="contact-section">
             <h2>Want to Learn More?</h2>
             <p>Interested in discussing this research or exploring collaboration opportunities?</p>
-            <a href="/cdn-cgi/l/email-protection#fc9e94898a9d92d28f9d8e898c898e95bc9b919d9590d29f9391" class="email-link">
-                ✉ <span class="__cf_email__" data-cfema
+            <a href="mailto:bhuvan.sarupuri@gmail.com" class="email-link">
+                &#9993; bhuvan.sarupuri@gmail.com
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <a href="index.html">Home</a>
+        <a href="index.html#projects">Projects</a>
+        <a href="index.html#experience">Experience</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="https://www.linkedin.com/in/bhuvan-sarupuri-ph-d-6448a767/" target="_blank">LinkedIn</a>
+        <p>&copy; 2026 Bhuvan Sarupuri. All rights reserved.</p>
+    </footer>
+</body>
+</html>
