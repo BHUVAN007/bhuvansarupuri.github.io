@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Every project Bhuvan Sarupuri can talk about publicly, grouped by the kind of problem it was: evaluating AI, research into product and strategy, research systems and operations, and earlier doctoral work.">
-    <title>All projects | Bhuvan Sarupuri — Senior UX Researcher, Customer Insights and AI Strategy</title>
+    <meta name="description" content="Every project Bhuvan Sarupuri can talk about publicly, grouped by theme: customer discovery and product strategy, service innovation and workflow transformation, research leadership and operations, evaluating AI, and earlier doctoral work.">
+    <title>All projects | Bhuvan Sarupuri — UX Research Lead</title>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@300;600;900&family=Libre+Franklin:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -395,6 +395,31 @@
         .project-group + .projects-grid {
             margin-bottom: 70px;
         }
+
+        .theme-filter {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin: 0 auto 50px;
+        }
+
+        .theme-btn {
+            font: inherit;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 999px;
+            border: 1px solid var(--border-color, rgba(255,255,255,0.15));
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+        }
+
+        .theme-btn:hover { color: var(--text-primary); border-color: var(--cyan); }
+        .theme-btn[aria-pressed="true"] { background: var(--cyan); border-color: var(--cyan); color: var(--bg-primary, #0a0e1a); }
+        .theme-btn:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+        .theme-block[hidden] { display: none; }
 
         .project-group-title {
             font-family: 'Fraunces', serif;
@@ -1139,19 +1164,28 @@
                 <p class="project-group-desc" style="margin: 20px auto 0; text-align: center;">Everything I have worked on that I can talk about publicly, grouped by the kind of problem it was.</p>
             </div>
 
+            <div class="theme-filter" role="group" aria-label="Filter projects by theme">
+                <button type="button" class="theme-btn" data-filter="all" aria-pressed="true">All</button>
+                <button type="button" class="theme-btn" data-filter="discovery" aria-pressed="false">Discovery &amp; strategy</button>
+                <button type="button" class="theme-btn" data-filter="service" aria-pressed="false">Service innovation</button>
+                <button type="button" class="theme-btn" data-filter="leadership" aria-pressed="false">Research leadership</button>
+                <button type="button" class="theme-btn" data-filter="ai" aria-pressed="false">Evaluating AI</button>
+                <button type="button" class="theme-btn" data-filter="earlier" aria-pressed="false">Earlier research</button>
+            </div>
+
+            <div class="theme-block" data-theme-group="discovery">
             <div class="project-group">
-                <h3 class="project-group-title">Product and strategy research</h3>
-                <p class="project-group-desc">Studies and frameworks that changed what got built.</p>
+                <h3 class="project-group-title">Customer Discovery &amp; Product Strategy</h3>
+                <p class="project-group-desc">Understanding customer workflows, connecting evidence and identifying which problems deserve attention.</p>
             </div>
 
             <div class="projects-grid">
-                <!-- Project: TOPdesk Atlas -->
                 <div class="project-card">
                     <div class="project-content">
-                        <span class="project-tag">Product and strategy research</span>
+                        <span class="project-tag">Customer Discovery &amp; Product Strategy</span>
                         <h3 class="project-title">TOPdesk Atlas</h3>
                         <p class="project-description">
-                            A map of the whole product: every module, every task people do in it, and the evidence about each task. 574 problems from the research are coded to 12 root causes, and an interactive map shows how those causes feed each other, so the team can pick the fixes that unlock others.
+                            Connected 574 product problems across 21 modules to 12 underlying root causes, creating a shared evidence base for Product, UX, Engineering and leadership to identify dependencies and prioritise higher-impact improvements.
                         </p>
                         <div class="project-meta">
                             <div class="project-meta-item">
@@ -1170,120 +1204,251 @@
                     </div>
                 </div>
 
-                <!-- Project 3: TOPdesk Progress Trail -->
                 <div class="project-card">
-                <div class="project-content">
-                <span class="project-tag">Product and strategy research</span>
-                <h3 class="project-title">TOPdesk Progress Trail Redesign</h3>
-                <p class="project-description">
-                Comprehensive user research mapping opportunities in incident management workflows through interviews, affinity mapping, and journey mapping with 10 participants.
-                </p>
-                <div class="project-meta">
-                <div class="project-meta-item">
-                <span>👥</span>
-                <span>10 Interviews</span>
-                </div>
-                <div class="project-meta-item">
-                <span>📊</span>
-                <span>7 Opportunities</span>
-                </div>
-                </div>
-                <a href="topdesk-research-portfolio.html" class="project-link">View Case Study</a>
-                <div class="disclaimer">
-                This project was completed in collaboration with team members at TOPdesk.
-                </div>
-                </div>
+                    <div class="project-content">
+                        <span class="project-tag">Customer Discovery &amp; Product Strategy</span>
+                        <h3 class="project-title">Progress Trail Redesign</h3>
+                        <p class="project-description">
+                            Led discovery across incident management roles, mapping workflows and workarounds into seven prioritised opportunities for a product redesign.
+                        </p>
+                        <div class="project-meta">
+                            <div class="project-meta-item">
+                                <span>👥</span>
+                                <span>10 Interviews</span>
+                            </div>
+                            <div class="project-meta-item">
+                                <span>📊</span>
+                                <span>7 Opportunities</span>
+                            </div>
+                        </div>
+                        <a href="topdesk-research-portfolio.html" class="project-link">View Case Study</a>
+                        <div class="disclaimer">
+                            This project was completed in collaboration with team members at TOPdesk.
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Project 5: Knowledge Management -->
                 <div class="project-card">
-                <div class="project-content">
-                <span class="project-tag">Product and strategy research</span>
-                <h3 class="project-title">Knowledge Management Research</h3>
-                <p class="project-description">
-                Mixed-methods study across four methods — survey (n=31), card sorting (n=5), concept testing (n=7) and usability testing (n=19) — on how knowledge managers structure a knowledge base and who they need to restrict access for.
-                </p>
-                <div class="project-meta">
-                <div class="project-meta-item">
-                <span>📋</span>
-                <span>31 Survey Responses</span>
-                </div>
-                <div class="project-meta-item">
-                <span>💬</span>
-                <span>62 Participants, 4 Methods</span>
-                </div>
-                </div>
-                <a href="km_research_portfolio.html" class="project-link">View Case Study</a>
-                </div>
+                    <div class="project-content">
+                        <span class="project-tag">Customer Discovery &amp; Product Strategy</span>
+                        <h3 class="project-title">Customer Maturity Assessment</h3>
+                        <p class="project-description">
+                            Built a behavioural maturity assessment covering ~4,900 customers across 11 regional branches to support customer segmentation and product strategy.
+                        </p>
+                        <div class="project-meta">
+                            <div class="project-meta-item">
+                                <span>👥</span>
+                                <span>~4,900 Customers</span>
+                            </div>
+                            <div class="project-meta-item">
+                                <span>🌍</span>
+                                <span>11 Regional Branches</span>
+                            </div>
+                        </div>
+                        <a href="ai-readiness-portfolio.html" class="project-link">View Case Study</a>
+                    </div>
                 </div>
 
-                <!-- Project: Intelligent Front Door Readiness -->
                 <div class="project-card">
-                <div class="project-content">
-                <span class="project-tag">Product and strategy research</span>
-                <h3 class="project-title">Intelligent Front Door — Readiness Framework</h3>
-                <p class="project-description">
-                Readiness and maturity framework benchmarked against Gartner, Ivanti, HDI, SDI, and Forrester — mapping where customers stand on the path to intelligent service delivery, informing product strategy, AI roadmap priorities, and long-term platform vision at TOPdesk.
-                </p>
-                <div class="project-meta">
-                <div class="project-meta-item">
-                <span>🧭</span>
-                <span>6 Capability Dimensions</span>
-                </div>
-                <div class="project-meta-item">
-                <span>📈</span>
-                <span>5 Maturity Stages</span>
-                </div>
-                </div>
-                <a href="ifd-readiness-portfolio.html" class="project-link">View Case Study</a>
-                </div>
+                    <div class="project-content">
+                        <span class="project-tag">Customer Discovery &amp; Product Strategy</span>
+                        <h3 class="project-title">Knowledge Management Research</h3>
+                        <p class="project-description">
+                            Mixed-methods study across four methods — survey (n=31), card sorting (n=5), concept testing (n=7) and usability testing (n=19) — on how knowledge managers structure a knowledge base and who they need to restrict access for.
+                        </p>
+                        <div class="project-meta">
+                            <div class="project-meta-item">
+                                <span>📋</span>
+                                <span>31 Survey Responses</span>
+                            </div>
+                            <div class="project-meta-item">
+                                <span>💬</span>
+                                <span>62 Participants, 4 Methods</span>
+                            </div>
+                        </div>
+                        <a href="km_research_portfolio.html" class="project-link">View Case Study</a>
+                    </div>
                 </div>
 
-                <!-- Project: AI Readiness & Customer Maturity -->
                 <div class="project-card">
-                <div class="project-content">
-                <span class="project-tag">Product and strategy research</span>
-                <h3 class="project-title">AI Readiness & Customer Maturity Assessment</h3>
-                <p class="project-description">
-                Globally standardised customer maturity scoring program mapping product adoption across ~4,900 customers and 11 regional branches — informing product strategy and the AI roadmap for intelligent service delivery.
-                </p>
-                <div class="project-meta">
-                <div class="project-meta-item">
-                <span>👥</span>
-                <span>~4,900 Customers</span>
-                </div>
-                <div class="project-meta-item">
-                <span>📊</span>
-                <span>6 Scoring Dimensions</span>
-                </div>
-                </div>
-                <a href="ai-readiness-portfolio.html" class="project-link">View Case Study</a>
-                </div>
-                </div>
-
-                <!-- Project 2: Connected Strategy -->
-                <div class="project-card">
-                <div class="project-content">
-                <span class="project-tag">Product and strategy research</span>
-                <h3 class="project-title">Connected Strategy for ITSM</h3>
-                <p class="project-description">
-                A Wharton Strategic Management course project applying the Connected Strategy framework to mid-market ITSM: customer journey mapping, pain-point and information-flow analysis, and four strategy archetypes mapped onto AI-driven automation. Figures throughout are modelled targets, not measured outcomes.
-                </p>
-                <div class="project-meta">
-                <div class="project-meta-item">
-                <span>🎯</span>
-                <span>6 analysis worksheets</span>
-                </div>
-                <div class="project-meta-item">
-                <span>🤖</span>
-                <span>4 strategy archetypes</span>
-                </div>
-                </div>
-                <a href="connected-strategy-itsm.html" class="project-link">View Case Study</a>
-                </div>
+                    <div class="project-content">
+                        <span class="project-tag">Customer Discovery &amp; Product Strategy</span>
+                        <h3 class="project-title">Intelligent Front Door — Readiness Framework</h3>
+                        <p class="project-description">
+                            Readiness and maturity framework benchmarked against Gartner, Ivanti, HDI, SDI, and Forrester — mapping where customers stand on the path to intelligent service delivery, informing product strategy, AI roadmap priorities, and long-term platform vision at TOPdesk.
+                        </p>
+                        <div class="project-meta">
+                            <div class="project-meta-item">
+                                <span>🧭</span>
+                                <span>6 Capability Dimensions</span>
+                            </div>
+                            <div class="project-meta-item">
+                                <span>📈</span>
+                                <span>5 Maturity Stages</span>
+                            </div>
+                        </div>
+                        <a href="ifd-readiness-portfolio.html" class="project-link">View Case Study</a>
+                    </div>
                 </div>
             </div>
+            </div>
 
+            <div class="theme-block" data-theme-group="service">
+            <div class="project-group">
+                <h3 class="project-group-title">Service Innovation &amp; Workflow Transformation</h3>
+                <p class="project-group-desc">Mapping existing processes, challenging assumptions and designing future-state services around customer outcomes.</p>
+            </div>
+
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-content">
+                        <span class="project-tag">Service Innovation &amp; Workflow Transformation</span>
+                        <h3 class="project-title">Cross-Domain Service Innovation</h3>
+                        <p class="project-description">
+                            Mapped processes across product areas and departments, facilitated outcome-driven workshops and developed future-state service blueprints that informed five features on the product roadmap.
+                        </p>
+                        <div class="project-meta">
+                            <div class="project-meta-item">
+                                <span>🧩</span>
+                                <span>Cross-domain</span>
+                            </div>
+                            <div class="project-meta-item">
+                                <span>🗺️</span>
+                                <span>5 roadmap features</span>
+                            </div>
+                        </div>
+                        <a href="service-innovation-portfolio.html" class="project-link">View Case Study</a>
+                        <div class="disclaimer">
+                            Built at TOPdesk. Maps, blueprints and roadmap items are internal.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-content">
+                        <span class="project-tag">Service Innovation &amp; Workflow Transformation</span>
+                        <h3 class="project-title">Standardising Feature Releases</h3>
+                        <p class="project-description">
+                            Interviews and a discovery workshop with 7 stakeholders on why feature releases were inconsistent at TOPdesk, clustered into four categories of finding and turned into recommendations for product management, the UX guild, user guidance and marketing.
+                        </p>
+                        <div class="project-meta">
+                            <div class="project-meta-item">
+                                <span>🚀</span>
+                                <span>7 stakeholders</span>
+                            </div>
+                            <div class="project-meta-item">
+                                <span>⚡</span>
+                                <span>4 finding categories</span>
+                            </div>
+                        </div>
+                        <a href="feature-release-standards.html" class="project-link">View Case Study</a>
+                        <div class="disclaimer">
+                            This project was completed in collaboration with team members at TOPdesk.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-content">
+                        <span class="project-tag">Service Innovation &amp; Workflow Transformation</span>
+                        <h3 class="project-title">Connected Strategy for ITSM</h3>
+                        <p class="project-description">
+                            A Wharton Strategic Management course project applying the Connected Strategy framework to mid-market ITSM: customer journey mapping, pain-point and information-flow analysis, and four strategy archetypes mapped onto AI-driven automation. Figures throughout are modelled targets, not measured outcomes.
+                        </p>
+                        <div class="project-meta">
+                            <div class="project-meta-item">
+                                <span>🎯</span>
+                                <span>6 analysis worksheets</span>
+                            </div>
+                            <div class="project-meta-item">
+                                <span>🤖</span>
+                                <span>4 strategy archetypes</span>
+                            </div>
+                        </div>
+                        <a href="connected-strategy-itsm.html" class="project-link">View Case Study</a>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <div class="theme-block" data-theme-group="leadership">
+            <div class="project-group">
+                <h3 class="project-group-title">Research Leadership &amp; Operations</h3>
+                <p class="project-group-desc">Building the people, methods, recruitment channels and tools that make continuous customer research possible.</p>
+            </div>
+
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-content">
+                        <span class="project-tag">Research Leadership &amp; Operations</span>
+                        <h3 class="project-title">Building the UX Research Practice</h3>
+                        <p class="project-description">
+                            Established research standards, managed customer recruitment channels, built research operations and helped teams make better use of customer evidence.
+                        </p>
+                        <div class="project-meta">
+                            <div class="project-meta-item">
+                                <span>📘</span>
+                                <span>Research playbook</span>
+                            </div>
+                            <div class="project-meta-item">
+                                <span>🤝</span>
+                                <span>4 recruitment channels</span>
+                            </div>
+                        </div>
+                        <a href="research-practice-portfolio.html" class="project-link">View Case Study</a>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-content">
+                        <span class="project-tag">Research Leadership &amp; Operations</span>
+                        <h3 class="project-title">Research Buddy</h3>
+                        <p class="project-description">
+                            Connected fragmented research and product evidence into a single retrieval experience with role-specific insights for researchers, designers and product managers.
+                        </p>
+                        <div class="project-meta">
+                            <div class="project-meta-item">
+                                <span>🤖</span>
+                                <span>5 of 6 sources live</span>
+                            </div>
+                            <div class="project-meta-item">
+                                <span>🔌</span>
+                                <span>3 role-shaped outputs</span>
+                            </div>
+                        </div>
+                        <a href="research-buddy-portfolio.html" class="project-link">View Case Study</a>
+                        <div class="disclaimer">
+                            Built at TOPdesk and in use.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-content">
+                        <span class="project-tag">Research Leadership &amp; Operations</span>
+                        <h3 class="project-title">TOPdesk Research Copilot</h3>
+                        <p class="project-description">
+                            Built guided research workflows and methodological safeguards to help product teams conduct appropriate research independently.
+                        </p>
+                        <div class="project-meta">
+                            <div class="project-meta-item">
+                                <span>&#129513;</span>
+                                <span>20 research tasks</span>
+                            </div>
+                            <div class="project-meta-item">
+                                <span>&#128279;</span>
+                                <span>6 chained workflows</span>
+                            </div>
+                        </div>
+                        <a href="research-copilot-portfolio.html" class="project-link">View Case Study</a>
+                        <div class="disclaimer">
+                            Self-directed, for TOPdesk. Built; feedback and adoption metrics pending.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="theme-block" data-theme-group="ai">
             <div class="project-group">
                 <h3 class="project-group-title">Evaluating AI</h3>
                 <p class="project-group-desc">Judging whether AI systems are actually good, and being clear about what the evidence cannot carry.</p>
@@ -1338,91 +1503,9 @@
                 </div>
             </div>
 
-            <div class="project-group">
-                <h3 class="project-group-title">Research systems and operations</h3>
-                <p class="project-group-desc">The tools and playbooks that let research reach decisions without a researcher in the middle of every one.</p>
             </div>
 
-            <div class="projects-grid">
-                <!-- Project: TOPdesk Research Copilot -->
-                <div class="project-card">
-                    <div class="project-content">
-                        <span class="project-tag">Research systems and operations</span>
-                        <h3 class="project-title">TOPdesk Research Copilot</h3>
-                        <p class="project-description">
-                            A copilot that lets any product role run real research on their own, so a decision does not have to wait for a specialist. Say or type what you are working on, and it routes you to the right task, grounded in TOPdesk's own product documentation. Twenty tasks across the research lifecycle, built as configuration rather than code.
-                        </p>
-                        <div class="project-meta">
-                            <div class="project-meta-item">
-                                <span>&#129513;</span>
-                                <span>20 research tasks</span>
-                            </div>
-                            <div class="project-meta-item">
-                                <span>&#128279;</span>
-                                <span>6 chained workflows</span>
-                            </div>
-                        </div>
-                        <a href="research-copilot-portfolio.html" class="project-link">View Case Study</a>
-                        <div class="disclaimer">
-                            Self-directed, for TOPdesk. Built; feedback and adoption metrics pending.
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project: Research Buddy -->
-                <div class="project-card">
-                <div class="project-content">
-                <span class="project-tag">Research systems and operations</span>
-                <h3 class="project-title">Research Buddy — AI-Assisted Research Retrieval</h3>
-                <p class="project-description">
-                An internal tool, built and in use, putting six fragmented research and customer data sources behind a single plain-language query — qual and quant agents run in parallel, then a third synthesises findings shaped to the asker's role, so research data flows into product and AI strategy decisions.
-                </p>
-                <div class="project-meta">
-                <div class="project-meta-item">
-                <span>🤖</span>
-                <span>5 of 6 sources live</span>
-                </div>
-                <div class="project-meta-item">
-                <span>🔌</span>
-                <span>3 role-shaped outputs</span>
-                </div>
-                </div>
-                <a href="research-buddy-portfolio.html" class="project-link">View Case Study</a>
-                <div class="disclaimer">
-                Built at TOPdesk to help research reach more product decisions.
-                </div>
-                </div>
-                </div>
-
-
-
-
-                <!-- Project 4: Release Patterns -->
-                <div class="project-card">
-                <div class="project-content">
-                <span class="project-tag">Research systems and operations</span>
-                <h3 class="project-title">Standardising Feature Releases</h3>
-                <p class="project-description">
-                Interviews and a discovery workshop with 7 stakeholders on why feature releases were inconsistent at TOPdesk, clustered into four categories of finding and turned into recommendations for product management, the UX guild, user guidance and marketing.
-                </p>
-                <div class="project-meta">
-                <div class="project-meta-item">
-                <span>🚀</span>
-                <span>7 stakeholders</span>
-                </div>
-                <div class="project-meta-item">
-                <span>⚡</span>
-                <span>4 finding categories</span>
-                </div>
-                </div>
-                <a href="feature-release-standards.html" class="project-link">View Case Study</a>
-                <div class="disclaimer">
-                This project was completed in collaboration with team members at TOPdesk.
-                </div>
-                </div>
-                </div>
-            </div>
-
+            <div class="theme-block" data-theme-group="earlier">
             <div class="project-group">
                 <h3 class="project-group-title">Earlier research</h3>
                 <p class="project-group-desc">Doctoral and postdoctoral work in virtual reality.</p>
@@ -1457,8 +1540,28 @@
                 <p class="project-group-desc">Six peer-reviewed papers on VR locomotion and interaction, plus the VR dance work published in The Visual Computer.</p>
                 <p class="archive-link"><a href="https://scholar.google.com/citations?user=2r0gzbsAAAAJ&amp;hl=en" target="_blank" rel="noopener">View publications on Google Scholar &rarr;</a></p>
             </div>
+            </div>
         </div>
     </section>
+
+    <script>
+        (function () {
+            var btns = document.querySelectorAll('.theme-btn');
+            var blocks = document.querySelectorAll('.theme-block');
+            function show(f) {
+                btns.forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.filter === f)); });
+                blocks.forEach(function (bl) { bl.hidden = f !== 'all' && bl.dataset.themeGroup !== f; });
+            }
+            btns.forEach(function (b) {
+                b.addEventListener('click', function () {
+                    show(b.dataset.filter);
+                    try { history.replaceState(null, '', b.dataset.filter === 'all' ? location.pathname : '#' + b.dataset.filter); } catch (e) {}
+                });
+            });
+            var h = location.hash.slice(1);
+            if (h && document.querySelector('.theme-btn[data-filter="' + h + '"]')) show(h);
+        })();
+    </script>
 
     <!-- Footer -->
     <footer>

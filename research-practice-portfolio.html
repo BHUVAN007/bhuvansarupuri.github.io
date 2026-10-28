@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Establishing the people, processes and infrastructure for continuous research at TOPdesk: research standards, a participant panel, continuous Voice of Customer, research operations and adoption.">
+    <title>Building and Scaling UX Research at TOPdesk | Bhuvan Sarupuri</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Fraunces:wght@300;600;900&display=swap">
+<style>
+  :root {
+    --bg: #eef2f4; --surface: #ffffff; --surface-2: #f4f8fa; --ink: #17242c; --muted: #55636d; --faint: #8895a0;
+    --line: #dde5ea; --line-strong: #c7d2da; --accent: #0a7da0; --accent-deep: #0a6382; --accent-soft: #e2eff4;
+    --coral: #e65038; --warn: #b0761a; --warn-soft: #f6ecd7; --crit: #bf4630; --crit-soft: #f7e3dd;
+    --f-head: "Bricolage Grotesque", system-ui, sans-serif;
+    --f-body: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --f-mono: ui-monospace, "SFMono-Regular", Menlo, monospace;
+  }
+  :root:not([data-theme="light"]) { @media (prefers-color-scheme: dark) {
+    --bg: #0d151a; --surface: #131f26; --surface-2: #16242c; --ink: #e9f1f4; --muted: #94a4ad; --faint: #66767e;
+    --line: #22323a; --line-strong: #2e3f48; --accent: #23a6c9; --accent-deep: #7fcfe4; --accent-soft: #12262e;
+    --coral: #f0715a; --warn: #d69a3f; --warn-soft: #2a2416; --crit: #e0745c; --crit-soft: #2c1c18;
+  } }
+  :root[data-theme="dark"] {
+    --bg: #0d151a; --surface: #131f26; --surface-2: #16242c; --ink: #e9f1f4; --muted: #94a4ad; --faint: #66767e;
+    --line: #22323a; --line-strong: #2e3f48; --accent: #23a6c9; --accent-deep: #7fcfe4; --accent-soft: #12262e;
+    --coral: #f0715a; --warn: #d69a3f; --warn-soft: #2a2416; --crit: #e0745c; --crit-soft: #2c1c18;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 18px; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 26px; }
+  .measure { max-width: 880px; }
+  h1, h2, h3 { font-family: var(--f-head); font-weight: 700; line-height: 1.14; letter-spacing: -0.015em; margin: 0; text-wrap: balance; }
+  a { color: var(--accent-deep); }
+  .eyebrow { font-family: var(--f-mono); font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent-deep); font-weight: 600; }
+
+  .part { padding: 62px 0; border-bottom: 1px solid var(--line); }
+  .part:first-of-type { padding-top: 124px; }
+  .part:last-of-type { border-bottom: none; }
+  h1 { font-size: clamp(34px, 5vw, 46px); margin-top: 16px; }
+  h1.measure { max-width: 1040px; }
+  h2 { font-size: clamp(26px, 4vw, 33px); margin-top: 16px; }
+  p { margin: 18px 0 0; }
+  p.muted { color: var(--muted); }
+  .lede { font-size: 21px; line-height: 1.55; }
+
+  .meta { display: flex; flex-wrap: wrap; gap: 26px; margin-top: 28px; }
+  .meta .k { font-family: var(--f-mono); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--faint); }
+  .meta .v { font-weight: 600; margin-top: 4px; font-size: 16px; }
+
+  ul.points { list-style: none; padding: 0; margin: 24px 0 0; max-width: 880px; }
+  ul.points li { position: relative; padding-left: 22px; margin-bottom: 12px; color: var(--muted); }
+  ul.points li b { color: var(--ink); font-weight: 600; }
+  ul.points li::before { content: ""; position: absolute; left: 0; top: 10px; width: 9px; height: 9px; border-radius: 2px; background: var(--coral); }
+
+  figure { margin: 30px 0 0; }
+  figcaption { font-family: var(--f-mono); font-size: 13px; color: var(--faint); margin-top: 10px; }
+  .shots { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 700px) { .shots { grid-template-columns: 1fr; } }
+
+  .browser { border-radius: 11px; overflow: hidden; border: 1px solid var(--line-strong); box-shadow: 0 12px 30px -16px rgba(20,34,43,.35); background: #fff; }
+  .browser .bar { display: flex; align-items: center; gap: 6px; padding: 8px 12px; background: #e7edf0; border-bottom: 1px solid #d6dee3; }
+  .browser .bar i { width: 10px; height: 10px; border-radius: 50%; }
+  .browser .bar .u { flex: 1; font-family: var(--f-mono); font-size: 11px; color: #58656d; background: #fff; border: 1px solid #d6dee3; border-radius: 5px; padding: 3px 10px; margin-left: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  .app { font-family: system-ui, sans-serif; background: #eef2f4; color: #17242c; padding: 15px; font-size: 12.5px; }
+  .app .ah { display: flex; align-items: center; gap: 8px; padding-bottom: 11px; border-bottom: 1px solid #dde5ea; }
+  .app .ah .nm { font-weight: 700; font-size: 13px; } .app .ah .nm b { color: #55636d; font-weight: 500; }
+  .app .h1 { font-family: var(--f-head); font-weight: 700; font-size: 19px; margin: 13px 0 3px; letter-spacing: -0.01em; }
+  .app .sub { color: #55636d; font-size: 12px; margin-bottom: 11px; }
+  .app .ask { display: flex; gap: 6px; margin-bottom: 12px; }
+  .app .ask .mic { width: 30px; border: 1px solid #dde5ea; border-radius: 8px; background: #fff; display: grid; place-items: center; }
+  .app .ask input { flex: 1; border: 1px solid #dde5ea; border-radius: 8px; padding: 8px 10px; font-size: 11.5px; color: #55636d; background: #fff; }
+  .app .ask .b { background: #0a7da0; color: #fff; border-radius: 8px; padding: 8px 14px; font-weight: 600; font-size: 11.5px; }
+  .app .pl { font-size: 9px; text-transform: uppercase; letter-spacing: .09em; color: #8895a0; font-weight: 700; margin: 11px 0 6px; }
+  .app .chips { display: flex; flex-wrap: wrap; gap: 5px; }
+  .app .c { font-size: 10.5px; border: 1px solid #dde5ea; background: #fff; border-radius: 7px; padding: 5px 9px; display: inline-flex; align-items: center; gap: 5px; }
+  .app .c .d { width: 6px; height: 6px; border-radius: 50%; }
+  .qual { background: #3f7a55; } .quant { background: #9a6a12; } .mixed { background: #0a7da0; }
+
+  /* intake form mockup */
+  .app .field { margin-bottom: 10px; }
+  .app .field label { display: block; font-size: 9.5px; font-weight: 700; color: #17242c; margin-bottom: 4px; }
+  .app .inp { background: #fff; border: 1px solid #dde5ea; border-radius: 7px; padding: 8px 10px; font-size: 11.5px; color: #17242c; }
+  .app .inp.sel { display: flex; justify-content: space-between; } .app .inp.sel::after { content: "▾"; color: #8895a0; }
+  /* question rows */
+  .app .qrow { display: flex; gap: 6px; align-items: center; background: #fff; border: 1px solid #dde5ea; border-radius: 7px; padding: 7px 10px; margin-bottom: 5px; font-size: 11.5px; }
+  .app .qrow .n { font-family: var(--f-mono); font-size: 9px; color: #0a6382; font-weight: 700; }
+  .app .flags { display: flex; gap: 4px; margin-left: auto; }
+  .app .fl { font-family: var(--f-mono); font-size: 8.5px; font-weight: 700; padding: 2px 5px; border-radius: 4px; }
+  .app .fl.c { color: #bf4630; background: #f7e3dd; } .app .fl.w { color: #b0761a; background: #f6ecd7; } .app .fl.ok { color: #2c6a45; background: #e6f2ea; }
+  .app .runs { background: #fff; border: 1px solid #dde5ea; border-radius: 8px; padding: 10px; margin-top: 6px; }
+  .app .run { padding: 6px 0; border-top: 1px solid #eef1ef; } .app .run:first-child { border-top: none; }
+  .app .run .t { font-size: 11.5px; font-weight: 600; } .app .run .m { font-family: var(--f-mono); font-size: 9px; color: #8895a0; margin-top: 1px; }
+  .pill2 { font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 20px; } .pill2.mixed { background: #e2eff4; color: #0a6382; }
+
+  /* skill output mockup */
+  .out { font-family: system-ui, sans-serif; padding: 15px; background: #fff; font-size: 12px; }
+  .out .mode { font-size: 9.5px; text-transform: uppercase; letter-spacing: .07em; color: #2c6a45; font-weight: 700; }
+  .out .ot { font-family: var(--f-head); font-weight: 700; font-size: 15px; margin: 5px 0 9px; letter-spacing: -0.01em; }
+  .out h5 { margin: 11px 0 5px; font-size: 10px; text-transform: uppercase; letter-spacing: .05em; color: #0a6382; }
+  .out ul { margin: 0; padding-left: 16px; } .out li { margin-bottom: 5px; line-height: 1.45; }
+
+  /* architecture */
+  .arch { border: 1px solid var(--line); border-radius: 14px; background: var(--surface); padding: 20px; margin-top: 30px; }
+  .arch .layer { display: flex; align-items: stretch; gap: 10px; flex-wrap: wrap; }
+  .arch .box { flex: 1; min-width: 120px; border: 1px solid var(--line); border-radius: 10px; padding: 12px 13px; background: var(--surface-2); }
+  .arch .box .t { font-weight: 700; font-size: 13.5px; }
+  .arch .box .s { font-size: 12px; color: var(--muted); margin-top: 4px; line-height: 1.4; }
+  .arch .flowlbl { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--faint); margin: 16px 0 8px; }
+  .arch .down { text-align: center; color: var(--accent); font-family: var(--f-mono); margin: 6px 0; }
+  .arch .engine { border-color: var(--coral); }
+  .arch .engine .t { color: var(--coral); }
+
+  .model { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 26px; }
+  @media (max-width: 700px) { .model { grid-template-columns: 1fr; } }
+  .mcard { border: 1px solid var(--line); border-radius: 12px; padding: 16px; background: var(--surface); }
+  .mcard .n { font-family: var(--f-head); font-weight: 700; font-size: 30px; letter-spacing: -0.03em; }
+  .mcard .h { font-weight: 700; margin-top: 4px; } .mcard .s { color: var(--muted); font-size: 13.5px; margin-top: 6px; line-height: 1.5; }
+
+  .wf { margin-top: 26px; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  .wf .r { display: grid; grid-template-columns: 130px 1fr auto; gap: 12px; align-items: center; padding: 12px 15px; border-top: 1px solid var(--line); }
+  .wf .r:first-child { border-top: none; }
+  .wf .r .name { font-weight: 700; font-size: 14px; }
+  .wf .r .desc { font-size: 13px; color: var(--muted); }
+  .wf .r .steps { font-family: var(--f-mono); font-size: 11px; color: var(--faint); white-space: nowrap; }
+  @media (max-width: 640px) { .wf .r { grid-template-columns: 1fr; gap: 4px; } .wf .r .steps { white-space: normal; } }
+
+  .agents { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 24px; }
+  .agent { border: 1px solid var(--line); border-radius: 10px; padding: 12px 16px; background: var(--surface); display: flex; align-items: center; gap: 10px; }
+  .agent .d { width: 11px; height: 11px; border-radius: 50%; } .agent b { font-size: 14px; } .agent span { font-family: var(--f-mono); font-size: 12px; color: var(--muted); }
+
+  .spec { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; margin-top: 26px; }
+  .spec .code { background: var(--surface-2); font-family: var(--f-mono); font-size: 12px; line-height: 1.6; padding: 16px; white-space: pre-wrap; color: var(--ink); }
+  .spec .note { padding: 12px 16px; font-size: 13.5px; color: var(--muted); border-top: 1px solid var(--line); }
+
+
+  footer { padding: 42px 0 62px; }
+  footer .who { font-family: var(--f-head); font-weight: 700; font-size: 16px; }
+  footer .who span { display: block; color: var(--muted); font-size: 13px; font-weight: 400; margin-top: 3px; }
+  footer .links { margin-top: 14px; display: flex; gap: 20px; flex-wrap: wrap; font-family: var(--f-mono); font-size: 14px; }
+  footer a { text-decoration: none; } footer a:hover { text-decoration: underline; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+</style>
+<style>
+    .name-header {
+        position: fixed; top: 30px; left: 40px; z-index: 1000;
+        font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600;
+        color: var(--ink); text-decoration: none; letter-spacing: 0.5px;
+        background: var(--surface); padding: 12px 24px; border-radius: 12px;
+        border: 1px solid var(--line-strong); box-shadow: 0 8px 24px -14px rgba(20,34,43,.45);
+        transition: all .3s ease;
+    }
+    .name-header:hover { border-color: var(--accent); }
+    .name-header .degree { color: var(--accent); font-weight: 300; }
+    .nav-links {
+        position: fixed; top: 30px; right: 40px; z-index: 1000;
+        display: flex; gap: 30px; align-items: center;
+        background: var(--surface); padding: 12px 24px; border-radius: 12px;
+        border: 1px solid var(--line-strong); box-shadow: 0 8px 24px -14px rgba(20,34,43,.45);
+    }
+    .nav-links a {
+        color: var(--muted); text-decoration: none;
+        font-size: 14px; font-weight: 500; letter-spacing: 0.5px;
+        transition: color .3s ease;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .scope-note {
+        margin-top: 30px;
+        padding: 18px 20px;
+        border: 1px solid var(--line-strong);
+        border-left: 3px solid var(--warn);
+        border-radius: 9px;
+        background: var(--warn-soft);
+    }
+    .scope-note p { margin-top: 8px; font-size: 16.5px; color: var(--muted); }
+    .scope-note .eyebrow { color: var(--warn); }
+    @media (max-width: 968px) {
+        .name-header, .nav-links { position: static; margin: 16px auto 0; width: max-content; }
+        .nav-links { flex-wrap: wrap; justify-content: center; }
+        .part:first-of-type { padding-top: 34px; }
+    }
+</style>
+<style>
+  .flow { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin-top: 28px; }
+  .flow .step { position: relative; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 14px; }
+  .flow .step .k { font-family: var(--f-mono); font-size: 11px; color: var(--accent-deep); font-weight: 600; letter-spacing: .06em; }
+  .flow .step .t { font-family: var(--f-head); font-weight: 700; font-size: 16px; line-height: 1.2; margin-top: 6px; }
+  .flow .step .s { font-size: 13px; color: var(--muted); margin-top: 6px; line-height: 1.45; }
+  .flow .step:not(:last-child)::after { content: "→"; position: absolute; right: -10px; top: 14px; color: var(--accent); font-family: var(--f-mono); font-size: 13px; }
+  @media (max-width: 860px) { .flow { grid-template-columns: 1fr; } .flow .step:not(:last-child)::after { content: "↓"; right: auto; left: 16px; top: auto; bottom: -15px; } }
+  .model.four { grid-template-columns: repeat(4, 1fr); }
+  @media (max-width: 860px) { .model.four { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .model.four { grid-template-columns: 1fr; } }
+  .mcard .lbl { font-family: var(--f-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--accent-deep); font-weight: 600; }
+</style>
+</head>
+<body>
+    <a href="index.html" class="name-header">Bhuvan Sarupuri <span class="degree">Ph.D.</span></a>
+
+    <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="index.html#projects">Projects</a>
+        <a href="index.html#experience">Experience</a>
+        <a href="index.html#contact">Contact</a>
+        <a href="https://www.linkedin.com/in/bhuvan-sarupuri-ph-d-6448a767/" target="_blank" rel="noopener">LinkedIn</a>
+    </nav>
+
+
+
+<main>
+  <!-- 1 · CONTEXT -->
+  <section class="part wrap">
+    <span class="eyebrow">Research leadership</span>
+    <h1 class="measure">Building and Scaling UX Research at TOPdesk</h1>
+    <p class="lede measure">Establishing the people, processes and infrastructure for continuous research.</p>
+    <p class="muted measure">I joined TOPdesk as its first Senior UX Researcher and helped establish the foundations of its UX research practice: the standards research is held to, ongoing access to customers, a continuous way of hearing from them, and the operations that let researchers, product managers and designers all use it.</p>
+    <p class="muted measure">My focus has been on making customer research repeatable, accessible and useful for product decisions, beyond any single project.</p>
+    <div class="meta">
+      <div><div class="k">Role</div><div class="v">Senior UX Researcher → UX Research Lead</div></div>
+      <div><div class="k">For</div><div class="v">TOPdesk</div></div>
+      <div><div class="k">Years</div><div class="v">2023 – present</div></div>
+      <div><div class="k">Status</div><div class="v">Ongoing</div></div>
+    </div>
+    <aside class="scope-note measure">
+      <span class="eyebrow">Scope</span>
+      <p>The playbook, templates, panel and vendor material are internal to TOPdesk, so this page describes the practice rather than showing it. The continuous Voice of Customer programme runs within my product domain; it is not a company-wide programme.</p>
+    </aside>
+  </section>
+
+  <!-- 2 · OPERATING MODEL -->
+  <section class="part wrap">
+    <span class="eyebrow">The operating model</span>
+    <h2 class="measure">Five parts that make research repeatable.</h2>
+    <p class="muted measure">Each part covers a different condition for research to happen, and to be used: a shared standard, people to talk to, a regular signal, the tools and people to run it, and an organisation that knows what to ask of it.</p>
+    <div class="flow">
+      <div class="step"><div class="k">01</div><div class="t">Standards</div><div class="s">Playbook, methods, templates, quality</div></div>
+      <div class="step"><div class="k">02</div><div class="t">Access to customers</div><div class="s">Participant panel and recruitment channels</div></div>
+      <div class="step"><div class="k">03</div><div class="t">Continuous discovery</div><div class="s">Voice of Customer in my product domain</div></div>
+      <div class="step"><div class="k">04</div><div class="t">Operations</div><div class="s">People, tools, vendors, pilots</div></div>
+      <div class="step"><div class="k">05</div><div class="t">Adoption</div><div class="s">Workshops, presentations, coaching</div></div>
+    </div>
+  </section>
+
+  <!-- 3 · STANDARDS -->
+  <section class="part wrap">
+    <span class="eyebrow">01 · Establishing research standards</span>
+    <h2 class="measure">One playbook, so a study means the same thing in every team.</h2>
+    <p class="muted measure">I own the research playbook. Alongside it I developed reusable methods and templates and the guidance that goes with them, so studies are planned, run and reported consistently, and the quality of research does not depend on who happens to run it.</p>
+    <ul class="points">
+      <li><b>Research playbook.</b> The shared reference for how research is done at TOPdesk, which I own and maintain.</li>
+      <li><b>Reusable methods and templates.</b> Starting points for common study types, so teams are not designing each study from scratch.</li>
+      <li><b>Guidance and quality.</b> Making research practice more consistent and accessible across product teams.</li>
+    </ul>
+    <p class="muted measure">The <a href="research-copilot-portfolio.html">Research Copilot</a> builds on this: it is grounded in TOPdesk's research standards and its democratisation matrix, which sets out which research product roles can run on their own and which stays with a trained researcher.</p>
+  </section>
+
+  <!-- 4 · ACCESS -->
+  <section class="part wrap">
+    <span class="eyebrow">02 · Building ongoing access to customers</span>
+    <h2 class="measure">A participant panel fed by four channels.</h2>
+    <p class="muted measure">Continuous discovery needs a steady supply of the right people to talk to. I manage a research participant panel and coordinate recruitment through four channels.</p>
+    <div class="arch">
+      <div class="flowlbl">Recruitment channels</div>
+      <div class="layer">
+        <div class="box"><div class="t">Account Managers</div><div class="s">Through existing account relationships.</div></div>
+        <div class="box"><div class="t">Customer Success Managers</div><div class="s">Through customer success relationships.</div></div>
+        <div class="box"><div class="t">TOPdesk Community</div><div class="s">Through TOPdesk's user community.</div></div>
+        <div class="box"><div class="t">External channels</div><div class="s">Beyond TOPdesk's own networks.</div></div>
+      </div>
+      <div class="down">↓</div>
+      <div class="layer"><div class="box engine" style="flex:1 1 100%"><div class="t">Research participant panel</div><div class="s">One managed pool of participants that studies recruit from.</div></div></div>
+      <div class="down">↓</div>
+      <div class="layer">
+        <div class="box"><div class="t">Research studies</div><div class="s">Recruitment for individual projects.</div></div>
+        <div class="box"><div class="t">Voice of Customer</div><div class="s">The continuous programme in my product domain.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · CONTINUOUS DISCOVERY -->
+  <section class="part wrap">
+    <span class="eyebrow">03 · Introducing continuous discovery</span>
+    <h2 class="measure">A regular Voice of Customer signal in my product domain.</h2>
+    <p class="muted measure">I introduced a continuous Voice of Customer programme within my product domain. It gives a consistent way to understand customer needs and to bring evidence into product discussions as a matter of routine, rather than only when a project asks for it.</p>
+  </section>
+
+  <!-- 6 · OPERATIONS -->
+  <section class="part wrap">
+    <span class="eyebrow">04 · Scaling research operations</span>
+    <h2 class="measure">Operations for researchers, product managers and designers.</h2>
+    <p class="muted measure">As UX Research Lead, my responsibilities expanded from running research to building what research runs on. The goal is research operations that support not only researchers, but the product managers and designers who also need customer evidence.</p>
+    <div class="model four">
+      <div class="mcard"><div class="lbl">People</div><div class="h">Recruiting researchers</div><div class="s">Hiring researchers into the practice.</div></div>
+      <div class="mcard"><div class="lbl">Tools</div><div class="h">Evaluation and selection</div><div class="s">Evaluating research tools.</div></div>
+      <div class="mcard"><div class="lbl">Vendors</div><div class="h">Procurement and negotiation</div><div class="s">Selecting vendors and negotiating terms.</div></div>
+      <div class="mcard"><div class="lbl">Pilots</div><div class="h">Pilot programmes</div><div class="s">Running pilots before committing.</div></div>
+    </div>
+    <p class="muted measure">The research infrastructure I built for this includes <a href="research-buddy-portfolio.html">Research Buddy</a>, which puts existing evidence behind one question, and the <a href="research-copilot-portfolio.html">Research Copilot</a>, which guides product roles through research they can run themselves. <a href="atlas-portfolio.html">TOPdesk Atlas</a> connects that evidence to the product itself.</p>
+  </section>
+
+  <!-- 7 · ADOPTION -->
+  <section class="part wrap">
+    <span class="eyebrow">05 · Building research adoption</span>
+    <h2 class="measure">Helping the organisation understand what research can do.</h2>
+    <p class="muted measure">I facilitate workshops and present research findings and methods to product leadership and the wider Product &amp; Technology organisation, through workshops, presentations, coaching and knowledge sharing. The aim is a shared understanding of research processes, customer needs and opportunities.</p>
+  </section>
+
+  <footer class="wrap">
+    <div class="who">Bhuvan Sarupuri<span>UX Research · heybhuvan.com</span></div>
+    <div class="links">
+      <a href="https://heybhuvan.com">heybhuvan.com</a>
+    </div>
+    <p style="width: 100%; margin-top: 1.25rem; font-size: 0.875rem; opacity: 0.7;">&copy; 2026 Bhuvan Sarupuri. All rights reserved.</p>
+  </footer>
+</main>
+
+<script>
+  (function () {
+    try { var s = localStorage.getItem('td-theme'); if (s) document.documentElement.setAttribute('data-theme', s); } catch (e) {}
+  })();
+</script>
+
+</body>
+</html>
